@@ -1,26 +1,40 @@
 <template>
   <div class="editor-container">
     <a-layout>
-      <a-layout-sider width="300" style="background: yellow">
+      <a-layout-sider class="component">
         <div class="sidebar-container">组件列表</div>
       </a-layout-sider>
-      <a-layout style="padding: 0 24px 24px">
+      <!-- 主体 -->
+      <a-layout>
         <a-layout-content class="preview-container">
           <p>画布区域</p>
-          <div class="preview-list" id="canvas-area"></div>
+          <div class="preview-list" id="canvas-area">
+            <div v-for="com in components" :key="com.id">
+              {{ com.props.text }}
+            </div>
+          </div>
         </a-layout-content>
       </a-layout>
-      <a-layout-sider width="300" style="background: purple" class="settings-panel">
-        组件属性
-      </a-layout-sider>
+
+      <a-layout-sider class="settings-panel"> 组件属性 </a-layout-sider>
     </a-layout>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
+import { useStore } from 'vuex'
+import { GlobalDataProps } from '../store/index'
 
-export default defineComponent({})
+export default defineComponent({
+  setup() {
+    const store = useStore<GlobalDataProps>()
+    const components = computed(() => store.state.editor.components)
+    return {
+      components,
+    }
+  },
+})
 </script>
 
 <style lang="scss">
@@ -46,6 +60,16 @@ export default defineComponent({})
     position: fixed;
     margin-top: 50px;
     max-height: 80vh;
+  }
+
+  .component {
+    width: 300px;
+    background: yellow;
+  }
+
+  .settings-panel {
+    width: 300px;
+    background: purple;
   }
 }
 </style>

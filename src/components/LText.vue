@@ -1,27 +1,45 @@
 <template>
-  <div></div>
+  <component
+    :is="tag"
+    :style="styleProps"
+    class="l-text-component"
+    @click="handleClick"
+  >
+    {{ text }}
+    <slot />
+  </component>
 </template>
 
 <script lang="ts">
-import { defineComponent, component } from 'vue'
-import { pick } from 'lodash-es'
+import { defineComponent, computed } from "vue";
+import {
+  textStylePropNames,
+  transformToComponentProps,
+  textDefaultProps,
+} from "../defaultProps";
+import { pick } from "lodash-es";
+import useComponentCommon from "../hooks/useComponentCommon";
+const defaultProps = transformToComponentProps(textDefaultProps);
 export default defineComponent({
-  name: 'l-text',
+  name: "l-text",
   props: {
-    textt: {
-      type: String,
-    },
-    fontSize: {
-      type: String,
-    },
     tag: {
       type: String,
+      default: "div",
     },
+    ...defaultProps,
   },
   setup(props) {
-    return {}
+    const { styleProps, handleClick } = useComponentCommon(
+      props,
+      textStylePropNames
+    );
+    return {
+      styleProps,
+      handleClick,
+    };
   },
-})
+});
 </script>
 
 <style lang="scss">

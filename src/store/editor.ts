@@ -63,8 +63,8 @@ export const testComponents: ComponentData[] = [
 const editor: Module<EditorProps, GlobalDataProps> = {
   state: {
     components: testComponents,
-    currentElement:''
-    
+    currentElement: ''
+
   },
 }
 

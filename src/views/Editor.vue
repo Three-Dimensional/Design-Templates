@@ -9,9 +9,12 @@
         <a-layout-content class="preview-container">
           <p>画布区域</p>
           <div class="preview-list" id="canvas-area">
-            <div v-for="com in components" :key="com.id">
-              {{ com.props.text }}
-            </div>
+            <component
+              :is="com.name"
+              v-bind="com.props"
+              v-for="com in components"
+              :key="com.id"
+            ></component>
           </div>
         </a-layout-content>
       </a-layout>
@@ -22,19 +25,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useStore } from 'vuex'
-import { GlobalDataProps } from '../store/index'
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
+import { GlobalDataProps } from "../store/index";
+import LText from "../components/LText.vue";
 
 export default defineComponent({
+  components: {
+    LText,
+  },
   setup() {
-    const store = useStore<GlobalDataProps>()
-    const components = computed(() => store.state.editor.components)
+    const store = useStore<GlobalDataProps>();
+    const components = computed(() => store.state.editor.components);
     return {
       components,
-    }
+    };
   },
-})
+});
 </script>
 
 <style lang="scss">

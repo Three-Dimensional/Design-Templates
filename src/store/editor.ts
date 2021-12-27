@@ -1,6 +1,7 @@
 import { Module } from 'vuex'
 import { v4 as uuidv4 } from 'uuid'
 import { GlobalDataProps } from './index'
+import { TextComponentProps } from '../defaultProps'
 
 export interface EditorProps {
   // 供中间编辑器渲染的数组
@@ -64,8 +65,29 @@ const editor: Module<EditorProps, GlobalDataProps> = {
   state: {
     components: testComponents,
     currentElement: ''
-
   },
+  mutations: {
+    addComponent(state, props: Partial<TextComponentProps>) {
+      const addComponent: ComponentData = {
+        name: 'l-text',
+        id: uuidv4(),
+        props
+      }
+      state.components.push(addComponent)
+    },
+    // removeComponent(state, id: string) {
+    //   state.components = state.components.filter(item => item.id !== id)
+    // },
+    // setActive(state, id: string) {
+    //   state.currentElement = id
+    // },
+    // updateComponent(state, { key, value }) {
+    //   const updatedComponent = state.components.find(component => component.id === state.currentElement)
+    //   if (updatedComponent) {
+    //     updatedComponent.props[key as keyof TextComponentProps] = value
+    //   }
+    // }
+  }
 }
 
 export default editor

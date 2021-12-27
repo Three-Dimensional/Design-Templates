@@ -2,7 +2,13 @@
   <div class="editor-container">
     <a-layout>
       <a-layout-sider class="component">
-        <div class="sidebar-container">组件列表</div>
+        <div class="sidebar-container">
+          组件列表
+          <Component-list
+            :list="defaultTextTemplates"
+            @onClickItem="addItem"
+          ></Component-list>
+        </div>
       </a-layout-sider>
       <!-- 主体 -->
       <a-layout>
@@ -28,17 +34,37 @@
 import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
 import { GlobalDataProps } from "../store/index";
+import { defaultTextTemplates } from "../defaultTemplates";
 import LText from "../components/LText.vue";
+import ComponentList from "../components/ComponentsList.vue";
 
 export default defineComponent({
   components: {
     LText,
+    ComponentList,
   },
   setup() {
     const store = useStore<GlobalDataProps>();
     const components = computed(() => store.state.editor.components);
+    const addItem = (props: any) => {
+      store.commit("addComponent", props);
+    };
+    const removeComponent = (id: string) => {
+      store.commit("removeComponent", id);
+    };
+    const onItemClick = (id: string) => {
+      store.commit("setActive", id);
+    };
+    const handleChange = (e: { key: string; value: any }) => {
+      store.commit("updateComponent", e);
+    };
     return {
       components,
+      addItem,
+      defaultTextTemplates,
+      removeComponent,
+      onItemClick,
+      handleChange,
     };
   },
 });

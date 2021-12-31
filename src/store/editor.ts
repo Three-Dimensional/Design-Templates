@@ -66,6 +66,11 @@ const editor: Module<EditorProps, GlobalDataProps> = {
     components: testComponents,
     currentElement: ''
   },
+  getters: {
+    getCurrentElement(state) {
+      return state.components.find(component => component.id === state.currentElement)
+    }
+  },
   mutations: {
     addComponent(state, props: Partial<TextComponentProps>) {
       const addComponent: ComponentData = {
@@ -75,12 +80,12 @@ const editor: Module<EditorProps, GlobalDataProps> = {
       }
       state.components.push(addComponent)
     },
-    // removeComponent(state, id: string) {
-    //   state.components = state.components.filter(item => item.id !== id)
-    // },
-    // setActive(state, id: string) {
-    //   state.currentElement = id
-    // },
+    removeComponent(state, id: string) {
+      state.components = state.components.filter(item => item.id !== id)
+    },
+    setActive(state, id: string) {
+      state.currentElement = id
+    },
     // updateComponent(state, { key, value }) {
     //   const updatedComponent = state.components.find(component => component.id === state.currentElement)
     //   if (updatedComponent) {

@@ -3,29 +3,34 @@
     <a-layout>
       <a-layout-sider class="component">
         <div class="sidebar-container">
-          组件列表
-          <Component-list
+          <Component-List
             :list="defaultTextTemplates"
             @onClickItem="addItem"
-          ></Component-list>
+          ></Component-List>
         </div>
       </a-layout-sider>
       <!-- 主体 -->
       <a-layout>
         <a-layout-content class="preview-container">
-          <p>画布区域</p>
           <div class="preview-list" id="canvas-area">
-            <component
-              :is="com.name"
-              v-bind="com.props"
+            <Editor-Wrapper
               v-for="com in components"
               :key="com.id"
-            ></component>
+              :id="com.id"
+              @on-item-click="onItemClick"
+              :active="currentElement ? com.id === currentElement.id : false"
+            >
+              <component :is="com.name" v-bind="com.props">
+                <!-- <button @click="removeComponent(com.id)">删除</button> -->
+              </component>
+            </Editor-Wrapper>
           </div>
         </a-layout-content>
       </a-layout>
 
-      <a-layout-sider class="settings-panel"> 组件属性 </a-layout-sider>
+      <a-layout-sider class="settings-panel">
+        <pre>{{ currentElement && currentElement.props }}</pre>
+      </a-layout-sider>
     </a-layout>
   </div>
 </template>
@@ -34,18 +39,24 @@
 import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
 import { GlobalDataProps } from "../store/index";
+import { ComponentData } from "../store/editor";
 import { defaultTextTemplates } from "../defaultTemplates";
 import LText from "../components/LText.vue";
+import EditorWrapper from "../components/EditorWrapper.vue";
 import ComponentList from "../components/ComponentsList.vue";
 
 export default defineComponent({
   components: {
     LText,
     ComponentList,
+    EditorWrapper,
   },
   setup() {
     const store = useStore<GlobalDataProps>();
     const components = computed(() => store.state.editor.components);
+    const currentElement = computed<ComponentData | null>(
+      () => store.getters.getCurrentElement
+    );
     const addItem = (props: any) => {
       store.commit("addComponent", props);
     };
@@ -63,6 +74,7 @@ export default defineComponent({
       addItem,
       defaultTextTemplates,
       removeComponent,
+      currentElement,
       onItemClick,
       handleChange,
     };
@@ -73,9 +85,8 @@ export default defineComponent({
 <style lang="scss">
 .editor-container {
   .preview-container {
-    padding: 24px;
     margin: 0;
-    min-height: 85vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -85,7 +96,7 @@ export default defineComponent({
     padding: 0;
     margin: 0;
     min-width: 375px;
-    min-height: 200px;
+    min-height: 500px;
     border: 1px solid #efefef;
     background: #fff;
     overflow-x: hidden;
@@ -96,13 +107,13 @@ export default defineComponent({
   }
 
   .component {
-    width: 300px;
-    background: yellow;
+    width: 400px;
+    background: #fff;
   }
 
   .settings-panel {
-    width: 300px;
-    background: purple;
+    width: 400px;
+    background: #fff;
   }
 }
 </style>

@@ -29,6 +29,12 @@
       </a-layout>
 
       <a-layout-sider class="settings-panel">
+        <Props-Table
+          :props="currentElement.props"
+          v-if="currentElement"
+          @change="handleChange"
+        ></Props-Table>
+
         <pre>{{ currentElement && currentElement.props }}</pre>
       </a-layout-sider>
     </a-layout>
@@ -44,12 +50,14 @@ import { defaultTextTemplates } from "../defaultTemplates";
 import LText from "../components/LText.vue";
 import EditorWrapper from "../components/EditorWrapper.vue";
 import ComponentList from "../components/ComponentsList.vue";
+import PropsTable from '../components/PropsTable.vue'
 
 export default defineComponent({
   components: {
     LText,
     ComponentList,
     EditorWrapper,
+    PropsTable
   },
   setup() {
     const store = useStore<GlobalDataProps>();

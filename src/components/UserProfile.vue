@@ -1,5 +1,10 @@
 <template>
-  <a-button type="primary" v-if="!user.isLogin" class="user-profile-component" @click="login">
+  <a-button
+    type="primary"
+    v-if="!user.isLogin"
+    class="user-profile-component"
+    @click="login"
+  >
     登录
   </a-button>
   <div v-else>
@@ -15,13 +20,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { message } from 'ant-design-vue'
-import { UserProps } from '../store/user'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { defineComponent, PropType } from "vue";
+import { message } from "ant-design-vue";
+import { UserProps } from "../store/user";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 export default defineComponent({
-  name: 'user-profile',
+  name: "user-profile",
   props: {
     user: {
       type: Object as PropType<UserProps>,
@@ -29,25 +34,25 @@ export default defineComponent({
     },
   },
   setup() {
-    const store = useStore()
-    const router = useRouter()
+    const store = useStore();
+    const router = useRouter();
     const login = () => {
-      store.commit('login')
-      message.success('登录成功！', 2)
-    }
+      store.commit("login");
+      message.success("登录成功！", 2);
+    };
     const logout = () => {
-      store.commit('logout')
-      message.success('退出登录成功，2秒后跳转到首页', 2)
+      store.commit("logout");
+      message.success("退出登录成功，2秒后跳转到首页", 2);
       setTimeout(() => {
-        router.push('/')
-      }, 2000)
-    }
+        router.push("/");
+      }, 2000);
+    };
     return {
       login,
       logout,
-    }
+    };
   },
-})
+});
 </script>
 
 <style>

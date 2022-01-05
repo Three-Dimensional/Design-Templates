@@ -1,8 +1,8 @@
 import { defineComponent, computed, PropType, VNode } from 'vue'
-import {TextComponentProps} from '../defaultProps'
-import {mapPropsToFroms} from '../propsMap'
-import {reduce} from 'lodash-es'
-import { Input, InputNumber, Slider, Radio, Select  } from 'ant-design-vue'
+import { TextComponentProps } from '../defaultProps'
+import { mapPropsToFroms } from '../propsMap'
+import { reduce } from 'lodash-es'
+import { Input, InputNumber, Slider, Radio, Select } from 'ant-design-vue'
 import './propsTable.scss'
 const mapToComponent = {
   'a-textarea': Input.TextArea,
@@ -17,7 +17,7 @@ interface FormToProp {
   component: string;
   value: string;
   subComponent?: string;
-  options?: {text: string | VNode; value: string}[];
+  options?: { text: string | VNode; value: string }[];
   text?: string;
   extraProps?: { [key: string]: any };
   valueProp?: string;
@@ -26,7 +26,7 @@ interface FormToProp {
   afterTransform?: (v: any) => any;
   events: { [key: string]: (e: any) => void };
 }
-function capitalizeFirstLetter (eventName: string) {
+function capitalizeFirstLetter(eventName: string) {
   return eventName.charAt(0).toUpperCase() + eventName.slice(1)
 }
 export default defineComponent({
@@ -43,8 +43,8 @@ export default defineComponent({
       return reduce(props.props, (result, value, key) => {
         const newKey = key as keyof TextComponentProps
         const item = mapPropsToFroms[newKey]
-        if(item) {
-          const {valueProp = 'value', eventName = 'change', initTransform, afterTransform} = item
+        if (item) {
+          const { valueProp = 'value', eventName = 'change', initTransform, afterTransform } = item
           const newItem: FormToProp = {
             ...item,
             value: initTransform ? initTransform(value) : value,
@@ -52,14 +52,14 @@ export default defineComponent({
             eventName,
             events: {
               ['on' + capitalizeFirstLetter(eventName)]: (e) => {
-                ctx.emit('change', {key, value: afterTransform ? afterTransform(e) : e})
+                ctx.emit('change', { key, value: afterTransform ? afterTransform(e) : e })
               }
             }
           }
           result[newKey] = newItem
         }
         return result
-      }, {} as {[key: string]: FormToProp})
+      }, {} as { [key: string]: FormToProp })
     })
     return () => (
       <div class="props-table">

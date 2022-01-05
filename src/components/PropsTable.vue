@@ -1,13 +1,10 @@
 <template>
   <div class="props-table">
-    <div
-      class="prop-item"
-      v-for="(prop, key) in finalProps"
-      :key="key"
-    >
+    <div class="prop-item" v-for="(prop, key) in finalProps" :key="key">
       <div class="item-wrapper">
-        <div class="label" v-if="prop.text">{{prop.text}}</div>
-        <component class="item"
+        <div class="label" v-if="prop.text">{{ prop.text }}</div>
+        <component
+          class="item"
           :is="prop.component"
           :[prop.valueProp]="prop.value"
           v-bind="prop.extraProps"
@@ -20,7 +17,7 @@
               :key="k"
               :value="option.value"
             >
-              <render-vnode :vNode="option.text"></render-vnode>
+              <Render-Vnode :vNode="option.text"></Render-Vnode>
             </component>
           </template>
         </component>
@@ -29,16 +26,16 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, computed, PropType, VNode } from 'vue'
-import {TextComponentProps} from '../defaultProps'
-import {mapPropsToFroms} from '../propsMap'
-import {reduce} from 'lodash-es'
-import RenderVnode from './RenderVnode'
+import { defineComponent, computed, PropType, VNode } from "vue";
+import { TextComponentProps } from "../defaultProps";
+import { mapPropsToFroms } from "../propsMap";
+import { reduce } from "lodash-es";
+import RenderVnode from "./RenderVnode";
 interface FormToProp {
   component: string;
   value: string;
   subComponent?: string;
-  options?: {text: string | VNode; value: string}[];
+  options?: { text: string | VNode; value: string }[];
   text?: string;
   extraProps?: { [key: string]: any };
   valueProp?: string;
@@ -48,45 +45,57 @@ interface FormToProp {
   events: { [key: string]: (e: any) => void };
 }
 export default defineComponent({
-  name: 'props-table',
+  name: "props-table",
   props: {
     props: {
       type: Object as PropType<TextComponentProps>,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
-    RenderVnode
+    RenderVnode,
   },
-  emits: ['change'],
+  emits: ["change"],
   setup(props, ctx) {
     const finalProps = computed(() => {
-      return reduce(props.props, (result, value, key) => {
-        const newKey = key as keyof TextComponentProps
-        const item = mapPropsToFroms[newKey]
-        if(item) {
-          const {valueProp = 'value', eventName = 'change', initTransform, afterTransform} = item
-          const newItem: FormToProp = {
-            ...item,
-            value: initTransform ? initTransform(value) : value,
-            valueProp,
-            eventName,
-            events: {
-              [eventName]: (e) => {
-                ctx.emit('change', {key, value: afterTransform ? afterTransform(e) : e})
-              }
-            }
+      return reduce(
+        props.props,
+        (result, value, key) => {
+          const newKey = key as keyof TextComponentProps;
+          const item = mapPropsToFroms[newKey];
+          if (item) {
+            const {
+              valueProp = "value",
+              eventName = "change",
+              initTransform,
+              afterTransform,
+            } = item;
+            const newItem: FormToProp = {
+              ...item,
+              value: initTransform ? initTransform(value) : value,
+              valueProp,
+              eventName,
+              events: {
+                [eventName]: (e) => {
+                  ctx.emit("change", {
+                    key,
+                    value: afterTransform ? afterTransform(e) : e,
+                  });
+                },
+              },
+            };
+            result[newKey] = newItem;
           }
-          result[newKey] = newItem
-        }
-        return result
-      }, {} as {[key: string]: FormToProp})
-    })
+          return result;
+        },
+        {} as { [key: string]: FormToProp }
+      );
+    });
     return {
-      finalProps
-    }
+      finalProps,
+    };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>

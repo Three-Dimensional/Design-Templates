@@ -1,43 +1,38 @@
 <template>
-  <div class="editor-container">
-    <a-layout>
-      <a-layout-sider class="component">
-        <div class="sidebar-container">
-          <Component-List
-            :list="defaultTextTemplates"
-            @onClickItem="addItem"
-          ></Component-List>
-        </div>
-      </a-layout-sider>
-      <!-- 主体 -->
-      <a-layout>
-        <a-layout-content class="preview-container">
-          <div class="preview-list" id="canvas-area">
-            <Editor-Wrapper
-              v-for="com in components"
-              :key="com.id"
-              :id="com.id"
-              @on-item-click="onItemClick"
-              :active="currentElement ? com.id === currentElement.id : false"
-            >
-              <component :is="com.name" v-bind="com.props">
-                <!-- <button @click="removeComponent(com.id)">删除</button> -->
-              </component>
-            </Editor-Wrapper>
-          </div>
-        </a-layout-content>
-      </a-layout>
+  <div class="editor">
+    <aside class="component">
+      <div class="sidebar-container">
+        <Component-List
+          :list="defaultTextTemplates"
+          @onClickItem="addItem"
+        ></Component-List>
+      </div>
+    </aside>
+    <!-- 主体 -->
+    <main class="preview-container">
+      <div class="preview-list" id="canvas-area">
+        <Editor-Wrapper
+          v-for="com in components"
+          :key="com.id"
+          :id="com.id"
+          @on-item-click="onItemClick"
+          :active="currentElement ? com.id === currentElement.id : false"
+        >
+          <component :is="com.name" v-bind="com.props">
+            <!-- <button @click="removeComponent(com.id)">删除</button> -->
+          </component>
+        </Editor-Wrapper>
+      </div>
+    </main>
 
-      <a-layout-sider class="settings-panel">
-        <Props-Table
-          :props="currentElement.props"
-          v-if="currentElement"
-          @change="handleChange"
-        ></Props-Table>
-
-        <pre>{{ currentElement && currentElement.props }}</pre>
-      </a-layout-sider>
-    </a-layout>
+    <aside class="settings-panel">
+      <Props-Table
+        :props="currentElement.props"
+        v-if="currentElement"
+        @change="handleChange"
+      ></Props-Table>
+      <p>{{ currentElement && currentElement.props }}</p>
+    </aside>
   </div>
 </template>
 
@@ -50,14 +45,14 @@ import { defaultTextTemplates } from "../defaultTemplates";
 import LText from "../components/LText.vue";
 import EditorWrapper from "../components/EditorWrapper.vue";
 import ComponentList from "../components/ComponentsList.vue";
-import PropsTable from '../components/PropsTable.vue'
+import PropsTable from "../components/PropsTable.vue";
 
 export default defineComponent({
   components: {
     LText,
     ComponentList,
     EditorWrapper,
-    PropsTable
+    PropsTable,
   },
   setup() {
     const store = useStore<GlobalDataProps>();
@@ -91,20 +86,32 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.editor-container {
+.editor {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #e7e8f0;
+  height: 100%;
+
+  .component {
+    width: 400px;
+    height: 100vh;
+    background: #fff;
+    box-shadow: 10px 0 20px 0 rgb(0 0 0 / 4%);
+  }
+
   .preview-container {
-    margin: 0;
+    width: calc(100% - 584px);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     position: relative;
   }
   .preview-list {
-    padding: 0;
-    margin: 0;
     min-width: 375px;
-    min-height: 500px;
+    min-height: 667px;
     border: 1px solid #efefef;
     background: #fff;
     overflow-x: hidden;
@@ -114,14 +121,11 @@ export default defineComponent({
     max-height: 80vh;
   }
 
-  .component {
-    width: 400px;
-    background: #fff;
-  }
-
   .settings-panel {
-    width: 400px;
+    width: 20%;
+    height: 100vh;
     background: #fff;
+    box-shadow: -10px 0 20px 0 rgb(0 0 0 / 4%);
   }
 }
 </style>

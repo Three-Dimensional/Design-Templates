@@ -1,4 +1,5 @@
 import { VNode } from "vue";
+import { h } from "vue";
 import { TextComponentProps } from "./defaultProps";
 export interface PropToFrom {
   component: string;
@@ -20,10 +21,9 @@ const fontFamilyArr = [
 const fontFamilyOptions = fontFamilyArr.map((fontFamily) => {
   return {
     value: fontFamily.value,
-    text: ''
-    // text: (
-    //   <span style={{ fontFamily: fontFamily.value }}>{fontFamily.text}</span>
-    // ) as VNode,
+    text: (
+      <span style={{ fontFamily: fontFamily.value }}>{fontFamily.text}</span>
+    ) as VNode,
   };
 });
 export type PropsToFroms = {

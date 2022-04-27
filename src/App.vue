@@ -1,18 +1,14 @@
 <template>
-  <div class="app-container">
+  <div class="app">
     <router-view />
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
-  name: 'App',
-})
+<script lang="ts" setup>
 </script>
 
 <style lang="scss" scoped>
-.app-container {
+.app {
   width: 100%;
   height: 100%;
 }

@@ -1,5 +1,6 @@
 <template>
-  <Editor-Header></Editor-Header>
+  <editor-header></editor-header>
+
   <div class="editor">
     <aside class="component">
       <div class="sidebar-container">
@@ -16,9 +17,7 @@
           @on-item-click="onItemClick"
           :active="currentElement ? com.id === currentElement.id : false"
         >
-          <component :is="com.name" v-bind="com.props">
-            <!-- <button @click="removeComponent(com.id)">删除</button> -->
-          </component>
+          <component :is="com.name" v-bind="com.props"> </component>
         </Editor-Wrapper>
       </div>
     </main>
@@ -33,14 +32,15 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
-import { GlobalDataProps } from '../store/index'
-import { ComponentData } from '../store/editor'
-import { defaultTextTemplates } from '../defaultTemplates'
-import EditorHeader from '../components/EditorHeader.vue'
-import LText from '../components/LText.vue'
-import EditorWrapper from '../components/EditorWrapper.vue'
-import ComponentList from '../components/ComponentsList.vue'
-import PropsTable from '../components/PropsTable.vue'
+import { GlobalDataProps } from '@/store/index'
+import { ComponentData } from '@/store/editor'
+import { defaultTextTemplates } from '@/defaultTemplates'
+
+import EditorHeader from './components/EditorHeader.vue'
+import LText from '@/components/LText.vue'
+import EditorWrapper from '@/components/EditorWrapper.vue'
+import ComponentList from '@/components/ComponentsList.vue'
+import PropsTable from '@/components/PropsTable.vue'
 
 export default defineComponent({
   components: {
@@ -85,19 +85,17 @@ export default defineComponent({
   justify-content: space-between;
   align-items: flex-start;
   background: #e7e8f0;
-  height: 100%;
-  position: relative;
 
   .component {
     width: 400px;
-    height: 100vh;
+    height: 80vh;
     background: #fff;
     box-shadow: 10px 0 20px 0 rgb(0 0 0 / 4%);
   }
 
   .preview-container {
     width: calc(100% - 584px);
-    min-height: 100vh;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -118,7 +116,7 @@ export default defineComponent({
 
   .settings-panel {
     width: 20%;
-    height: 100vh;
+    height: 80vh;
     background: #fff;
     box-shadow: -10px 0 20px 0 rgb(0 0 0 / 4%);
   }

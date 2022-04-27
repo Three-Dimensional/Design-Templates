@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"]
+    },
     "target": "esnext",
     "useDefineForClassFields": true,
     "module": "esnext",

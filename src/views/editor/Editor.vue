@@ -90,7 +90,6 @@ export default defineComponent({
     width: 400px;
     height: 80vh;
     background: #fff;
-    box-shadow: 10px 0 20px 0 rgb(0 0 0 / 4%);
   }
 
   .preview-container {
@@ -118,7 +117,6 @@ export default defineComponent({
     width: 20%;
     height: 80vh;
     background: #fff;
-    box-shadow: -10px 0 20px 0 rgb(0 0 0 / 4%);
   }
 }
 </style>

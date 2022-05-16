@@ -37,9 +37,7 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore<GlobalDataProps>()
     const currentId = route.params.id as string
-    const template = computed<TemplateProps>(() =>
-      store.getters.getTemplateById(parseInt(currentId)),
-    )
+    const template = computed<TemplateProps>(() => store.getters.getTemplateById(parseInt(currentId)))
     return {
       route,
       template,

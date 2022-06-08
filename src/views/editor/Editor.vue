@@ -85,16 +85,16 @@ export default defineComponent({
   justify-content: space-between;
   align-items: flex-start;
   background: #e7e8f0;
+  height: calc(100vh - 70px);
 
   .component {
     width: 400px;
-    height: 80vh;
+    height: 100%;
     background: #fff;
   }
 
   .preview-container {
-    width: calc(100% - 584px);
-    min-height: 80vh;
+    width: 375px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -103,19 +103,16 @@ export default defineComponent({
   }
   .preview-list {
     min-width: 375px;
-    min-height: 667px;
+    min-height: 660px;
     border: 1px solid #efefef;
     background: #fff;
-    overflow-x: hidden;
-    overflow-y: auto;
-    position: fixed;
-    margin-top: 50px;
     max-height: 80vh;
+    margin-top: 60px;
   }
 
   .settings-panel {
     width: 20%;
-    height: 80vh;
+    height: 100%;
     background: #fff;
   }
 }

@@ -1,7 +1,6 @@
 ## 🌋 介绍
 - 技术栈: Vue3 + TypeScript + Vite + Cavans + Nginx + Docker + Node.js + Koa2 + MongoDB
-- 用于学习, 研究, 沉淀技术实力
-- 欢迎Star ✨ 欢迎 PR
+- 用于学习, 沉淀技术
 
 ## 📜 功能
 - 通过拖拽编辑实现海报的自定义制作编辑和下载

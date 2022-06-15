@@ -2,10 +2,12 @@
   <editor-header></editor-header>
 
   <div class="editor">
-    <aside class="component">
-      <div class="sidebar-container">
+    <aside class="editor-item">
+      <LeftPanel :handleChangeItemID="handleChangeItemID"></LeftPanel>
+      <div>{{ itemID }}</div>
+      <!-- <div class="sidebar-container">
         <Component-List :list="defaultTextTemplates" @onClickItem="addItem"></Component-List>
-      </div>
+      </div> -->
     </aside>
     <!-- 主体 -->
     <main class="preview-container">
@@ -30,13 +32,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '@/store/index'
 import { ComponentData } from '@/store/editor'
 import { defaultTextTemplates } from '@/defaultTemplates'
 
 import EditorHeader from './components/EditorHeader.vue'
+import LeftPanel from './components/LeftPanel.vue'
 import LText from '@/components/LText.vue'
 import EditorWrapper from '@/components/EditorWrapper.vue'
 import ComponentList from '@/components/ComponentsList.vue'
@@ -49,6 +52,7 @@ export default defineComponent({
     EditorWrapper,
     EditorHeader,
     PropsTable,
+    LeftPanel,
   },
   setup() {
     const store = useStore<GlobalDataProps>()
@@ -66,6 +70,11 @@ export default defineComponent({
     const handleChange = (e: { key: string; value: any }) => {
       store.commit('updateComponent', e)
     }
+
+    let itemID = ref(1)
+    const handleChangeItemID = (e: number) => {
+      itemID.value = e
+    }
     return {
       components,
       addItem,
@@ -74,6 +83,8 @@ export default defineComponent({
       currentElement,
       onItemClick,
       handleChange,
+      handleChangeItemID,
+      itemID,
     }
   },
 })
@@ -86,11 +97,13 @@ export default defineComponent({
   align-items: flex-start;
   background: #e7e8f0;
   height: calc(100vh - 70px);
+  overflow: hidden;
 
-  .component {
+  .editor-item {
     width: 400px;
     height: 100%;
     background: #fff;
+    display: flex;
   }
 
   .preview-container {

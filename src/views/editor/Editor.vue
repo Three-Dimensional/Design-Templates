@@ -4,9 +4,9 @@
     <aside class="editor-item">
       <LeftPanel :handleChangeItemID="handleChangeItemID"></LeftPanel>
       <PanelContent :itemID="itemID"></PanelContent>
-      <div class="sidebar-container">
+      <!-- <div class="sidebar-container">
         <Component-List :list="defaultTextTemplates" @onClickItem="addItem"></Component-List>
-      </div>
+      </div> -->
     </aside>
     <!-- 主体 -->
     <main class="preview-container">

@@ -1,24 +1,18 @@
 <template>
   <editor-header></editor-header>
-
   <div class="editor">
     <aside class="editor-item">
       <LeftPanel :handleChangeItemID="handleChangeItemID"></LeftPanel>
-      <div>{{ itemID }}</div>
-      <!-- <div class="sidebar-container">
+      <PanelContent :itemID="itemID"></PanelContent>
+      <div class="sidebar-container">
         <Component-List :list="defaultTextTemplates" @onClickItem="addItem"></Component-List>
-      </div> -->
+      </div>
     </aside>
     <!-- 主体 -->
     <main class="preview-container">
       <div class="preview-list" id="canvas-area">
-        <Editor-Wrapper
-          v-for="com in components"
-          :key="com.id"
-          :id="com.id"
-          @on-item-click="onItemClick"
-          :active="currentElement ? com.id === currentElement.id : false"
-        >
+        <Editor-Wrapper v-for="com in components" :key="com.id" :id="com.id" @on-item-click="onItemClick"
+          :active="currentElement ? com.id === currentElement.id : false">
           <component :is="com.name" v-bind="com.props"> </component>
         </Editor-Wrapper>
       </div>
@@ -40,6 +34,7 @@ import { defaultTextTemplates } from '@/defaultTemplates'
 
 import EditorHeader from './components/EditorHeader.vue'
 import LeftPanel from './components/LeftPanel.vue'
+import PanelContent from './components/PanelContent.vue'
 import LText from '@/components/LText.vue'
 import EditorWrapper from '@/components/EditorWrapper.vue'
 import ComponentList from '@/components/ComponentsList.vue'
@@ -53,10 +48,12 @@ export default defineComponent({
     EditorHeader,
     PropsTable,
     LeftPanel,
+    PanelContent
   },
   setup() {
     const store = useStore<GlobalDataProps>()
     const components = computed(() => store.state.editor.components)
+    console.log('%c 🌮 components: ', 'font-size:20px;background-color: #FCA650;color:#fff;', components);
     const currentElement = computed<ComponentData | null>(() => store.getters.getCurrentElement)
     const addItem = (props: any) => {
       store.commit('addComponent', props)
@@ -72,7 +69,7 @@ export default defineComponent({
     }
 
     let itemID = ref(1)
-    const handleChangeItemID = (e: number) => {
+    const handleChangeItemID = (e: number):void => {
       itemID.value = e
     }
     return {

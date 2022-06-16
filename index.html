@@ -3,11 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
     <title>海报猛攻站 🏂</title>
   </head>
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
+    <script>
+      document.addEventListener(
+        'mousewheel',
+        function (e) {
+          e = e || window.event
+          if ((e.wheelDelta && event.ctrlKey) || e.detail) {
+            event.preventDefault()
+          }
+        },
+        {
+          capture: false,
+          passive: false,
+        }
+      )
+      document.addEventListener(
+        'keydown',
+        function (event) {
+          if (
+            (event.ctrlKey === true || event.metaKey === true) &&
+            (event.keyCode === 61 ||
+              event.keyCode === 107 ||
+              event.keyCode === 173 ||
+              event.keyCode === 109 ||
+              event.keyCode === 187 ||
+              event.keyCode === 189)
+          ) {
+            event.preventDefault()
+          }
+        },
+        false
+      )
+    </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 <template>
-  <editor-header></editor-header>
+  <EditorHeader></EditorHeader>
   <div class="editor">
     <aside class="editor-item">
       <LeftPanel :handleChangeItemID="handleChangeItemID"></LeftPanel>
@@ -11,22 +11,23 @@
     <!-- 主体 -->
     <main class="preview-container">
       <div class="preview-list" id="canvas-area">
-        <Editor-Wrapper v-for="com in components" :key="com.id" :id="com.id" @on-item-click="onItemClick"
+        <EditorWrapper v-for="com in components" :key="com.id" :id="com.id" @on-item-click="onItemClick"
           :active="currentElement ? com.id === currentElement.id : false">
           <component :is="com.name" v-bind="com.props"> </component>
-        </Editor-Wrapper>
+        </EditorWrapper>
       </div>
     </main>
 
     <aside class="settings-panel">
-      <Props-Table :props="currentElement.props" v-if="currentElement" @change="handleChange"></Props-Table>
+      <PropsTable :props="(currentElement.props as any)" v-if="currentElement" @change="handleChange">
+      </PropsTable>
       <p>{{ currentElement && currentElement.props }}</p>
     </aside>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed, ref } from 'vue'
+<script lang="ts" setup>
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '@/store/index'
 import { ComponentData } from '@/store/editor'
@@ -35,54 +36,42 @@ import { defaultTextTemplates } from '@/defaultTemplates'
 import EditorHeader from './components/EditorHeader.vue'
 import LeftPanel from './components/LeftPanel.vue'
 import PanelContent from './components/PanelContent.vue'
-import LText from '@/components/LText.vue'
 import EditorWrapper from '@/components/EditorWrapper.vue'
-import ComponentList from '@/components/ComponentsList.vue'
 import PropsTable from '@/components/PropsTable.vue'
+
+const store = useStore<GlobalDataProps>()
+const components = computed(() => store.state.editor.components)
+const currentElement = computed<ComponentData | null>(() => store.getters.getCurrentElement)
+const addItem = (props: any) => {
+  store.commit('addComponent', props)
+}
+const removeComponent = (id: string) => {
+  store.commit('removeComponent', id)
+}
+const onItemClick = (id: string) => {
+  store.commit('setActive', id)
+}
+const handleChange = (e: { key: string; value: any }) => {
+  store.commit('updateComponent', e)
+  console.log(currentElement);
+}
+
+let itemID = ref(1)
+const handleChangeItemID = (e: number): void => {
+  itemID.value = e
+}
+
+</script>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import LText from '@/components/LText.vue'
+import ComponentList from '@/components/ComponentsList.vue'
 
 export default defineComponent({
   components: {
     LText,
-    ComponentList,
-    EditorWrapper,
-    EditorHeader,
-    PropsTable,
-    LeftPanel,
-    PanelContent
-  },
-  setup() {
-    const store = useStore<GlobalDataProps>()
-    const components = computed(() => store.state.editor.components)
-    console.log('%c 🌮 components: ', 'font-size:20px;background-color: #FCA650;color:#fff;', components);
-    const currentElement = computed<ComponentData | null>(() => store.getters.getCurrentElement)
-    const addItem = (props: any) => {
-      store.commit('addComponent', props)
-    }
-    const removeComponent = (id: string) => {
-      store.commit('removeComponent', id)
-    }
-    const onItemClick = (id: string) => {
-      store.commit('setActive', id)
-    }
-    const handleChange = (e: { key: string; value: any }) => {
-      store.commit('updateComponent', e)
-    }
-
-    let itemID = ref(1)
-    const handleChangeItemID = (e: number):void => {
-      itemID.value = e
-    }
-    return {
-      components,
-      addItem,
-      defaultTextTemplates,
-      removeComponent,
-      currentElement,
-      onItemClick,
-      handleChange,
-      handleChangeItemID,
-      itemID,
-    }
+    ComponentList
   },
 })
 </script>
@@ -111,6 +100,7 @@ export default defineComponent({
     justify-content: center;
     position: relative;
   }
+
   .preview-list {
     min-width: 375px;
     min-height: 660px;

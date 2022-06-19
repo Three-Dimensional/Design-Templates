@@ -9,7 +9,8 @@
       </div> -->
     </aside>
     <!-- 主体 -->
-    <main class="preview-container">
+    <main class="preview-container" style="width: calc(100% - 400px)">
+      <EditorTools/>
       <div class="preview-list" id="canvas-area">
         <EditorWrapper v-for="com in components" :key="com.id" :id="com.id" @on-item-click="onItemClick"
           :active="currentElement ? com.id === currentElement.id : false">
@@ -35,6 +36,7 @@ import { defaultTextTemplates } from '@/defaultTemplates'
 
 import EditorHeader from './components/EditorHeader.vue'
 import LeftPanel from './components/LeftPanel.vue'
+import EditorTools from './components/EditorTools.vue'
 import PanelContent from './components/PanelContent.vue'
 import EditorWrapper from '@/components/EditorWrapper.vue'
 import PropsTable from '@/components/PropsTable.vue'
@@ -93,7 +95,6 @@ export default defineComponent({
   }
 
   .preview-container {
-    width: 375px;
     display: flex;
     flex-direction: column;
     align-items: center;

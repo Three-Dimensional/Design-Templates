@@ -8,6 +8,9 @@ export default defineConfig({
     jsxFactory: 'h',
     jsxFragment: 'Fragment'
   },
+  server: {
+    open: true
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, 'src'),

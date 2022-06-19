@@ -1,12 +1,7 @@
 <template>
   <menu class="leftPanel-menu">
-    <li
-      class="leftPanel-menu__li"
-      :class="item.id == active ? 'active' : ''"
-      v-for="item in itemList"
-      :key="item.title"
-      @click="handleClick(item.id)"
-    >
+    <li class="leftPanel-menu__li" :class="item.id == active ? 'active' : ''" v-for="item in itemList" :key="item.title"
+      @click="handleClick(item.id)">
       <img class="leftPanel-menu__img" :src="item.iconUrl" alt="" />
       <span class="leftPanel-menu__button">{{ item.title }}</span>
     </li>
@@ -16,11 +11,11 @@
 import { reactive, ref } from 'vue'
 import templateUrl from 'assets/svg/menu.svg'
 
-const props = defineProps({
-  handleChangeItemID: {
-    default: Function,
-  },
-})
+interface propsType {
+  handleChangeItemID: Function
+}
+const props = defineProps<propsType>()
+
 let active = ref(1)
 interface itemType {
   id: number
@@ -55,6 +50,7 @@ const handleClick = (id: number) => {
   align-items: center;
   padding: 24px;
   height: 80px;
+  box-sizing: border-box;
 }
 
 .active {

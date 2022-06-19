@@ -18,6 +18,7 @@
     box-sizing: border-box;
     width: 100%;
     position: fixed;
+    z-index: 2;
 
     .logo {
       width: 50px;

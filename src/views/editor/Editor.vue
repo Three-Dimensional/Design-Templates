@@ -10,7 +10,8 @@
       </div> -->
     </aside>
     <!-- 主体 -->
-    <main class="preview-container">
+    <main class="preview-container" style="width: calc(100% - 400px)">
+      <EditorTools/>
       <div class="preview-list" id="canvas-area">
         <Editor-Wrapper
           v-for="com in components"
@@ -40,6 +41,7 @@ import { defaultTextTemplates } from '@/defaultTemplates'
 
 import EditorHeader from './components/EditorHeader.vue'
 import LeftPanel from './components/LeftPanel.vue'
+import EditorTools from './components/EditorTools.vue'
 import LText from '@/components/LText.vue'
 import EditorWrapper from '@/components/EditorWrapper.vue'
 import ComponentList from '@/components/ComponentsList.vue'
@@ -53,6 +55,7 @@ export default defineComponent({
     EditorHeader,
     PropsTable,
     LeftPanel,
+    EditorTools,
   },
   setup() {
     const store = useStore<GlobalDataProps>()
@@ -107,7 +110,6 @@ export default defineComponent({
   }
 
   .preview-container {
-    width: 375px;
     display: flex;
     flex-direction: column;
     align-items: center;

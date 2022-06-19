@@ -1,9 +1,11 @@
 <template>
-  <a-button type="primary" v-if="!user.isLogin" class="user-profile-component" @click="login"> 登录 </a-button>
+  <a-button type="primary" v-if="!user.isLogin" class="user-profile-component" @click="login">
+    登录
+  </a-button>
   <div v-else>
     <a-dropdown-button class="user-profile-component">
       <router-link to="/setting">{{ user.userName }}</router-link>
-      <template v-slot:overlay>
+      <template #overlay>
         <a-menu class="user-profile-dropdown">
           <a-menu-item key="0" @click="logout">登出</a-menu-item>
         </a-menu>
@@ -15,16 +17,17 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { message } from 'ant-design-vue'
-import { UserProps } from '../store/user'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { UserProps } from '../store/user'
+
 export default defineComponent({
-  name: 'user-profile',
+  name: 'UserProfile',
   props: {
     user: {
       type: Object as PropType<UserProps>,
-      required: true,
-    },
+      required: true
+    }
   },
   setup() {
     const store = useStore()
@@ -42,9 +45,9 @@ export default defineComponent({
     }
     return {
       login,
-      logout,
+      logout
     }
-  },
+  }
 })
 </script>
 

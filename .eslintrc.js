@@ -28,6 +28,28 @@ module.exports = {
         ts: 'never',
         tsx: 'never'
       }
-    ]
+    ],
+    'no-param-reassign': [
+      'error',
+      {
+        props: true,
+        ignorePropertyModificationsFor: [
+          'e', // for e.returnvalue
+          'ctx', // for Koa routing
+          'req', // for Express requests
+          'request', // for Express requests
+          'res', // for Express responses
+          'response', // for Express responses
+          'state' // for vuex state
+        ]
+      }
+    ],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/no-unresolved': 'off',
+    // 'import/extensions': 'off',
+    'import/no-absolute-path': 'off',
+    // 'import/no-extraneous-dependencies': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error']
   }
 }

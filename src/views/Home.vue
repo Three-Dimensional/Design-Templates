@@ -10,19 +10,20 @@ import { computed, defineComponent } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '../store/index'
 import TemplateList from '../components/TemplateList.vue'
+
 export default defineComponent({
   components: {
-    TemplateList,
+    TemplateList
   },
   setup() {
     // const router = useRouter()
     const store = useStore<GlobalDataProps>()
     const testData = computed(() => store.state.templates.data)
     return {
-      testData,
+      testData
       // router
     }
-  },
+  }
 })
 </script>
 

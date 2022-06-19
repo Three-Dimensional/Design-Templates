@@ -44,7 +44,6 @@ const handleClick = (id: number) => {
   height: 100vh;
   width: 72px;
 }
-
 .leftPanel-menu__li {
   display: flex;
   flex-direction: column;
@@ -57,7 +56,6 @@ const handleClick = (id: number) => {
 .active {
   background: #fff;
 }
-
 .leftPanel-menu__button {
   color: #000;
   cursor: pointer;

@@ -6,7 +6,7 @@ import router from './routers/index'
 import store from './store/index'
 import './assets/scss/global.scss'
 
-import { registerComponent } from './components'
+import registerComponent from './components'
 
 const app = createApp(App)
 // 注册全局组件

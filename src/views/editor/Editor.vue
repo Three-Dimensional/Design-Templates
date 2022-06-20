@@ -10,7 +10,7 @@
     </aside>
     <!-- 主体 -->
     <main class="preview-container" style="width: calc(100% - 400px)">
-      <EditorTools/>
+      <EditorTools />
       <div class="preview-list" id="canvas-area">
         <EditorWrapper v-for="com in components" :key="com.id" :id="com.id" @on-item-click="onItemClick"
           :active="currentElement ? com.id === currentElement.id : false">
@@ -28,11 +28,11 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, ref, defineComponent } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '@/store/index'
 import { ComponentData } from '@/store/editor'
-import { defaultTextTemplates } from '@/defaultTemplates'
+// import { defaultTextTemplates } from '@/defaultTemplates'
 
 import EditorHeader from './components/EditorHeader.vue'
 import LeftPanel from './components/LeftPanel.vue'
@@ -55,18 +55,16 @@ const onItemClick = (id: string) => {
 }
 const handleChange = (e: { key: string; value: any }) => {
   store.commit('updateComponent', e)
-  console.log(currentElement);
+  console.log(currentElement)
 }
 
-let itemID = ref(1)
+const itemID = ref(1)
 const handleChangeItemID = (e: number): void => {
   itemID.value = e
 }
-
 </script>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import LText from '@/components/LText.vue'
 import ComponentList from '@/components/ComponentsList.vue'
 

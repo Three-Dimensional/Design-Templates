@@ -21,12 +21,13 @@ module.exports = {
     'vue/multi-word-component-names': 0,
     'import/extensions': [
       'error',
-      'ignorePackages',
+      'never',
       {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never'
+        // js: 'never',
+        // jsx: 'never',
+        // ts: 'never',
+        // tsx: 'never',
+        // vue: 'never'
       }
     ],
     'no-param-reassign': [
@@ -46,10 +47,15 @@ module.exports = {
     ],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'import/no-unresolved': 'off',
-    // 'import/extensions': 'off',
     'import/no-absolute-path': 'off',
-    // 'import/no-extraneous-dependencies': 'off',
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error']
+    '@typescript-eslint/no-unused-vars': ['error'],
+    'vue/attribute-hyphenation': [
+      'error',
+      'never',
+      {
+        ignore: []
+      }
+    ]
   }
 }

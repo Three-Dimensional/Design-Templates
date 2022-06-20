@@ -1,6 +1,11 @@
+<script lang="ts">
+export default {
+  name: 'Opacity',
+}
+</script>
+
 <template>
     <div class="full-mask" v-show="props.show" @click.self.stop="changeShow">
-        <!-- <div class="full-mask-bg"></div> -->
         <div class="full-mask-poc" :style="{left: props.location.left+'px', top: props.location.top+'px'}">
             <div class="tool-opacity-child">
                 <div class="slider">
@@ -17,7 +22,7 @@
 </template>
 
 <script setup lang='ts'>
-    import { onMounted, watch, nextTick, ref, computed } from 'vue';
+    import { onMounted, watch, nextTick, computed } from 'vue';
     interface Location {
         left: number,
         top: number
@@ -54,7 +59,7 @@
     })
 
     let startX = 0; //鼠标按下的位置
-    let bar_width = 152; // 滑块的宽度
+    let barWidth = 152; // 滑块的宽度
 
     function bindListener() {
         const box = document.getElementById('slider-area');
@@ -64,8 +69,8 @@
             startX = event.clientX
             console.log(event);
 
-            console.log(event.offsetX/bar_width);
-            inputValue.value = event.offsetX/bar_width*100
+            console.log(event.offsetX/barWidth);
+            inputValue.value = Math.trunc(event.offsetX/barWidth*100)
 
             box?.addEventListener('mousemove', mMove)
         })
@@ -73,19 +78,6 @@
         box?.addEventListener('mouseup', function(event: MouseEvent){
             box?.removeEventListener('mousemove', mMove)
         })
-    }
-
-    function unbindListener() {
-        // const box = document.getElementById('slider-area');
-        // console.log(box);
-        // const ele = document.getElementById('slider-block');
-        // let startX = 0; //鼠标按下的位置
-        // box?.addEventListener('mousedown', function(event: MouseEvent) {
-        //     event.preventDefault();
-        //     event.stopPropagation();
-        //     startX = event.clientX
-        //     console.log(event);
-        // })
     }
 
     const changeShow = () => {
@@ -96,17 +88,17 @@
         event.stopPropagation()
         event.preventDefault()
         console.log(event);
-        let dis_width = event.clientX - startX + 7.5;
-        if(dis_width > bar_width) {
-            dis_width = bar_width
+        let disWidth = event.clientX - startX + 7.5;
+        if(disWidth > barWidth) {
+            disWidth = barWidth
         } 
-        if(dis_width < 0){
-            dis_width = 0
+        if(disWidth < 0){
+            disWidth = 0
         }
 
-        console.log(dis_width, dis_width/bar_width);
+        console.log(disWidth, disWidth/barWidth);
 
-        inputValue.value = dis_width/bar_width*100
+        inputValue.value = Math.trunc(disWidth/barWidth*100)
     }
 
     // 输入框失去焦点，更新透明度
@@ -134,7 +126,7 @@
         // box?.addEventListener('mouseup', function(event: MouseEvent){
         //     ele?.removeEventListener('mousemove', mMove)
         // })
-        inputValue.value = bar_width*props.value
+        // inputValue.value = bar_width*props.value
     })
 </script>
 <style scoped lang="scss">
@@ -146,15 +138,6 @@
         top: 0;
         width: 100%;
         z-index: 99;
-        .full-mask-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background: transparent;
-            z-index: 1;
-        }
         .full-mask-poc{
             height: 0;
             position: absolute;

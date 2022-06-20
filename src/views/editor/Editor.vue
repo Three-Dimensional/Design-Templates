@@ -10,7 +10,7 @@
     </aside>
     <!-- 主体 -->
     <main class="preview-container" style="width: calc(100% - 400px)">
-      <EditorTools/>
+      <EditorTools v-model="propsSetting"/>
       <div class="preview-list" id="canvas-area">
         <EditorWrapper v-for="com in components" :key="com.id" :id="com.id" @on-item-click="onItemClick"
           :active="currentElement ? com.id === currentElement.id : false">
@@ -32,7 +32,6 @@ import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '@/store/index'
 import { ComponentData } from '@/store/editor'
-import { defaultTextTemplates } from '@/defaultTemplates'
 
 import EditorHeader from './components/EditorHeader.vue'
 import LeftPanel from './components/LeftPanel.vue'
@@ -62,6 +61,16 @@ let itemID = ref(1)
 const handleChangeItemID = (e: number): void => {
   itemID.value = e
 }
+
+const propsSetting = ref({
+    color: 'rgb(130, 85, 130)',
+    size: 15,
+    bold: false,
+    italic: false,
+    underline: false,
+    align: 'left',
+    opacity: 0
+})
 
 </script>
 

@@ -7,13 +7,6 @@
     "preview": "vite preview",
     "prepare": "husky install"
   },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,vue}": [
-      "prettier --write",
-      "eslint --fix",
-      "git add "
-    ]
-  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-customizable"

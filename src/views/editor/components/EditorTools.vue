@@ -8,29 +8,29 @@ export default {
         <div class="left-tools">
             <ul class="tools">
                 <li class="hover-tips">
-                    <span class="color-block" :style="{backgroundColor: props.setting.color}"></span>
+                    <span class="color-block" :style="{backgroundColor: props.modelValue.color}"></span>
                     <span class="tips-text">调色板</span>
                 </li>
                 <li class="hover-tips font-size-choose">
-                    <input type="text" v-model="props.setting.size">
+                    <input type="text" v-model="props.modelValue.size">
                     <span class="font-pop-icon">
                         <Icon icon="angle-down"/>
                     </span>
                     <span class="tips-text">字体大小</span>
                 </li>
-                <li :class="['hover-tips',props.setting.bold && 'selected']">
+                <li :class="['hover-tips',props.modelValue.bold && 'selected']">
                     <span class="icon-wrap">
                         <Icon icon="bold"/>
                     </span>
                     <span class="tips-text">加粗</span>
                 </li>
-                <li :class="['hover-tips',props.setting.italic && 'selected']">
+                <li :class="['hover-tips',props.modelValue.italic && 'selected']">
                     <span class="icon-wrap">
                         <Icon icon="italic"/>
                     </span>
                     <span class="tips-text">斜体</span>
                 </li>
-                <li :class="['hover-tips',props.setting.underline && 'selected']">
+                <li :class="['hover-tips',props.modelValue.underline && 'selected']">
                     <span class="icon-wrap">
                         <Icon icon="underline"/>
                     </span>
@@ -38,7 +38,7 @@ export default {
                 </li>
                 <li class="hover-tips">
                     <span class="icon-wrap">
-                        <Icon :icon="`text-align-${props.setting.align}`"/>
+                        <Icon :icon="`text-align-${props.modelValue.align}`"/>
                     </span>
                     <span class="tips-text">对齐</span>
                 </li>
@@ -76,7 +76,7 @@ export default {
     </div>
 </template>
 
-<script setup lang='ts'>
+<script lang='ts' setup>
     import { computed, reactive, ref } from 'vue';
     import Opacity from '@/components/Tools/Opacity.vue'
     interface Setting {
@@ -89,11 +89,11 @@ export default {
         opacity: number
     }
     interface Props {
-        setting: Setting
+        modelValue: Setting
     }
-    const emit = defineEmits(['update:setting', 'delete', 'reverse', 'copy'])
+    const emit = defineEmits(['update:modelValue', 'delete', 'reverse', 'copy'])
     const props = withDefaults(defineProps<Props>(), {
-        setting: () => {
+        modelValue: () => {
             return {
                 color: 'rgb(130, 85, 130)',
                 size: 15,
@@ -108,11 +108,11 @@ export default {
 
     const emitData = (key: string, value: string | number | boolean) => {
         const copyData = {
-            ...props.setting,
+            ...props.modelValue,
             [key]: value
         }
         console.log(copyData);
-        emit('update:setting', copyData)
+        emit('update:modelValue', copyData)
     }
 
     const opacityShow = ref(false)
@@ -121,8 +121,13 @@ export default {
         top: 0
     })
     const opacityValue = computed({
-        get: () => props.setting.opacity,
-        set: (value: number) => emitData('opacity', value)
+        get: () => {
+            console.log(props.modelValue);
+            return props.modelValue.opacity;
+        },
+        set: (value: number) => {
+            emitData('opacity', value)
+        }
     })
 
     function toggleShow() {

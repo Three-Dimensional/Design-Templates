@@ -1,37 +1,33 @@
 <template>
-  <div
-    class="editor-wrapper"
-    @click.capture.stop="onItemClick(id)"
-    :class="{ active: active }"
-  >
+  <div class="editor-wrapper" @click.capture.stop="onItemClick(id)" :class="{ active: active }">
     <slot />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
     id: {
       type: String,
-      required: true,
+      required: true
     },
     active: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
-  emits: ["on-item-click"],
+  emits: ['on-item-click'],
   setup(props, ctx) {
     const onItemClick = (id: string) => {
-      ctx.emit("on-item-click", id);
-    };
+      ctx.emit('on-item-click', id)
+    }
     return {
-      onItemClick,
-    };
-  },
-});
+      onItemClick
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>

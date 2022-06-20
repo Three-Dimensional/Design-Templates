@@ -23,11 +23,8 @@ module.exports = {
       'error',
       'never',
       {
-        // js: 'never',
-        // jsx: 'never',
-        // ts: 'never',
-        // tsx: 'never',
-        // vue: 'never'
+        js: 'never',
+        vue: 'always'
       }
     ],
     'no-param-reassign': [

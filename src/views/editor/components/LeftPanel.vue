@@ -1,7 +1,12 @@
 <template>
   <menu class="leftPanel-menu">
-    <li class="leftPanel-menu__li" :class="item.id == active ? 'active' : ''" v-for="item in itemList" :key="item.title"
-      @click="handleClick(item.id)">
+    <li
+      class="leftPanel-menu__li"
+      :class="item.id == active ? 'active' : ''"
+      v-for="item in itemList"
+      :key="item.title"
+      @click="handleClick(item.id)"
+    >
       <img class="leftPanel-menu__img" :src="item.iconUrl" alt="" />
       <span class="leftPanel-menu__button">{{ item.title }}</span>
     </li>
@@ -16,7 +21,7 @@ interface propsType {
 }
 const props = defineProps<propsType>()
 
-let active = ref(1)
+const active = ref(1)
 interface itemType {
   id: number
   title: string
@@ -29,7 +34,7 @@ const itemList = reactive<itemType[]>([
   { id: 4, title: '文字', iconUrl: templateUrl },
   { id: 5, title: '背景', iconUrl: templateUrl },
   { id: 6, title: '工具', iconUrl: templateUrl },
-  { id: 7, title: '上传', iconUrl: templateUrl },
+  { id: 7, title: '上传', iconUrl: templateUrl }
 ])
 // 切换左侧菜单
 const handleClick = (id: number) => {

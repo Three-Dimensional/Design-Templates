@@ -8,6 +8,6 @@ export default defineComponent({
     }
   },
   setup(props) {
-    return () => (props.vNode)
+    return () => props.vNode
   }
 })

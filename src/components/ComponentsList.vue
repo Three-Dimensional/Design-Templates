@@ -1,40 +1,36 @@
 <template>
   <div class="create-component-list">
-    <div
-      v-for="(item, index) in list"
-      class="component-item"
-      :key="index"
-      @click="clickItem(item)"
-    >
+    <div v-for="(item, index) in list" class="component-item" :key="index" @click="clickItem(item)">
       <L-text v-bind="item"></L-text>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-import LText from "./LText.vue";
+import { defineComponent, PropType } from 'vue'
+import LText from './LText.vue'
+
 export default defineComponent({
-  name: "components-list",
+  name: 'ComponentsList',
   components: {
-    LText,
+    LText
   },
   props: {
     list: {
       type: Array as PropType<any>,
-      required: true,
-    },
+      required: true
+    }
   },
-  emits: ["on-click-item"],
+  emits: ['on-click-item'],
   setup(props, ctx) {
     const clickItem = (item: any) => {
-      ctx.emit("on-click-item", item);
-    };
+      ctx.emit('on-click-item', item)
+    }
     return {
-      clickItem,
-    };
-  },
-});
+      clickItem
+    }
+  }
+})
 </script>
 
 <style lang="scss">

@@ -1,17 +1,17 @@
 <script lang="ts">
 export default {
-  name: 'Icon',
+  name: 'Icon'
 }
 </script>
 
 <template>
-    <svg class="icon" aria-hidden="true">
-        <use v-bind:xlink:href="`#icon-${icon}`"></use>
-    </svg>
+  <svg class="icon" aria-hidden="true">
+    <use :xlink:href="`#icon-${icon}`"></use>
+  </svg>
 </template>
 
-<script setup lang='ts'>
-    defineProps<{
-        icon: string
-    }>()
+<script setup lang="ts">
+defineProps<{
+  icon: string
+}>()
 </script>

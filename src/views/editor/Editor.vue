@@ -72,7 +72,7 @@ export default defineComponent({
   components: {
     LText,
     ComponentList
-  },
+  }
 })
 </script>
 

@@ -40,7 +40,7 @@ export const mapPropsToFroms: PropsToFroms = {
   fontSize: {
     component: 'a-input-number',
     text: '字号',
-    initTransform: (v) => parseInt(v),
+    initTransform: (v) => parseInt(v, 10),
     afterTransform: (e: number) => `${e}px`
   },
   lineHeight: {

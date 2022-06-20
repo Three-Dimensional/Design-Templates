@@ -8,7 +8,7 @@
           <span class="tips-text">调色板</span>
         </li>
         <li class="hover-tips font-size-choose">
-          <input type="text" v-model="props.setting.size" />
+          <input type="text" v-model="textSize" />
           <span class="font-pop-icon">
             <Icon icon="angle-down" />
           </span>
@@ -80,10 +80,6 @@
 import { computed, reactive, ref } from 'vue'
 import Opacity from '@/components/Tools/Opacity.vue'
 
-export default {
-  name: 'EditorTools'
-}
-
 interface Setting {
   color: string
   size: number | string
@@ -111,12 +107,15 @@ const props = withDefaults(defineProps<Props>(), {
   }
 })
 
+const textSize = computed(() => {
+  return props.setting.size
+})
+
 const emitData = (key: string, value: string | number | boolean) => {
   const copyData = {
     ...props.setting,
     [key]: value
   }
-  console.log(copyData)
   emit('update:setting', copyData)
 }
 
@@ -135,7 +134,6 @@ function toggleShow() {
   const rect = ele?.getBoundingClientRect()
   opacityLocation.left = rect?.x || 0
   opacityLocation.top = rect?.y || 0
-  console.log(opacityLocation)
   opacityShow.value = !opacityShow.value
 }
 </script>

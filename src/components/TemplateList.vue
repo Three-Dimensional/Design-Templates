@@ -4,7 +4,7 @@
       <a-col :span="6" v-for="item in list" :key="item.id" class="poster-item">
         <router-link :to="{ name: 'template', params: { id: item.id } }">
           <a-card hoverable>
-            <template v-slot:cover>
+            <template #cover>
               <img :src="item.coverImg" v-if="item.coverImg" />
               <img
                 src="http://typescript-vue.oss-cn-beijing.aliyuncs.com/vue-marker/5f81cca3f3bf7a0e1ebaf885.png"
@@ -15,7 +15,7 @@
               </div>
             </template>
             <a-card-meta :title="item.title">
-              <template v-slot:description>
+              <template #description>
                 <div class="description-detail">
                   <span>作者：{{ item.author }}</span>
                   <span class="user-number">{{ item.copiedCount }}</span>
@@ -32,14 +32,15 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { TemplateProps } from '../store/templates'
+
 export default defineComponent({
-  name: 'template-list',
+  name: 'TemplateList',
   props: {
     list: {
       type: Array as PropType<TemplateProps[]>,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 })
 </script>
 

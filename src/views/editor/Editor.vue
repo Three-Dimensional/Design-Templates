@@ -9,17 +9,28 @@
       </div> -->
     </aside>
     <!-- 主体 -->
-    <main class="preview-container">
+    <main class="preview-container" style="width: calc(100% - 400px)">
+      <EditorTools />
       <div class="preview-list" id="canvas-area">
-        <EditorWrapper v-for="com in components" :key="com.id" :id="com.id" @on-item-click="onItemClick"
-          :active="currentElement ? com.id === currentElement.id : false">
+        <EditorWrapper
+          v-for="com in components"
+          :key="com.id"
+          :id="com.id"
+          @on-item-click="onItemClick"
+          :active="currentElement ? com.id === currentElement.id : false"
+        >
+          <LText />
           <component :is="com.name" v-bind="com.props"> </component>
         </EditorWrapper>
       </div>
     </main>
 
     <aside class="settings-panel">
-      <PropsTable :props="(currentElement.props as any)" v-if="currentElement" @change="handleChange">
+      <PropsTable
+        :props="(currentElement.props as any)"
+        v-if="currentElement"
+        @change="handleChange"
+      >
       </PropsTable>
       <p>{{ currentElement && currentElement.props }}</p>
     </aside>
@@ -31,49 +42,45 @@ import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '@/store/index'
 import { ComponentData } from '@/store/editor'
-import { defaultTextTemplates } from '@/defaultTemplates'
-
 import EditorHeader from './components/EditorHeader.vue'
 import LeftPanel from './components/LeftPanel.vue'
+import EditorTools from './components/EditorTools.vue'
 import PanelContent from './components/PanelContent.vue'
 import EditorWrapper from '@/components/EditorWrapper.vue'
 import PropsTable from '@/components/PropsTable.vue'
+import LText from '@/components/LText.vue'
+// import { defaultTextTemplates } from '@/defaultTemplates'
+// import ComponentList from '@/components/ComponentsList.vue'
 
 const store = useStore<GlobalDataProps>()
 const components = computed(() => store.state.editor.components)
 const currentElement = computed<ComponentData | null>(() => store.getters.getCurrentElement)
-const addItem = (props: any) => {
-  store.commit('addComponent', props)
-}
-const removeComponent = (id: string) => {
-  store.commit('removeComponent', id)
-}
+// const addItem = (props: any) => {
+//   store.commit('addComponent', props)
+// }
+// const removeComponent = (id: string) => {
+//   store.commit('removeComponent', id)
+// }
 const onItemClick = (id: string) => {
   store.commit('setActive', id)
 }
 const handleChange = (e: { key: string; value: any }) => {
   store.commit('updateComponent', e)
-  console.log(currentElement);
 }
 
-let itemID = ref(1)
+const itemID = ref(1)
 const handleChangeItemID = (e: number): void => {
   itemID.value = e
 }
-
 </script>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import LText from '@/components/LText.vue'
-import ComponentList from '@/components/ComponentsList.vue'
-
-export default defineComponent({
-  components: {
-    LText,
-    ComponentList
-  },
-})
+// export default defineComponent({
+//   components: {
+//     LText,
+//     ComponentList
+//   }
+// })
 </script>
 
 <style lang="scss">
@@ -93,7 +100,6 @@ export default defineComponent({
   }
 
   .preview-container {
-    width: 375px;
     display: flex;
     flex-direction: column;
     align-items: center;

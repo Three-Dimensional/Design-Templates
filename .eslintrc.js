@@ -21,12 +21,37 @@ module.exports = {
     'vue/multi-word-component-names': 0,
     'import/extensions': [
       'error',
-      'ignorePackages',
+      'never',
       {
         js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never'
+        vue: 'always'
+      }
+    ],
+    'no-param-reassign': [
+      'error',
+      {
+        props: true,
+        ignorePropertyModificationsFor: [
+          'e', // for e.returnvalue
+          'ctx', // for Koa routing
+          'req', // for Express requests
+          'request', // for Express requests
+          'res', // for Express responses
+          'response', // for Express responses
+          'state' // for vuex state
+        ]
+      }
+    ],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/no-unresolved': 'off',
+    'import/no-absolute-path': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
+    'vue/attribute-hyphenation': [
+      'error',
+      'never',
+      {
+        ignore: []
       }
     ]
   }

@@ -1,28 +1,38 @@
 <template>
-  <div class="nav-menu">
-    <div
-      class="nav-menu__btn"
-      :class="item.id == active ? 'active' : ''"
-      v-for="(item, index) in itemList"
-      :key="index"
-      @click="handleClick(item.id)"
-    >
-      <span>{{ item.title }}</span>
+  <template v-if="activeItem?.type === 'text'">
+    <textMenu></textMenu>
+  </template>
+  <template v-else>
+    <div class="nav-menu">
+      <div
+        class="nav-menu__btn"
+        :class="item.id == active ? 'active' : ''"
+        v-for="(item, index) in itemList"
+        :key="index"
+        @click="handleClick(item.id)"
+      >
+        <span>{{ item.title }}</span>
+      </div>
     </div>
-  </div>
+  </template>
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
+import textMenu from './textMenu.vue'
 
-// const props = defineProps<{
-//   itemID: Number
-// }>()
-
-const active = ref(1)
 interface itemType {
   id: number
   title: string
+  type?: string
+  iconUrl?: string
 }
+
+defineProps<{
+  activeItem: itemType
+}>()
+
+const active = ref(1)
+
 const itemList = reactive<itemType[]>([
   { id: 1, title: '推荐模板' },
   { id: 2, title: '我的模板' },

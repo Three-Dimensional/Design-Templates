@@ -2,8 +2,8 @@
   <EditorHeader></EditorHeader>
   <div class="editor">
     <aside class="editor-item">
-      <LeftPanel :handleChangeItemID="handleChangeItemID"></LeftPanel>
-      <PanelContent :itemID="itemID"></PanelContent>
+      <LeftPanel :handleChangeItem="handleChangeItem"></LeftPanel>
+      <PanelContent :activeItem="activeItem"></PanelContent>
       <!-- <div class="sidebar-container">
         <Component-List :list="defaultTextTemplates" @onClickItem="addItem"></Component-List>
       </div> -->
@@ -68,9 +68,13 @@ const handleChange = (e: { key: string; value: any }) => {
   store.commit('updateComponent', e)
 }
 
-const itemID = ref(1)
-const handleChangeItemID = (e: number): void => {
-  itemID.value = e
+const activeItem = ref({
+  id: 0,
+  title: '',
+  type: ''
+})
+const handleChangeItem = (e: any): void => {
+  activeItem.value = e
 }
 </script>
 

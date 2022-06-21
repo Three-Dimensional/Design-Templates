@@ -51,6 +51,21 @@ import PropsTable from '@/components/PropsTable.vue'
 import LText from '@/components/LText.vue'
 // import { defaultTextTemplates } from '@/defaultTemplates'
 // import ComponentList from '@/components/ComponentsList.vue'
+const store = useStore<GlobalDataProps>()
+const components = computed(() => store.state.editor.components)
+const currentElement = computed<ComponentData | null>(() => store.getters.getCurrentElement)
+// const addItem = (props: any) => {
+//   store.commit('addComponent', props)
+// }
+// const removeComponent = (id: string) => {
+//   store.commit('removeComponent', id)
+// }
+const onItemClick = (id: string) => {
+  store.commit('setActive', id)
+}
+const handleChange = (e: { key: string; value: any }) => {
+  store.commit('updateComponent', e)
+}
 
 const store = useStore<GlobalDataProps>()
 const components = computed(() => store.state.editor.components)
@@ -85,6 +100,9 @@ const toolSetting = ref({
   align: 'left',
   opacity: 0
 })
+const handleChangeItem = (e: any): void => {
+  activeItem.value = e
+}
 </script>
 
 <style lang="scss">

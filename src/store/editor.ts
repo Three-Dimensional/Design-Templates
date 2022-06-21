@@ -4,7 +4,7 @@ import { GlobalDataProps } from './index'
 import { TextComponentProps } from '../defaultProps'
 
 export interface ComponentData {
-  // 业务组件库名称 l-text，l-image 等等
+  // 业务组件库名称 LText，l-image 等等
   name: string
   props: { [key: string]: any }
   // id，uuid v4 生成
@@ -21,7 +21,7 @@ export interface EditorProps {
 export const testComponents: ComponentData[] = [
   {
     id: uuidv4(),
-    name: 'l-text',
+    name: 'LText',
     props: {
       text: 'hello',
       fontSize: '20px',
@@ -34,7 +34,7 @@ export const testComponents: ComponentData[] = [
   },
   {
     id: uuidv4(),
-    name: 'l-text',
+    name: 'LText',
     props: {
       text: 'hello2',
       fontSize: '10px',
@@ -47,7 +47,7 @@ export const testComponents: ComponentData[] = [
   },
   {
     id: uuidv4(),
-    name: 'l-text',
+    name: 'LText',
     props: {
       text: 'hello3',
       fontSize: '15px',
@@ -74,7 +74,7 @@ const editor: Module<EditorProps, GlobalDataProps> = {
   mutations: {
     addComponent(state, props: Partial<TextComponentProps>) {
       const addComponent: ComponentData = {
-        name: 'l-text',
+        name: 'LText',
         id: uuidv4(),
         props
       }

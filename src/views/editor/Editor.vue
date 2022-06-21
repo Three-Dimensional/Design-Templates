@@ -19,8 +19,7 @@
           @on-item-click="onItemClick"
           :active="currentElement ? com.id === currentElement.id : false"
         >
-          <LText />
-          <component :is="com.name" v-bind="com.props"> </component>
+          <LText v-bind="com.props" />
         </EditorWrapper>
       </div>
     </main>
@@ -72,15 +71,6 @@ const itemID = ref(1)
 const handleChangeItemID = (e: number): void => {
   itemID.value = e
 }
-</script>
-
-<script lang="ts">
-// export default defineComponent({
-//   components: {
-//     LText,
-//     ComponentList
-//   }
-// })
 </script>
 
 <style lang="scss">

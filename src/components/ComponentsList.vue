@@ -1,7 +1,7 @@
 <template>
   <div class="create-component-list">
     <div v-for="(item, index) in list" class="component-item" :key="index" @click="clickItem(item)">
-      <L-text v-bind="item"></L-text>
+      <LText v-bind="item"> </LText>
     </div>
   </div>
 </template>

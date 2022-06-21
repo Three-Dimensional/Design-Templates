@@ -79,7 +79,7 @@ function bindListener() {
 
     box?.addEventListener('mousemove', mMove)
   })
-  
+
   box?.addEventListener('mouseup', function mouseup() {
     box?.removeEventListener('mousemove', mMove)
   })

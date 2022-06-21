@@ -70,7 +70,7 @@ const mMove = (event: MouseEvent) => {
 
 function bindListener() {
   const box = document.getElementById('slider-area')
-  box?.addEventListener('mousedown', function (event: MouseEvent) {
+  box?.addEventListener('mousedown', (event: MouseEvent) => {
     event.preventDefault()
     event.stopPropagation()
     startX = event.clientX
@@ -80,7 +80,7 @@ function bindListener() {
     box?.addEventListener('mousemove', mMove)
   })
 
-  box?.addEventListener('mouseup', function () {
+  box?.addEventListener('mouseup', () => {
     box?.removeEventListener('mousemove', mMove)
   })
 }

@@ -10,7 +10,7 @@
     </aside>
     <!-- 主体 -->
     <main class="preview-container" style="width: calc(100% - 400px)">
-      <EditorTools />
+      <EditorTools v-model:setting="toolSetting" />
       <div class="preview-list" id="canvas-area">
         <EditorWrapper
           v-for="com in components"
@@ -51,6 +51,21 @@ import PropsTable from '@/components/PropsTable.vue'
 import LText from '@/components/LText.vue'
 // import { defaultTextTemplates } from '@/defaultTemplates'
 // import ComponentList from '@/components/ComponentsList.vue'
+const store = useStore<GlobalDataProps>()
+const components = computed(() => store.state.editor.components)
+const currentElement = computed<ComponentData | null>(() => store.getters.getCurrentElement)
+// const addItem = (props: any) => {
+//   store.commit('addComponent', props)
+// }
+// const removeComponent = (id: string) => {
+//   store.commit('removeComponent', id)
+// }
+const onItemClick = (id: string) => {
+  store.commit('setActive', id)
+}
+const handleChange = (e: { key: string; value: any }) => {
+  store.commit('updateComponent', e)
+}
 
 const store = useStore<GlobalDataProps>()
 const components = computed(() => store.state.editor.components)
@@ -76,15 +91,18 @@ const activeItem = ref({
 const handleChangeItem = (e: any): void => {
   activeItem.value = e
 }
-</script>
-
-<script lang="ts">
-// export default defineComponent({
-//   components: {
-//     LText,
-//     ComponentList
-//   }
-// })
+const toolSetting = ref({
+  color: 'rgb(130, 85, 130)',
+  size: 15,
+  bold: false,
+  italic: false,
+  underline: false,
+  align: 'left',
+  opacity: 0
+})
+const handleChangeItem = (e: any): void => {
+  activeItem.value = e
+}
 </script>
 
 <style lang="scss">

@@ -19,8 +19,7 @@
           @on-item-click="onItemClick"
           :active="currentElement ? com.id === currentElement.id : false"
         >
-          <LText />
-          <component :is="com.name" v-bind="com.props"> </component>
+          <LText v-bind="com.props" />
         </EditorWrapper>
       </div>
     </main>
@@ -40,13 +39,13 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
-import { GlobalDataProps } from '@/store/index'
-import { ComponentData } from '@/store/editor'
-import EditorHeader from './components/EditorHeader.vue'
-import LeftPanel from './components/LeftPanel.vue'
-import EditorTools from './components/EditorTools.vue'
-import PanelContent from './components/PanelContent.vue'
+import { GlobalDataProps } from '../../store/index.js'
+import { ComponentData } from '../../store/editor.js'
 import EditorWrapper from '@/components/EditorWrapper.vue'
+import EditorHeader from './components/EditorHeader.vue'
+import EditorTools from './components/EditorTools.vue'
+import PanelContent from './components/left/PanelContent.vue'
+import LeftPanel from './components/left/LeftPanel.vue'
 import PropsTable from '@/components/PropsTable.vue'
 import LText from '@/components/LText.vue'
 // import { defaultTextTemplates } from '@/defaultTemplates'

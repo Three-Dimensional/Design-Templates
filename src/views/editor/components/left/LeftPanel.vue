@@ -14,7 +14,7 @@
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import templateUrl from '../../../assets/svg/menu.svg'
+import templateUrl from '../../../../assets/svg/menu.svg'
 
 interface propsType {
   handleChangeItem: Function

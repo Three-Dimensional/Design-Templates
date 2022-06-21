@@ -71,16 +71,13 @@ const mMove = (event: MouseEvent) => {
 
 function bindListener() {
   const box = document.getElementById('slider-area')
-  box?.addEventListener('mousedown', function mousedown(event: MouseEvent) {
+  box?.addEventListener('mousedown', (event: MouseEvent) => {
     event.preventDefault()
     event.stopPropagation()
-
     inputValue.value = Math.trunc(((event.clientX - startX) / barWidth) * 100)
-
     box?.addEventListener('mousemove', mMove)
   })
-
-  box?.addEventListener('mouseup', function mouseup() {
+  box?.addEventListener('mouseup', () => {
     box?.removeEventListener('mousemove', mMove)
   })
 }

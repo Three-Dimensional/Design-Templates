@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :style="styleProps" class="l-text-component" @click="handleClick">
+  <component :is="tag" :style="styleProps" class="l-text__component" @click="handleClick">
     {{ text }}
     <slot />
   </component>
@@ -33,15 +33,15 @@ export default defineComponent({
 <style lang="scss">
 h2,
 p {
-  .l-text-component {
+  .l-text__component {
     margin-bottom: 0;
   }
 }
-button.l-text-component {
+button.l-text__component {
   padding: 5px 10px;
   cursor: pointer;
 }
-.l-text-component {
+.l-text__component {
   box-sizing: border-box;
   white-space: pre-wrap;
   position: relative !important;

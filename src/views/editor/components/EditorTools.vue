@@ -15,19 +15,19 @@
           <span class="tips-text">字体大小</span>
         </li>
         <li :class="['hover-tips', props.setting.bold && 'selected']">
-          <span class="icon-wrap">
+          <span class="icon-wrap" @click="emitData('bold', !props.setting.bold)">
             <Icon icon="bold" />
           </span>
           <span class="tips-text">加粗</span>
         </li>
         <li :class="['hover-tips', props.setting.italic && 'selected']">
-          <span class="icon-wrap">
+          <span class="icon-wrap" @click="emitData('italic', !props.setting.italic)">
             <Icon icon="italic" />
           </span>
           <span class="tips-text">斜体</span>
         </li>
         <li :class="['hover-tips', props.setting.underline && 'selected']">
-          <span class="icon-wrap">
+          <span class="icon-wrap" @click="emitData('underline', !props.setting.underline)">
             <Icon icon="underline" />
           </span>
           <span class="tips-text">下划线</span>
@@ -77,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
+import { computed, ref } from 'vue'
 import Opacity from '@/components/Tools/Opacity.vue'
 
 interface Setting {
@@ -120,7 +120,7 @@ const emitData = (key: string, value: string | number | boolean) => {
 }
 
 const opacityShow = ref(false)
-const opacityLocation = reactive({
+const opacityLocation = ref({
   left: 0,
   top: 0
 })
@@ -132,8 +132,8 @@ const opacityValue = computed({
 function toggleShow() {
   const ele = document.getElementById('OpacityBtn')
   const rect = ele?.getBoundingClientRect()
-  opacityLocation.left = rect?.x || 0
-  opacityLocation.top = rect?.y || 0
+  opacityLocation.value.left = rect?.x || 0
+  opacityLocation.value.top = rect?.y || 0
   opacityShow.value = !opacityShow.value
 }
 </script>

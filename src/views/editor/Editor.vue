@@ -2,15 +2,15 @@
   <EditorHeader></EditorHeader>
   <div class="editor">
     <aside class="editor-item">
-      <LeftPanel :handleChangeItemID="handleChangeItemID"></LeftPanel>
-      <PanelContent :itemID="itemID"></PanelContent>
+      <LeftPanel :handleChangeItem="handleChangeItem"></LeftPanel>
+      <PanelContent :activeItem="activeItem"></PanelContent>
       <!-- <div class="sidebar-container">
         <Component-List :list="defaultTextTemplates" @onClickItem="addItem"></Component-List>
       </div> -->
     </aside>
     <!-- 主体 -->
     <main class="preview-container" style="width: calc(100% - 400px)">
-      <EditorTools v-model:setting="toolSetting" />
+      <EditorTools />
       <div class="preview-list" id="canvas-area">
         <EditorWrapper
           v-for="com in components"
@@ -68,20 +68,23 @@ const handleChange = (e: { key: string; value: any }) => {
   store.commit('updateComponent', e)
 }
 
-const itemID = ref(1)
-const handleChangeItemID = (e: number): void => {
-  itemID.value = e
-}
-
-const toolSetting = ref({
-  color: 'rgb(130, 85, 130)',
-  size: 15,
-  bold: false,
-  italic: false,
-  underline: false,
-  align: 'left',
-  opacity: 0
+const activeItem = ref({
+  id: 0,
+  title: '',
+  type: ''
 })
+const handleChangeItem = (e: any): void => {
+  activeItem.value = e
+}
+</script>
+
+<script lang="ts">
+// export default defineComponent({
+//   components: {
+//     LText,
+//     ComponentList
+//   }
+// })
 </script>
 
 <script lang="ts">

@@ -1,5 +1,11 @@
 import { mapValues, without } from 'lodash-es'
 
+interface DefaultPropsType {
+  [key: string]: {
+    props: object
+    extraProps?: { [key: string]: any }
+  }
+}
 export interface CommonComponentProps {
   // actions
   actionType: string
@@ -78,6 +84,35 @@ export const textDefaultProps: TextComponentProps = {
   backgroundColor: '',
   ...commonDefaultProps
 }
+
+export const imageDefaultProps = {
+  imageSrc: '',
+  ...commonDefaultProps
+}
+
+// this contains all default props for all the components
+// useful for inserting new component into the store
+export const componentsDefaultProps: DefaultPropsType = {
+  'l-text': {
+    props: {
+      ...textDefaultProps,
+      width: '125px',
+      height: '36px'
+    }
+  },
+  'l-image': {
+    props: {
+      ...imageDefaultProps
+    }
+  },
+  'l-shape': {
+    props: {
+      backgroundColor: '',
+      ...commonDefaultProps
+    }
+  }
+}
+
 const withoutKeys = ['actionType', 'url', 'text']
 export const textStylePropNames = without(Object.keys(textDefaultProps), ...withoutKeys)
 

@@ -10,7 +10,7 @@
     </aside>
     <!-- 主体 -->
     <main class="preview-container" style="width: calc(100% - 400px)">
-      <EditorTools />
+      <EditorTools v-model:setting="toolSetting" />
       <div class="preview-list" id="canvas-area">
         <EditorWrapper
           v-for="com in components"
@@ -72,6 +72,16 @@ const itemID = ref(1)
 const handleChangeItemID = (e: number): void => {
   itemID.value = e
 }
+
+const toolSetting = ref({
+  color: 'rgb(130, 85, 130)',
+  size: 15,
+  bold: false,
+  italic: false,
+  underline: false,
+  align: 'left',
+  opacity: 0
+})
 </script>
 
 <script lang="ts">

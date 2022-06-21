@@ -16,14 +16,7 @@
               :style="{ left: `calc(${props.value}% - 7.5px)` }"
             ></div>
           </div>
-          <input
-            class="slider-input"
-            type="number"
-            max="100"
-            min="0"
-            v-model="inputValue"
-            @blur="inputBlur"
-          />
+          <input class="slider-input" type="number" max="100" min="0" v-model="inputValue" />
           <span class="unit">%</span>
         </div>
       </div>
@@ -104,9 +97,6 @@ watch([() => props.show], (val) => {
 const changeShow = () => {
   emit('update:show', false)
 }
-
-// 输入框失去焦点，更新透明度
-function inputBlur() {}
 
 onMounted(() => {
   inputValue.value = barWidth * (props.value / 100)

@@ -10,7 +10,7 @@
     </aside>
     <!-- 主体 -->
     <main class="preview-container" style="width: calc(100% - 400px)">
-      <EditorTools />
+      <EditorTools v-model:setting="toolSetting" />
       <div class="preview-list" id="canvas-area">
         <EditorWrapper
           v-for="com in components"
@@ -76,24 +76,15 @@ const activeItem = ref({
 const handleChangeItem = (e: any): void => {
   activeItem.value = e
 }
-</script>
-
-<script lang="ts">
-// export default defineComponent({
-//   components: {
-//     LText,
-//     ComponentList
-//   }
-// })
-</script>
-
-<script lang="ts">
-// export default defineComponent({
-//   components: {
-//     LText,
-//     ComponentList
-//   }
-// })
+const toolSetting = ref({
+  color: 'rgb(130, 85, 130)',
+  size: 15,
+  bold: false,
+  italic: false,
+  underline: false,
+  align: 'left',
+  opacity: 0
+})
 </script>
 
 <style lang="scss">

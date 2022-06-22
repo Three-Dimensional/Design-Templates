@@ -13,7 +13,8 @@ module.exports = {
     },
     { value: 'ci', name: 'ci:       修改 CI 配置、脚本' },
     { value: 'chore', name: 'chore:    对构建过程或辅助工具和库的更改（不影响源文件、测试用例）' },
-    { value: 'revert', name: 'revert:   回滚 commit' }
+    { value: 'revert', name: 'revert:   回滚 commit' },
+    { value: 'merge', name:'merge:    合并分支，合并分支代码到其他分支' }
   ],
   scopes: [],
   messages: {

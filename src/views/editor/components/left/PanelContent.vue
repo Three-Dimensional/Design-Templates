@@ -1,10 +1,8 @@
 <template>
-  <template v-if="activeItem?.type === 'text'">
-    <textMenu></textMenu>
-  </template>
+  <textMenu v-if="activeItem?.type === 'text'"></textMenu>
   <template v-else>
     <div class="nav-menu">
-      <div
+      <nav
         class="nav-menu__btn"
         :class="item.id == active ? 'active' : ''"
         v-for="(item, index) in itemList"
@@ -12,7 +10,7 @@
         @click="handleClick(item.id)"
       >
         <span>{{ item.title }}</span>
-      </div>
+      </nav>
     </div>
   </template>
 </template>
@@ -35,8 +33,7 @@ const active = ref(1)
 
 const itemList = reactive<itemType[]>([
   { id: 1, title: '推荐模板' },
-  { id: 2, title: '我的模板' },
-  { id: 3, title: '团队模板' }
+  { id: 2, title: '我的模板' }
 ])
 const handleClick = (id: number) => {
   active.value = id

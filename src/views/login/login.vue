@@ -17,14 +17,6 @@
     <a-button type="primary">登录</a-button>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
-export default defineComponent({
-  name: 'home',
-  components: {},
-})
-</script>
-
 <style lang="scss" scoped>
 .login {
   background: #222;
@@ -34,7 +26,7 @@ export default defineComponent({
   perspective: 2000px;
 }
 
-.loginDialog{
+.loginDialog {
   right: 10vw;
   top: 20vh;
   background: rgb(124, 124, 124);
@@ -43,8 +35,6 @@ export default defineComponent({
   border-radius: 10px;
   position: absolute;
 }
-
-
 
 .animation {
   width: 60%;

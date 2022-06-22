@@ -1,6 +1,6 @@
-import TemplateDetail from '../views/TemplateDetail.vue'
-import Home from '../views/Home.vue'
-import Index from '../views/Index.vue'
+import TemplateDetail from '../views/template/TemplateDetail.vue'
+import Home from '../views/home/home.vue'
+import Index from '../views/index.vue'
 
 const routers = [
   {
@@ -23,7 +23,7 @@ const routers = [
   {
     path: '/editor',
     name: 'editor',
-    component: () => import('@/views/editor/Editor.vue')
+    component: () => import('@/views/editor/editor.vue')
   }
 ]
 

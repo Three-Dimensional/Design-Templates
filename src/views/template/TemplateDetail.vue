@@ -26,27 +26,19 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from 'vue'
+<script lang="ts" setup>
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { GlobalDataProps } from '../store/index'
-import { TemplateProps } from '../store/templates'
+import { GlobalDataProps } from '../../store/index'
+import { TemplateProps } from '../../store/templates'
 
-export default defineComponent({
-  setup() {
-    const route = useRoute()
-    const store = useStore<GlobalDataProps>()
-    const currentId = route.params.id as string
-    const template = computed<TemplateProps>(() =>
-      store.getters.getTemplateById(parseInt(currentId, 10))
-    )
-    return {
-      route,
-      template
-    }
-  }
-})
+const route = useRoute()
+const store = useStore<GlobalDataProps>()
+const currentId = route.params.id as string
+const template = computed<TemplateProps>(() =>
+  store.getters.getTemplateById(parseInt(currentId, 10))
+)
 </script>
 
 <style scoped>

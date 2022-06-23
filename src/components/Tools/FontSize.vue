@@ -1,7 +1,7 @@
 <template>
   <div class="size-child" v-if="visible">
     <ul class="list">
-      <li v-for="item in fontSize" :key="item" @click="changeFontSize(item)">{{ item }}</li>
+      <li v-for="item in fontSize" :key="item" @click.stop="chooseFontSize(item)">{{ item }}</li>
     </ul>
   </div>
 </template>
@@ -16,7 +16,7 @@ defineProps<{
 
 const emit = defineEmits(['update:visible', 'update:size'])
 
-const changeFontSize = (size: number) => {
+const chooseFontSize = (size: number) => {
   emit('update:size', size)
   emit('update:visible', false)
 }

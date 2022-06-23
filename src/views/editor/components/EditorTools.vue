@@ -9,24 +9,24 @@
         </li>
         <li class="hover-tips">
           <div
-            class="font-family-wrap"
+            class="font-family__wrap"
             v-html="findFamilyByvalue(fontFamilyValue)"
             @click="fontFamilyVisible = !fontFamilyVisible"
           ></div>
-          <span class="font-pop-icon" @click="fontFamilyVisible = !fontFamilyVisible">
+          <span class="font-pop__icon" @click="fontFamilyVisible = !fontFamilyVisible">
             <Icon icon="angle-down" />
           </span>
           <span class="tips-text" v-if="!fontFamilyVisible">字体</span>
           <FontFamily v-model:visible="fontFamilyVisible" v-model:family="fontFamilyValue" />
         </li>
-        <li class="hover-tips font-size-choose">
+        <li class="hover-tips font-size--choose">
           <input
             type="text"
             v-model="fontSizeValue"
-            @focus="fontSizeVisible = true"
-            @blur="fontSizeVisible = false"
+            @focus="fontInputFocus"
+            @blur="fontInputBlur"
           />
-          <span class="font-pop-icon" @click="fontSizeVisible = !fontSizeVisible">
+          <span class="font-pop__icon" @click="fontSizeVisible = !fontSizeVisible">
             <Icon icon="angle-down" />
           </span>
           <span class="tips-text" v-if="!fontSizeVisible">字体大小</span>
@@ -164,6 +164,15 @@ const fontSizeValue = computed({
   get: () => props.setting.size,
   set: (value: number) => emitData('size', value)
 })
+let copyFont = 0
+const fontInputFocus = () => {
+  fontSizeVisible.value = true
+  copyFont = fontSizeValue.value
+}
+const fontInputBlur = () => {
+  if (fontSizeValue.value === copyFont) return
+  fontSizeVisible.value = !fontSizeVisible.value
+}
 
 // 字体显示控制
 const fontFamilyVisible = ref(false)
@@ -207,7 +216,7 @@ const fontFamilyValue = computed({
       align-items: center;
       position: relative;
     }
-    .font-pop-icon {
+    .font-pop__icon {
       cursor: pointer;
     }
     .color-block {
@@ -265,7 +274,7 @@ const fontFamilyValue = computed({
       }
     }
 
-    .font-size-choose {
+    .font-size--choose {
       input {
         background: transparent;
         border: none;
@@ -275,7 +284,7 @@ const fontFamilyValue = computed({
         text-align: left;
         width: 32px;
       }
-      .font-pop-icon {
+      .font-pop__icon {
         display: block;
         height: 20px;
         margin-left: 5px;
@@ -291,7 +300,7 @@ const fontFamilyValue = computed({
       }
     }
 
-    .font-family-wrap {
+    .font-family__wrap {
       align-items: center;
       cursor: pointer;
       display: flex;

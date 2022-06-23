@@ -1,19 +1,17 @@
 <template>
   <EditorHeader></EditorHeader>
-  <div class="editor">
+  <main class="editor">
     <aside class="editor-item">
       <LeftPanel :handleChangeItem="handleChangeItem"></LeftPanel>
       <PanelContent :activeItem="activeItem"></PanelContent>
-      <!-- <div class="sidebar-container">
-        <Component-List :list="defaultTextTemplates" @onClickItem="addItem"></Component-List>
-      </div> -->
+      <!-- <ComponentList :list="defaultTextTemplates" @onClickItem="addItem"></ComponentList> -->
     </aside>
     <!-- 主体 -->
     <main class="preview-container" style="width: calc(100% - 400px)">
       <EditorTools v-model:setting="toolSetting" @copy="handleCopy" />
       <div class="preview-list" id="canvas-area">
         <EditorWrapper
-          v-for="com in components"
+          v-for="com in componentList"
           :key="com.id"
           :id="com.id"
           @on-item-click="onItemClick"
@@ -31,9 +29,10 @@
         @change="handleChange"
       >
       </PropsTable>
+      <!-- 具体数据 -->
       <p>{{ currentElement && currentElement.props }}</p>
     </aside>
-  </div>
+  </main>
 </template>
 
 <script lang="ts" setup>
@@ -50,8 +49,9 @@ import PropsTable from '@/components/PropsTable.vue'
 import LText from '@/components/LText.vue'
 // import { defaultTextTemplates } from '@/defaultTemplates'
 // import ComponentList from '@/components/ComponentsList.vue'
+
 const store = useStore<GlobalDataProps>()
-const components = computed(() => store.state.editor.components)
+const componentList = computed(() => store.state.editor.components)
 const currentElement = computed<ComponentData | null>(() => store.getters.getCurrentElement)
 // const addItem = (props: any) => {
 //   store.commit('addComponent', props)

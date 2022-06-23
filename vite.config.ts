@@ -19,7 +19,8 @@ export default defineConfig({
     jsxFragment: 'Fragment'
   },
   server: {
-    open: true
+    open: true,
+    hmr: true
   },
   resolve: {
     alias: {

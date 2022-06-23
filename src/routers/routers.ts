@@ -19,7 +19,7 @@ const routers = [
   {
     path: '/editor',
     name: 'editor',
-    component: () => import('@/views/editor/editor.vue')
+    component: () => import('@/views/editor/editors.vue')
   }
 ]
 

@@ -1,33 +1,27 @@
 <template>
-  <div class="editor-wrapper" @click.capture.stop="onItemClick(id)" :class="{ active: active }">
+  <div
+    draggable="true"
+    class="editor-wrapper"
+    @click.capture.stop="onItemClick(id)"
+    :class="{ active: active }"
+  >
     <slot />
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+defineProps<{
+  id: string
+  active: boolean
+}>()
 
-export default defineComponent({
-  props: {
-    id: {
-      type: String,
-      required: true
-    },
-    active: {
-      type: Boolean,
-      default: false
-    }
-  },
-  emits: ['on-item-click'],
-  setup(props, ctx) {
-    const onItemClick = (id: string) => {
-      ctx.emit('on-item-click', id)
-    }
-    return {
-      onItemClick
-    }
-  }
-})
+const emits = defineEmits<{
+  (e: 'on-item-click', id: string): void
+}>()
+
+const onItemClick = (id: string) => {
+  emits('on-item-click', id)
+}
 </script>
 
 <style lang="scss" scoped>

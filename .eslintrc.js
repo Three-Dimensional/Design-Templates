@@ -53,6 +53,7 @@ module.exports = {
       {
         ignore: []
       }
-    ]
+    ],
+    'no-console': 'off'
   }
 }

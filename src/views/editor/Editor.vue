@@ -4,22 +4,11 @@
     <aside class="editor-item">
       <LeftPanel :handleChangeItem="handleChangeItem"></LeftPanel>
       <PanelContent :activeItem="activeItem"></PanelContent>
-      <!-- <ComponentList :list="defaultTextTemplates" @onClickItem="addItem"></ComponentList> -->
     </aside>
-    <!-- 主体 -->
     <main class="preview-container" style="width: calc(100% - 400px)">
       <EditorTools v-model:setting="toolSetting" @copy="handleCopy" />
-      <div class="preview-list" id="canvas-area">
-        <EditorWrapper
-          v-for="com in componentList"
-          :key="com.id"
-          :id="com.id"
-          @on-item-click="onItemClick"
-          :active="currentElement ? com.id === currentElement.id : false"
-        >
-          <LText v-bind="com.props" />
-        </EditorWrapper>
-      </div>
+      <!-- 画布区域 -->
+      <CanvasArea></CanvasArea>
     </main>
 
     <aside class="settings-panel">
@@ -40,28 +29,15 @@ import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '../../store/index.js'
 import { ComponentData } from '../../store/editor.js'
-import EditorWrapper from '@/components/EditorWrapper.vue'
 import EditorHeader from './components/EditorHeader.vue'
 import EditorTools from './components/EditorTools.vue'
 import PanelContent from './components/left/PanelContent.vue'
 import LeftPanel from './components/left/LeftPanel.vue'
+import CanvasArea from './components/canvas/CanvasArea.vue'
 import PropsTable from '@/components/PropsTable.vue'
-import LText from '@/components/LText.vue'
-// import { defaultTextTemplates } from '@/defaultTemplates'
-// import ComponentList from '@/components/ComponentsList.vue'
 
 const store = useStore<GlobalDataProps>()
-const componentList = computed(() => store.state.editor.components)
 const currentElement = computed<ComponentData | null>(() => store.getters.getCurrentElement)
-// const addItem = (props: any) => {
-//   store.commit('addComponent', props)
-// }
-// const removeComponent = (id: string) => {
-//   store.commit('removeComponent', id)
-// }
-const onItemClick = (id: string) => {
-  store.commit('setActive', id)
-}
 const handleChange = (e: { key: string; value: any }) => {
   store.commit('updateComponent', e)
 }
@@ -113,15 +89,6 @@ const handleCopy = () => {
     align-items: center;
     justify-content: center;
     position: relative;
-  }
-
-  .preview-list {
-    min-width: 375px;
-    min-height: 660px;
-    border: 1px solid #efefef;
-    background: #fff;
-    max-height: 80vh;
-    margin-top: 60px;
   }
 
   .settings-panel {

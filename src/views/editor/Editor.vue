@@ -10,7 +10,7 @@
     </aside>
     <!-- 主体 -->
     <main class="preview-container" style="width: calc(100% - 400px)">
-      <EditorTools v-model:setting="toolSetting" />
+      <EditorTools v-model:setting="toolSetting" @copy="handleCopy" />
       <div class="preview-list" id="canvas-area">
         <EditorWrapper
           v-for="com in components"
@@ -74,8 +74,10 @@ const activeItem = ref({
 const handleChangeItem = (e: any): void => {
   activeItem.value = e
 }
+// 工具栏相关
 const toolSetting = ref({
   color: 'rgb(130, 85, 130)',
+  family: '"SimSun","STSong"',
   size: 15,
   bold: false,
   italic: false,
@@ -83,6 +85,10 @@ const toolSetting = ref({
   align: 'left',
   opacity: 0
 })
+// 工具栏复制事件
+const handleCopy = () => {
+  console.info('handleCopy')
+}
 </script>
 
 <style lang="scss">

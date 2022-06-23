@@ -53,7 +53,7 @@ const handleChangeItem = (e: any): void => {
 // 工具栏相关
 const toolSetting = ref({
   color: 'rgb(130, 85, 130)',
-  family: '"SimSun","STSong"',
+  family: 'SimSun,STSong',
   size: 15,
   bold: false,
   italic: false,

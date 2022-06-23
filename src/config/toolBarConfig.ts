@@ -4,10 +4,10 @@ type Font = {
 }
 // 字体的默认配置
 export const fontFamily: Font[] = [
-  { text: '宋体', value: '"SimSun","STSong"' },
-  { text: '黑体', value: '"SimHei","STHeiti"' },
-  { text: '楷体', value: '"KaiTi","STKaiti"' },
-  { text: '仿宋', value: '"FangSong","STFangsong"' }
+  { text: '宋体', value: 'SimSun,STSong' },
+  { text: '黑体', value: 'SimHei,STHeiti' },
+  { text: '楷体', value: 'KaiTi,STKaiti' },
+  { text: '仿宋', value: 'FangSong,STFangsong' }
 ]
 
 // 字号的默认配置

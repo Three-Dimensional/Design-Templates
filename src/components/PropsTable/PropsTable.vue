@@ -6,7 +6,7 @@
         <component
           class="item"
           :is="prop.component"
-          :[prop.valueProp]="prop.value"
+          :value="prop.value"
           v-bind="prop.extraProps"
           v-on="prop.events"
         >
@@ -17,7 +17,7 @@
               :key="k"
               :value="option.value"
             >
-              <Render-Vnode :vNode="option.text"></Render-Vnode>
+              <Render-Vnode :vNode="option.text">12312321</Render-Vnode>
             </component>
           </template>
         </component>
@@ -28,9 +28,9 @@
 <script lang="ts">
 import { defineComponent, computed, PropType, VNode } from 'vue'
 import { reduce } from 'lodash-es'
-import { TextComponentProps } from '../defaultProps'
-import { mapPropsToFroms } from '../propsMap'
-import RenderVnode from './RenderVnode'
+import { TextComponentProps } from '../../defaultProps'
+import { mapPropsToFroms } from '../../propsMap'
+import RenderVnode from '../RenderVnode'
 
 interface FormToProp {
   component: string

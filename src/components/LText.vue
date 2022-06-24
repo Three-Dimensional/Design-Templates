@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :style="styleProps" class="l-text__component" @click="handleClick">
+  <component :is="tag" :style="styleProps" class="l-text__component">
     {{ text }}
     <slot />
   </component>

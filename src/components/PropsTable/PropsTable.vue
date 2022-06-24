@@ -17,7 +17,7 @@
               :key="k"
               :value="option.value"
             >
-              <Render-Vnode :vNode="option.text"></Render-Vnode>
+              <Render-Vnode :vNode="option.text">12312321</Render-Vnode>
             </component>
           </template>
         </component>

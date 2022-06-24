@@ -6,7 +6,7 @@
         <component
           class="item"
           :is="prop.component"
-          :[prop.valueProp]="prop.value"
+          :value="prop.value"
           v-bind="prop.extraProps"
           v-on="prop.events"
         >

@@ -2,6 +2,7 @@
   <aside class="canvas-area">
     <EditorWrapper
       v-for="com in componentList"
+      :detail="com"
       :key="com.id"
       :id="com.id"
       @on-item-click="onItemClick"
@@ -14,10 +15,9 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import EditorWrapper from '@/components/EditorWrapper.vue'
 import { GlobalDataProps } from '@/store/index'
 import { ComponentData } from '@/store/editor'
-
+import EditorWrapper from '@/components/EditorWrapper.vue'
 import LText from '@/components/LText.vue'
 
 const store = useStore<GlobalDataProps>()
@@ -30,11 +30,12 @@ const onItemClick = (id: string) => {
 </script>
 <style lang="scss" scoped>
 .canvas-area {
-  min-width: 375px;
+  width: 375px;
   min-height: 660px;
   border: 1px solid #efefef;
   background: #fff;
   max-height: 80vh;
   margin-top: 60px;
+  position: relative;
 }
 </style>

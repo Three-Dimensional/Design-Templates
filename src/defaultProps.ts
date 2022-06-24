@@ -17,11 +17,6 @@ export interface CommonComponentProps {
   paddingRight: string
   paddingTop: string
   paddingBottom: string
-  // border type
-  borderStyle: string
-  borderColor: string
-  borderWidth: string
-  borderRadius: string
   // shadow and opacity
   boxShadow: string
   opacity: string
@@ -44,11 +39,6 @@ export const commonDefaultProps: CommonComponentProps = {
   paddingRight: '0px',
   paddingTop: '0px',
   paddingBottom: '0px',
-  // border type
-  borderStyle: 'none',
-  borderColor: '#000',
-  borderWidth: '0',
-  borderRadius: '0',
   // shadow and opacity
   boxShadow: '0 0 0 #000000',
   opacity: '1',

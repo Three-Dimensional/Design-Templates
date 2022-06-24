@@ -19,7 +19,7 @@ import { defineComponent, PropType } from 'vue'
 import { message } from 'ant-design-vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { UserProps } from '../store/user'
+import { UserProps } from '../../store/user'
 
 export default defineComponent({
   name: 'UserProfile',

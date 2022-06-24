@@ -34,7 +34,7 @@ import EditorTools from './components/EditorTools.vue'
 import PanelContent from './components/left/PanelContent.vue'
 import LeftPanel from './components/left/LeftPanel.vue'
 import CanvasArea from './components/canvas/CanvasArea.vue'
-import PropsTable from '@/components/PropsTable.vue'
+import PropsTable from '@/components/PropsTable/PropsTable.vue'
 
 const store = useStore<GlobalDataProps>()
 const currentElement = computed<ComponentData | null>(() => store.getters.getCurrentElement)

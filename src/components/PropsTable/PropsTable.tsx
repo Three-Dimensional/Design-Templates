@@ -1,6 +1,6 @@
 import { defineComponent, computed, PropType, VNode } from 'vue'
-import { TextComponentProps } from '../defaultProps'
-import { mapPropsToFroms } from '../propsMap'
+import { TextComponentProps } from '../../defaultProps'
+import { mapPropsToFroms } from '../../propsMap'
 import { reduce } from 'lodash-es'
 import { Input, InputNumber, Slider, Radio, Select } from 'ant-design-vue'
 import './propsTable.scss'

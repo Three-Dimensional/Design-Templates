@@ -30,6 +30,7 @@ export interface CommonComponentProps {
   left: string
   top: string
   right: string
+  transform: string
 }
 
 export const commonDefaultProps: CommonComponentProps = {
@@ -38,7 +39,7 @@ export const commonDefaultProps: CommonComponentProps = {
   url: '',
   // size
   height: '',
-  width: '318px',
+  width: '100%',
   paddingLeft: '0px',
   paddingRight: '0px',
   paddingTop: '0px',
@@ -55,7 +56,8 @@ export const commonDefaultProps: CommonComponentProps = {
   position: 'absolute',
   left: '0',
   top: '0',
-  right: '0'
+  right: '0',
+  transform: 'matrix(1, 0, 0, 1, 0, 0)'
 }
 
 export interface TextComponentProps extends CommonComponentProps {

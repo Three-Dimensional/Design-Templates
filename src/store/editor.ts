@@ -29,7 +29,8 @@ export const testComponents: ComponentData[] = [
       lineHeight: '1',
       textAlign: 'left',
       fontFamily: '',
-      opacity: '1'
+      opacity: '1',
+      transform: 'matrix(1, 0, 0, 1, 0, 0)'
     }
   },
   {
@@ -42,7 +43,8 @@ export const testComponents: ComponentData[] = [
       lineHeight: '2',
       textAlign: 'left',
       fontFamily: '',
-      opacity: '1'
+      opacity: '1',
+      transform: 'matrix(1, 0, 0, 1, 0, 0)'
     }
   },
   {
@@ -56,7 +58,8 @@ export const testComponents: ComponentData[] = [
       lineHeight: '3',
       textAlign: 'left',
       fontFamily: '',
-      opacity: '1'
+      opacity: '1',
+      transform: 'matrix(1, 0, 0, 1, 0, 0)'
     }
   }
 ]

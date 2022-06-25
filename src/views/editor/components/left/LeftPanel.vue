@@ -2,7 +2,7 @@
   <menu class="leftPanel-menu">
     <li
       class="leftPanel-menu__li"
-      :class="item.id == active ? 'active' : ''"
+      :class="item.id == active.id ? 'active' : ''"
       v-for="item in itemList"
       :key="item.title"
       @click="handleClick(item)"
@@ -13,7 +13,7 @@
   </menu>
 </template>
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import templateUrl from '../../../../assets/svg/menu.svg'
 
 interface propsType {
@@ -21,7 +21,10 @@ interface propsType {
 }
 const props = defineProps<propsType>()
 
-const active = ref(1)
+const active = ref({
+  id: 1,
+  type: 'template'
+})
 interface itemType {
   id: number
   type: string
@@ -39,9 +42,12 @@ const itemList = reactive<itemType[]>([
 ])
 // 切换左侧菜单
 const handleClick = (item: itemType) => {
-  active.value = item.id
+  active.value.id = item.id
   props.handleChangeItem(item)
 }
+onMounted(() => {
+  props.handleChangeItem(itemList[active.value.id - 1])
+})
 </script>
 <style lang="scss" scoped>
 .leftPanel-menu {

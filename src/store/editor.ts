@@ -1,15 +1,22 @@
 import { Module } from 'vuex'
 import { v4 as uuidv4 } from 'uuid'
 import { GlobalDataProps } from './index'
-import { TextComponentProps } from '../defaultProps'
+import { TextComponentProps, ComponentAllTypes } from '../defaultProps'
+import { PickObjWithRequired } from '@/types/common'
 
-export interface ComponentData {
+type NewComponentProps = PickObjWithRequired<ComponentAllTypes, 'width' | 'height'>
+
+export type ComponentData = {
   // 业务组件库名称 LText，l-image 等等
   name: string
-  props: { [key: string]: any }
+  // 业务组件库名称 LText的内容
+  text?: string
+  props: NewComponentProps
   // id，uuid v4 生成
   id: string
 }
+
+export type ComponentAllData = ComponentData
 
 export interface EditorProps {
   // 供中间编辑器渲染的数组
@@ -22,43 +29,49 @@ export const testComponents: ComponentData[] = [
   {
     id: uuidv4(),
     name: 'LText',
+    text: 'hello',
     props: {
-      text: 'hello',
-      fontSize: '20px',
+      fontSize: 20,
+      width: 125,
+      height: 36,
       color: 'red',
-      lineHeight: '1',
+      lineHeight: 1,
       textAlign: 'left',
       fontFamily: '',
-      opacity: '1',
+      opacity: 1,
       transform: 'matrix(1, 0, 0, 1, 0, 0)'
     }
   },
   {
     id: uuidv4(),
     name: 'LText',
+    text: 'hello2',
     props: {
-      text: 'hello2',
-      fontSize: '10px',
+      fontSize: 10,
+      width: 125,
+      height: 36,
       fontWeight: 'bold',
-      lineHeight: '2',
+      lineHeight: 2,
       textAlign: 'left',
       fontFamily: '',
-      opacity: '1',
+      opacity: 1,
       transform: 'matrix(1, 0, 0, 1, 0, 0)'
     }
   },
   {
     id: uuidv4(),
     name: 'LText',
+    text: 'hello3',
     props: {
-      text: 'hello3',
-      fontSize: '15px',
+      fontSize: 15,
+      width: 125,
+      height: 36,
       actionType: 'url',
       url: 'https://www.baidu.com',
-      lineHeight: '3',
+      lineHeight: 3,
       textAlign: 'left',
       fontFamily: '',
-      opacity: '1',
+      opacity: 1,
       transform: 'matrix(1, 0, 0, 1, 0, 0)'
     }
   }
@@ -75,21 +88,22 @@ const editor: Module<EditorProps, GlobalDataProps> = {
     }
   },
   mutations: {
-    addComponent(state, props: Partial<TextComponentProps>) {
+    addComponent(state: EditorProps, props: NewComponentProps) {
       const addComponent: ComponentData = {
         name: 'LText',
         id: uuidv4(),
+        text: 'test',
         props
       }
       state.components.push(addComponent)
     },
-    removeComponent(state, id: string) {
+    removeComponent(state: EditorProps, id: string) {
       state.components = state.components.filter((item) => item.id !== id)
     },
-    setActive(state, id: string) {
+    setActive(state: EditorProps, id: string) {
       state.currentElement = id
     },
-    updateComponent(state, { key, value }) {
+    updateComponent(state: EditorProps, { key, value }) {
       const updatedComponent = state.components.find(
         (component) => component.id === state.currentElement
       )

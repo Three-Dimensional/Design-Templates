@@ -6,25 +6,25 @@
       class="shape-point"
       :style="getPointStyle(item)"
     ></div>
+
+    <div class="rotate">
+      <Icon icon="weiraogoujianxuanzhuan"></Icon>
+    </div>
     <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-interface StyleObj {
-  width: number
-  height: number
-}
+import { ComponentAllTypes } from '@/defaultProps'
+import { PickObjWithRequired } from '@/types/common'
+
 const props = withDefaults(
   defineProps<{
     active: boolean
-    defaultStyle: StyleObj
+    defaultStyle: PickObjWithRequired<ComponentAllTypes, 'width' | 'height'>
   }>(),
   {
-    active: false,
-    defaultStyle: () => {
-      return { width: 0, height: 0 }
-    }
+    active: false
   }
 )
 
@@ -73,5 +73,48 @@ const getPointStyle = (point: string) => {
   position: absolute;
   left: 0;
   top: 0;
+  &:hover {
+    cursor: move;
+  }
+}
+
+.active {
+  outline: 1px solid #70c0ff;
+  user-select: none;
+}
+
+.shape-point {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #59c7f9;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.rotate {
+  border-radius: 2px;
+  color: #fff;
+  font-size: 12px;
+  height: 24px;
+  left: -12px;
+  line-height: 24px;
+  position: absolute;
+  text-align: center;
+  top: 50px;
+  width: 40px;
+}
+.rotate .icon {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 0 4px 0 rgb(24 49 81 / 10%);
+  box-sizing: border-box;
+  height: 26px;
+  left: -5px;
+  padding: 5px;
+  position: absolute;
+  top: -5px;
+  width: 26px;
 }
 </style>

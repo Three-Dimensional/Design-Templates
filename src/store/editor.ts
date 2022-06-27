@@ -1,7 +1,7 @@
 import { Module } from 'vuex'
 import { v4 as uuidv4 } from 'uuid'
 import { GlobalDataProps } from './index'
-import { TextComponentProps, ComponentAllTypes } from '../defaultProps'
+import { ComponentAllTypes } from '../defaultProps'
 import { PickObjWithRequired } from '@/types/common'
 
 type NewComponentProps = PickObjWithRequired<ComponentAllTypes, 'width' | 'height'>
@@ -39,7 +39,7 @@ export const testComponents: ComponentData[] = [
       textAlign: 'left',
       fontFamily: '',
       opacity: 1,
-      transform: 'matrix(1, 0, 0, 1, 0, 0)'
+      transform: 'matrix(1, 0, 0, 1, 100, 20)'
     }
   },
   {
@@ -55,7 +55,7 @@ export const testComponents: ComponentData[] = [
       textAlign: 'left',
       fontFamily: '',
       opacity: 1,
-      transform: 'matrix(1, 0, 0, 1, 0, 0)'
+      transform: 'matrix(1, 0, 0, 1, 150, 50)'
     }
   },
   {
@@ -72,7 +72,7 @@ export const testComponents: ComponentData[] = [
       textAlign: 'left',
       fontFamily: '',
       opacity: 1,
-      transform: 'matrix(1, 0, 0, 1, 0, 0)'
+      transform: 'matrix(1, 0, 0, 1, 200, 100)'
     }
   }
 ]
@@ -108,7 +108,7 @@ const editor: Module<EditorProps, GlobalDataProps> = {
         (component) => component.id === state.currentElement
       )
       if (updatedComponent) {
-        updatedComponent.props[key as keyof TextComponentProps] = value
+        updatedComponent.props[key as keyof ComponentData] = value
       }
     }
   }

@@ -1,3 +1,5 @@
+import { omit, pick } from 'lodash-es'
+
 export interface CommonComponentProps {
   // actions
   actionType: string
@@ -63,12 +65,9 @@ export const commonDefaultProps: Partial<CommonComponentProps> = {
 }
 
 // 图片组件类型参数
-export interface TextComponentProps extends Partial<CommonComponentProps> {
-  text: string
-}
+export interface TextComponentProps extends Partial<CommonComponentProps> {}
 
 export const textDefaultProps: TextComponentProps = {
-  text: '正文内容',
   fontSize: 14,
   fontFamily: '',
   fontWeight: 'normal',
@@ -128,11 +127,24 @@ export const componentsDefaultProps: DefaultPropsType = {
   }
 }
 
-// 将对象属性转为字符串属性去赋值
-export const propsToStyleString = (props: ComponentAllTypes) => {
+/**
+ * 将对象属性转为字符串属性去赋值
+ * @param props 源属性
+ * @param includeGeometric 是否包含几何属性
+ * @returns style字符串
+ */
+export const propsToStyleString = (props: ComponentAllTypes, includeGeometric: boolean = false) => {
+  const geometric = ['width', 'height', 'transform']
+  let obj = null
+  if (includeGeometric) {
+    obj = pick(props, geometric)
+  } else {
+    obj = omit(props, geometric)
+  }
   let start = ''
-  Object.entries(props).forEach((current) => {
-    start += `${current[0]}: ${current[1]}${typeof current[1] === 'number' ? 'px' : ''}`
+  Object.entries(obj).forEach((current) => {
+    start += `${current[0]}: ${current[1]}${typeof current[1] === 'number' ? 'px' : ''};`
   })
+  console.log(start)
   return start
 }

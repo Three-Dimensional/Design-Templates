@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<ThisComponentProps>(), {
 })
 
 const styleStr = computed(() => {
-  return propsToStyleString(props.style)
+  return propsToStyleString(props.style, false)
 })
 </script>
 

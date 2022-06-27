@@ -1,5 +1,8 @@
 <template>
-  <div class="editor-box">
+  <div
+    :class="['editor-box', props.active && 'active']"
+    :style="`${propsToStyleString(props.defaultStyle, true)}`"
+  >
     <div
       v-for="item in props.active ? pointList : []"
       :key="item"
@@ -7,7 +10,7 @@
       :style="getPointStyle(item)"
     ></div>
 
-    <div class="rotate">
+    <div class="rotate" v-show="props.active">
       <Icon icon="weiraogoujianxuanzhuan"></Icon>
     </div>
     <slot></slot>
@@ -15,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { ComponentAllTypes } from '@/defaultProps'
+import { ComponentAllTypes, propsToStyleString } from '@/defaultProps'
 import { PickObjWithRequired } from '@/types/common'
 
 const props = withDefaults(
@@ -75,12 +78,17 @@ const getPointStyle = (point: string) => {
   top: 0;
   &:hover {
     cursor: move;
+    outline: 1px solid #70c0ff;
   }
 }
 
-.active {
-  outline: 1px solid #70c0ff;
+.editor-box.active {
+  border: 2px solid #70c0ff;
   user-select: none;
+  &:hover {
+    cursor: move;
+    outline: none;
+  }
 }
 
 .shape-point {
@@ -98,23 +106,23 @@ const getPointStyle = (point: string) => {
   color: #fff;
   font-size: 12px;
   height: 24px;
-  left: -12px;
   line-height: 24px;
   position: absolute;
   text-align: center;
   top: 50px;
-  width: 40px;
+  left: 50%;
+  margin-left: -5.5px;
 }
 .rotate .icon {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   box-shadow: 0 0 4px 0 rgb(24 49 81 / 10%);
   box-sizing: border-box;
-  height: 26px;
+  height: 23px;
   left: -5px;
   padding: 5px;
   position: absolute;
   top: -5px;
-  width: 26px;
+  width: 23px;
 }
 </style>

@@ -5,10 +5,17 @@
       <LeftPanel :handleChangeItem="handleChangeItem"></LeftPanel>
       <PanelContent :activeItem="activeItem"></PanelContent>
     </aside>
-    <main class="preview-container" style="width: calc(100% - 400px)">
+    <main class="preview-container" ref="previewRef" style="width: calc(100% - 400px)">
       <EditorTools v-model:setting="toolSetting" @copy="handleCopy" />
       <!-- 画布区域 -->
-      <CanvasArea></CanvasArea>
+      <!-- 画布缩放配置 :style="{
+          width: '1080px',
+          height: '1920px',
+          transform: previewStyle.transform,
+          transformOrigin: previewStyle.transformOrigin
+        }" -->
+      <CanvasArea ref="canvasRef"></CanvasArea>
+      <PageScaleSet></PageScaleSet>
     </main>
 
     <aside class="settings-panel">
@@ -35,6 +42,8 @@ import PanelContent from './components/left/PanelContent.vue'
 import LeftPanel from './components/left/LeftPanel.vue'
 import CanvasArea from './components/canvas/CanvasArea.vue'
 import PropsTable from '@/components/PropsTable/PropsTable.vue'
+import PageScaleSet from './components/bottom/PageScaleSet.vue'
+import pageScale from './components/bottom/pageScale'
 
 const store = useStore<GlobalDataProps>()
 const currentElement = computed<ComponentData | null>(() => store.getters.getCurrentElement)
@@ -65,6 +74,9 @@ const toolSetting = ref({
 const handleCopy = () => {
   console.info('handleCopy')
 }
+
+// 底部组件
+const { /* previewStyle, */ previewRef, canvasRef } = pageScale()
 </script>
 
 <style lang="scss">
@@ -89,6 +101,7 @@ const handleCopy = () => {
     align-items: center;
     justify-content: center;
     position: relative;
+    height: calc(100vh - 70px);
   }
 
   .settings-panel {

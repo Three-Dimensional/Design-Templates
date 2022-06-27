@@ -4,7 +4,7 @@
   "scripts": {
     "serve": "vite --host 0.0.0.0",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview",
+    "preview": "vite preview --port 8080",
     "prepare": "husky install",
     "commit": "git-cz"
   },

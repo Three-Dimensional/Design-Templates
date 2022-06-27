@@ -1,22 +1,26 @@
 <template>
   <textMenu v-if="activeItem?.type === 'text'"></textMenu>
   <template v-else>
-    <div class="nav-menu">
-      <nav
-        class="nav-menu__btn"
-        :class="item.id == active ? 'active' : ''"
-        v-for="(item, index) in itemList"
-        :key="index"
-        @click="handleClick(item.id)"
-      >
-        <span>{{ item.title }}</span>
-      </nav>
+    <div class="panel">
+      <div class="nav-menu">
+        <div
+          class="nav-menu__btn"
+          :class="item.id == active ? 'active' : ''"
+          v-for="(item, index) in itemList"
+          :key="index"
+          @click="handleClick(item.id, index)"
+        >
+          <span>{{ item.title }}</span>
+        </div>
+      </div>
+      <TemplateContent :activeModule="`${activeItem.type}-${activeType}`"></TemplateContent>
     </div>
   </template>
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import textMenu from './textMenu.vue'
+import TemplateContent from '@/components/TemplateContent.vue'
 
 interface itemType {
   id: number
@@ -30,16 +34,22 @@ defineProps<{
 }>()
 
 const active = ref(1)
+const activeType = ref('recommend')
 
 const itemList = reactive<itemType[]>([
-  { id: 1, title: '推荐模板' },
-  { id: 2, title: '我的模板' }
+  { id: 1, title: '推荐', type: 'recommend' },
+  { id: 2, title: '我的', type: 'my' }
 ])
-const handleClick = (id: number) => {
+const handleClick = (id: number, index: number) => {
   active.value = id
+  activeType.value = (itemList[index] as any).type
 }
 </script>
 <style lang="scss" scoped>
+.panel {
+  display: flex;
+  flex-direction: column;
+}
 .nav-menu {
   display: flex;
   height: 36px;

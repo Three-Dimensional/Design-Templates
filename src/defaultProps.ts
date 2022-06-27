@@ -1,85 +1,108 @@
-import { mapValues, without } from 'lodash-es'
-
-interface DefaultPropsType {
-  [key: string]: {
-    props: object
-    extraProps?: { [key: string]: any }
-  }
-}
 export interface CommonComponentProps {
   // actions
   actionType: string
   url: string
   // size
-  height: string
-  width: string
-  paddingLeft: string
-  paddingRight: string
-  paddingTop: string
-  paddingBottom: string
+  height: number
+  width: number
+  paddingLeft: number
+  paddingRight: number
+  paddingTop: number
+  paddingBottom: number
+  // border type
+  borderStyle: string
+  borderColor: string
+  borderWidth: number
+  borderRadius: string
   // shadow and opacity
   boxShadow: string
-  opacity: string
+  opacity: number
   // position and x,y
   position: string
-  left: string
-  top: string
-  right: string
+  left: number
+  top: number
+  right: number
   transform: string
-}
-
-export const commonDefaultProps: CommonComponentProps = {
-  // actions
-  actionType: '',
-  url: '',
-  // size
-  height: '',
-  width: '100%',
-  paddingLeft: '0px',
-  paddingRight: '0px',
-  paddingTop: '0px',
-  paddingBottom: '0px',
-  // shadow and opacity
-  boxShadow: '0 0 0 #000000',
-  opacity: '1',
-  // position and x,y
-  position: 'absolute',
-  left: '0',
-  top: '0',
-  right: '0',
-  transform: 'matrix(1, 0, 0, 1, 0, 0)'
-}
-
-export interface TextComponentProps extends CommonComponentProps {
-  text: string
-  fontSize: string
+  // 文字相关
+  fontSize: number
   fontFamily: string
   fontWeight: string
   fontStyle: string
   textDecoration: string
-  lineHeight: string
+  lineHeight: number
   textAlign: string
   color: string
   backgroundColor: string
 }
 
+export const commonDefaultProps: Partial<CommonComponentProps> = {
+  // actions
+  actionType: '',
+  url: '',
+  // size
+  height: 0,
+  width: 0,
+  paddingLeft: 0,
+  paddingRight: 0,
+  paddingTop: 0,
+  paddingBottom: 0,
+  // border type
+  borderStyle: 'none',
+  borderColor: '#000',
+  borderWidth: 0,
+  borderRadius: '0',
+  // shadow and opacity
+  boxShadow: '0 0 0 #000000',
+  opacity: 0,
+  // position and x,y
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  right: 0,
+  transform: 'matrix(1, 0, 0, 1, 0, 0)'
+}
+
+// 图片组件类型参数
+export interface TextComponentProps extends Partial<CommonComponentProps> {
+  text: string
+}
+
 export const textDefaultProps: TextComponentProps = {
   text: '正文内容',
-  fontSize: '14px',
+  fontSize: 14,
   fontFamily: '',
   fontWeight: 'normal',
   fontStyle: 'normal',
   textDecoration: 'none',
-  lineHeight: '1',
+  lineHeight: 1,
   textAlign: 'left',
   color: '#000000',
   backgroundColor: '',
   ...commonDefaultProps
 }
 
-export const imageDefaultProps = {
+// 图片组件类型参数
+export interface ImageComponentProps extends Partial<CommonComponentProps> {
+  imageSrc: ''
+}
+
+export const imageDefaultProps: ImageComponentProps = {
   imageSrc: '',
   ...commonDefaultProps
+}
+
+// 所有组件类型
+export type ComponentAllTypes =
+  | Partial<CommonComponentProps>
+  | ImageComponentProps
+  | TextComponentProps
+
+// 各组件默认的配置
+type DefaultPropsType = {
+  [key: string]: {
+    props: ComponentAllTypes
+    extraProps?: { [key: string]: any }
+  }
 }
 
 // this contains all default props for all the components
@@ -88,8 +111,8 @@ export const componentsDefaultProps: DefaultPropsType = {
   'l-text': {
     props: {
       ...textDefaultProps,
-      width: '125px',
-      height: '36px'
+      width: 125,
+      height: 36
     }
   },
   'l-image': {
@@ -105,14 +128,11 @@ export const componentsDefaultProps: DefaultPropsType = {
   }
 }
 
-const withoutKeys = ['actionType', 'url', 'text']
-export const textStylePropNames = without(Object.keys(textDefaultProps), ...withoutKeys)
-
-export const transformToComponentProps = (props: TextComponentProps) => {
-  return mapValues(props, (item) => {
-    return {
-      type: item.constructor as StringConstructor,
-      default: item
-    }
+// 将对象属性转为字符串属性去赋值
+export const propsToStyleString = (props: ComponentAllTypes) => {
+  let start = ''
+  Object.entries(props).forEach((current) => {
+    start += `${current[0]}: ${current[1]}${typeof current[1] === 'number' ? 'px' : ''}`
   })
+  return start
 }

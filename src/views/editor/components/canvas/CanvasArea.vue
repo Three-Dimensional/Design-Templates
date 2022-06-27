@@ -1,6 +1,6 @@
 <template>
   <aside class="canvas-area">
-    <div
+    <!-- <div
       v-for="com in componentList"
       :key="com.id"
       :detail="com"
@@ -11,19 +11,29 @@
       @mousedown="handleMouseDown"
     >
       <LText v-bind="com.props" />
-    </div>
+    </div> -->
+    <EditBox
+      v-for="com in componentList"
+      :key="com.id"
+      :defaultStyle="com.props"
+      @click.stop="onItemClick(com.id)"
+      @mousedown="handleMouseDown"
+    >
+      <LText v-bind="com.props" :text="com.text" />
+    </EditBox>
   </aside>
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '@/store/index'
-import { ComponentData } from '@/store/editor'
+import { ComponentAllData } from '@/store/editor'
 import LText from '@/components/LText.vue'
+import EditBox from '@/components/Editor/EditBox.vue'
 
 const store = useStore<GlobalDataProps>()
 const componentList = computed(() => store.state.editor.components)
-const currentElement = computed<ComponentData | null>(() => store.getters.getCurrentElement)
+const currentElement = computed<ComponentAllData | null>(() => store.getters.getCurrentElement)
 
 const onItemClick = (id: string) => {
   store.commit('setActive', id)

@@ -16,10 +16,11 @@
       v-for="com in componentList"
       :key="com.id"
       :defaultStyle="com.props"
+      :active="currentElement?.id === com.id ? true : false"
       @click.stop="onItemClick(com.id)"
       @mousedown="handleMouseDown"
     >
-      <LText v-bind="com.props" :text="com.text" />
+      <LText :style="com.props" :text="com.text" />
     </EditBox>
   </aside>
 </template>
@@ -77,10 +78,5 @@ const handleMouseDown = (e: any) => {
   &:hover {
     border: 1px dashed #ccc;
   }
-}
-.active {
-  border: 1px solid #1890ff;
-  user-select: none;
-  z-index: 1500;
 }
 </style>

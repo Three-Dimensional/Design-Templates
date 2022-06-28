@@ -8,7 +8,7 @@ name: test
 on: 
     push:
         branches:
-            - master
+            - main
 # 修改文件范围, 不在范围内不触发
         paths:
             - '.github/workflows/**'

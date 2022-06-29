@@ -2,6 +2,7 @@
   <div
     :class="['editor-box', props.active && 'active']"
     :style="`${propsToStyleString(props.defaultStyle, true)}`"
+    @mousedown="handleMouseDown"
   >
     <div
       v-for="item in props.active ? pointList : []"
@@ -18,8 +19,14 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 import { ComponentAllTypes, propsToStyleString } from '@/defaultProps'
 import { PickObjWithRequired } from '@/types/common'
+import { GlobalDataProps } from '@/store'
+import { ComponentAllData } from '@/store/editor'
+
+const store = useStore<GlobalDataProps>()
 
 const props = withDefaults(
   defineProps<{
@@ -70,6 +77,36 @@ const getPointStyle = (point: string) => {
 
   return style
 }
+
+const currentElement = computed<ComponentAllData | null>(() => store.getters.getCurrentElement)
+
+const handleMouseDown = (e: any) => {
+  // 点击开始移动
+  e.stopPropagation()
+  if (!currentElement.value) return
+  const trf = currentElement.value!
+  const trfArr: string[] = trf.props.transform!.trim().replace(/()/g, '').split(',')
+  const matrixX = trfArr[trfArr.length - 2]
+  const matrixY = trfArr[trfArr.length - 1]
+  const startY = e.clientY
+  const startX = e.clientX
+  const move = (moveEvent: any) => {
+    const currX = moveEvent.clientX - startX
+    const currY = moveEvent.clientY - startY
+    if (currentElement.value) {
+      currentElement.value.props.transform = `matrix(1, 0, 0, 1, ${
+        parseInt(matrixX, 10) + currX
+      }, ${parseInt(matrixY, 10) + currY})`
+    }
+  }
+  const up = () => {
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+  }
+  // 注册和取消移动事件
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
+}
 </script>
 <style scoped lang="scss">
 .editor-box {
@@ -83,11 +120,10 @@ const getPointStyle = (point: string) => {
 }
 
 .editor-box.active {
-  border: 2px solid #70c0ff;
+  outline: 2px solid #70c0ff;
   user-select: none;
   &:hover {
     cursor: move;
-    outline: none;
   }
 }
 
@@ -118,11 +154,11 @@ const getPointStyle = (point: string) => {
   border-radius: 20px;
   box-shadow: 0 0 4px 0 rgb(24 49 81 / 10%);
   box-sizing: border-box;
-  height: 23px;
+  height: 20px;
   left: -5px;
-  padding: 5px;
+  padding: 3px;
   position: absolute;
   top: -5px;
-  width: 23px;
+  width: 20px;
 }
 </style>

@@ -1,17 +1,17 @@
 <template>
   <div
-    :class="['editor-box', props.active && 'active']"
+    :class="['editor-box', isActive && 'active']"
     :style="`${propsToStyleString(props.defaultStyle, true)}`"
-    @mousedown="handleMouseDown"
+    @mousedown="handleMouseDown(props.comId, $event)"
   >
     <div
-      v-for="item in props.active ? pointList : []"
+      v-for="item in isActive ? pointList : []"
       :key="item"
       class="shape-point"
       :style="getPointStyle(item)"
     ></div>
 
-    <div class="rotate" v-show="props.active">
+    <div class="rotate" v-show="isActive">
       <Icon icon="weiraogoujianxuanzhuan"></Icon>
     </div>
     <slot></slot>
@@ -30,16 +30,25 @@ const store = useStore<GlobalDataProps>()
 
 const props = withDefaults(
   defineProps<{
-    active: boolean
+    comId: string
     defaultStyle: PickObjWithRequired<ComponentAllTypes, 'width' | 'height'>
   }>(),
   {
-    active: false
+    comId: ''
   }
 )
 
+// 当前选中的组件
+const currentElement = computed<ComponentAllData | null>(() => store.getters.getCurrentElement)
+
+// 当前组件是否选中
+const isActive = computed(() => {
+  return currentElement.value?.id === props.comId
+})
+
 const pointList: string[] = ['lt', 't', 'rt', 'r', 'rb', 'b', 'lb', 'l']
 
+// 获取8个拖动点的位置样式
 const getPointStyle = (point: string) => {
   const { width, height } = props.defaultStyle
   const hasT = /t/.test(point)
@@ -72,17 +81,16 @@ const getPointStyle = (point: string) => {
     marginTop: '-4px',
     left: `${newLeft}px`,
     top: `${newTop}px`
-    // cursor: this.cursors[point]
+    // cursor: cursors[point]
   }
 
   return style
 }
 
-const currentElement = computed<ComponentAllData | null>(() => store.getters.getCurrentElement)
-
-const handleMouseDown = (e: any) => {
+const handleMouseDown = (comId: string, e: any) => {
   // 点击开始移动
   e.stopPropagation()
+  store.commit('setActive', comId)
   if (!currentElement.value) return
   const trf = currentElement.value!
   const trfArr: string[] = trf.props.transform!.trim().replace(/()/g, '').split(',')

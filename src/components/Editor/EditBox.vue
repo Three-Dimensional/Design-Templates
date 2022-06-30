@@ -1,16 +1,17 @@
 <template>
   <div
-    :class="['editor-box', props.active && 'active']"
+    :class="['editor-box', isActive && 'active']"
     :style="`${propsToStyleString(props.defaultStyle, true)}`"
+    @mousedown="handleMouseDown(props.comId, $event)"
   >
     <div
-      v-for="item in props.active ? pointList : []"
+      v-for="item in isActive ? pointList : []"
       :key="item"
       class="shape-point"
       :style="getPointStyle(item)"
     ></div>
 
-    <div class="rotate" v-show="props.active">
+    <div class="rotate" v-show="isActive">
       <Icon icon="weiraogoujianxuanzhuan"></Icon>
     </div>
     <slot></slot>
@@ -18,21 +19,36 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 import { ComponentAllTypes, propsToStyleString } from '@/defaultProps'
 import { PickObjWithRequired } from '@/types/common'
+import { GlobalDataProps } from '@/store'
+import { ComponentAllData } from '@/store/editor'
+
+const store = useStore<GlobalDataProps>()
 
 const props = withDefaults(
   defineProps<{
-    active: boolean
+    comId: string
     defaultStyle: PickObjWithRequired<ComponentAllTypes, 'width' | 'height'>
   }>(),
   {
-    active: false
+    comId: ''
   }
 )
 
+// 当前选中的组件
+const currentElement = computed<ComponentAllData | null>(() => store.getters.getCurrentElement)
+
+// 当前组件是否选中
+const isActive = computed(() => {
+  return currentElement.value?.id === props.comId
+})
+
 const pointList: string[] = ['lt', 't', 'rt', 'r', 'rb', 'b', 'lb', 'l']
 
+// 获取8个拖动点的位置样式
 const getPointStyle = (point: string) => {
   const { width, height } = props.defaultStyle
   const hasT = /t/.test(point)
@@ -65,10 +81,39 @@ const getPointStyle = (point: string) => {
     marginTop: '-4px',
     left: `${newLeft}px`,
     top: `${newTop}px`
-    // cursor: this.cursors[point]
+    // cursor: cursors[point]
   }
 
   return style
+}
+
+const handleMouseDown = (comId: string, e: any) => {
+  // 点击开始移动
+  e.stopPropagation()
+  store.commit('setActive', comId)
+  if (!currentElement.value) return
+  const trf = currentElement.value!
+  const trfArr: string[] = trf.props.transform!.trim().replace(/()/g, '').split(',')
+  const matrixX = trfArr[trfArr.length - 2]
+  const matrixY = trfArr[trfArr.length - 1]
+  const startY = e.clientY
+  const startX = e.clientX
+  const move = (moveEvent: any) => {
+    const currX = moveEvent.clientX - startX
+    const currY = moveEvent.clientY - startY
+    if (currentElement.value) {
+      currentElement.value.props.transform = `matrix(1, 0, 0, 1, ${
+        parseInt(matrixX, 10) + currX
+      }, ${parseInt(matrixY, 10) + currY})`
+    }
+  }
+  const up = () => {
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+  }
+  // 注册和取消移动事件
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
 }
 </script>
 <style scoped lang="scss">
@@ -83,11 +128,10 @@ const getPointStyle = (point: string) => {
 }
 
 .editor-box.active {
-  border: 2px solid #70c0ff;
+  outline: 2px solid #70c0ff;
   user-select: none;
   &:hover {
     cursor: move;
-    outline: none;
   }
 }
 
@@ -118,11 +162,11 @@ const getPointStyle = (point: string) => {
   border-radius: 20px;
   box-shadow: 0 0 4px 0 rgb(24 49 81 / 10%);
   box-sizing: border-box;
-  height: 23px;
+  height: 20px;
   left: -5px;
-  padding: 5px;
+  padding: 3px;
   position: absolute;
   top: -5px;
-  width: 23px;
+  width: 20px;
 }
 </style>

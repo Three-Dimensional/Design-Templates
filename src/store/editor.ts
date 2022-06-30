@@ -4,7 +4,7 @@ import { GlobalDataProps } from './index'
 import { ComponentAllTypes } from '../defaultProps'
 import { PickObjWithRequired } from '@/types/common'
 
-type NewComponentProps = PickObjWithRequired<ComponentAllTypes, 'width' | 'height'>
+export type NewComponentProps = PickObjWithRequired<ComponentAllTypes, 'width' | 'height'>
 
 export type ComponentData = {
   // 业务组件库名称 LText，l-image 等等

@@ -145,6 +145,6 @@ export const propsToStyleString = (props: ComponentAllTypes, includeGeometric: b
   Object.entries(obj).forEach((current) => {
     start += `${current[0]}: ${current[1]}${typeof current[1] === 'number' ? 'px' : ''};`
   })
-  console.log(start)
+  //   console.log(start)
   return start
 }

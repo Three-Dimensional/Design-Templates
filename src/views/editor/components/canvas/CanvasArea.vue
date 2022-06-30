@@ -12,14 +12,7 @@
     >
       <LText v-bind="com.props" />
     </div> -->
-    <EditBox
-      v-for="com in componentList"
-      :key="com.id"
-      :defaultStyle="com.props"
-      :active="currentElement?.id === com.id ? true : false"
-      @click.stop="onItemClick(com.id)"
-      @mousedown="handleMouseDown"
-    >
+    <EditBox v-for="com in componentList" :key="com.id" :comId="com.id" :defaultStyle="com.props">
       <LText :style="com.props" :text="com.text" />
     </EditBox>
   </aside>
@@ -28,37 +21,11 @@
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '@/store/index'
-import { ComponentAllData } from '@/store/editor'
 import LText from '@/components/LText.vue'
 import EditBox from '@/components/Editor/EditBox.vue'
 
 const store = useStore<GlobalDataProps>()
 const componentList = computed(() => store.state.editor.components)
-const currentElement = computed<ComponentAllData | null>(() => store.getters.getCurrentElement)
-
-const onItemClick = (id: string) => {
-  store.commit('setActive', id)
-}
-const handleMouseDown = (e: any) => {
-  // 点击开始移动
-  e.stopPropagation()
-  const startY = e.clientY
-  const startX = e.clientX
-  const move = (moveEvent: any) => {
-    const currX = moveEvent.clientX - startX
-    const currY = moveEvent.clientY - startY
-    if (currentElement.value) {
-      currentElement.value.props.transform = `matrix(1, 0, 0, 1, ${currX}, ${currY})`
-    }
-  }
-  const up = () => {
-    document.removeEventListener('mousemove', move)
-    document.removeEventListener('mouseup', up)
-  }
-  // 注册和取消移动事件
-  document.addEventListener('mousemove', move)
-  document.addEventListener('mouseup', up)
-}
 </script>
 <style lang="scss" scoped>
 .canvas-area {

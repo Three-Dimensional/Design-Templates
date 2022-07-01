@@ -12,6 +12,7 @@
     >
       <LText v-bind="com.props" />
     </div> -->
+    <!-- 测试数据 -->
     <EditBox v-for="com in componentList" :key="com.id" :comId="com.id" :defaultStyle="com.props">
       <LText :style="com.props" :text="com.text" />
     </EditBox>
@@ -37,11 +38,13 @@ const componentList = computed(() => store.state.editor.components)
   margin-top: 60px;
   position: relative;
 }
+
 .editor-wrapper {
   padding: 0px;
   cursor: pointer;
   border: 1px solid transparent;
   user-select: none;
+
   &:hover {
     border: 1px dashed #ccc;
   }

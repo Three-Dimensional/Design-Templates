@@ -9,7 +9,7 @@
       :key="item"
       class="shape-point"
       :style="getPointStyle(item)"
-      @mousedown="handlePointMouseDown"
+      @mousedown="handlePointMouseDown(item, $event)"
     ></div>
 
     <div class="rotate" v-show="isActive">
@@ -27,6 +27,7 @@ import { PickObjWithRequired } from '@/types/common'
 import { GlobalDataProps } from '@/store'
 import { ComponentAllData } from '@/store/editor'
 import pointCursor from '@/config/editorConfig'
+import computedComponentLocation from '@/utils/computedComponentLocation'
 
 const store = useStore<GlobalDataProps>()
 
@@ -119,37 +120,70 @@ const handleMouseDown = (comId: string, e: any) => {
 }
 
 // 8个位置的点移动的事件
-const handlePointMouseDown = (e: MouseEvent) => {
+const handlePointMouseDown = (point: string, e: MouseEvent) => {
   console.log(e)
   e.stopPropagation()
   e.preventDefault()
 
-  //   const editorEl = document.querySelector('#canvas-area')!.getBoundingClientRect()
+  /**
+   * 找到对称点
+   * 条件：根据当前点击点(curPoint)和组件中心点(center)
+   * 对称点 x: center.x + (center.x - curPoint.x)
+   * 对称点 y: center.y + (center.y - curPoint.y)
+   */
 
-  //   // 获取对称点的坐标
-  //     const symmetricPoint = {
-  //         x: center.x - (curPoint.x - center.x),
-  //         y: center.y - (curPoint.y - center.y),
-  //     }
+  if (!e.target) return
 
-  //   const move = (moveEvent: any) => {
-  //     const currPoint = {
-  //       x: moveEvent.clientX - editorEl.left,
-  //       y: moveEvent.clientY - editorEl.top
-  //     }
-  //     if (currentElement.value) {
-  //       currentElement.value.props.transform = `matrix(1, 0, 0, 1, ${
-  //         parseInt(matrixX, 10) + currX
-  //       }, ${parseInt(matrixY, 10) + currY})`
-  //     }
-  //   }
-  //   const up = () => {
-  //     document.removeEventListener('mousemove', move)
-  //     document.removeEventListener('mouseup', up)
-  //   }
-  //   // 注册和取消移动事件
-  //   document.addEventListener('mousemove', move)
-  //   document.addEventListener('mouseup', up)
+  const trf = currentElement.value!
+  const trfArr: string[] = trf.props.transform!.trim().replace(/()/g, '').split(',')
+  const matrixX = trfArr[trfArr.length - 2]
+  const matrixY = trfArr[trfArr.length - 1]
+
+  // 中心点
+  const center = {
+    x: parseInt(matrixX, 10) + trf.props.width / 2,
+    y: parseInt(matrixY, 10) + trf.props.height / 2
+  }
+
+  const editorEl = document.querySelector('#canvas-area')!.getBoundingClientRect()
+
+  const pointRect = (e.target as HTMLDivElement).getBoundingClientRect()
+  const pointOffsetWidth = (e.target as HTMLDivElement).offsetWidth
+  const pointOffsetHeight = (e.target as HTMLDivElement).offsetHeight
+
+  // 当前点击的坐标
+  const curPoint = {
+    x: pointRect.left - editorEl.left + pointOffsetWidth / 2,
+    y: pointRect.top - editorEl.top + pointOffsetHeight / 2
+  }
+
+  // 获取对称点的坐标
+  const symmetricPoint = {
+    x: center.x - (curPoint.x - center.x),
+    y: center.y - (curPoint.y - center.y)
+  }
+
+  const move = (moveEvent: any) => {
+    const curPosition = {
+      x: moveEvent.clientX - editorEl.left,
+      y: moveEvent.clientY - editorEl.top
+    }
+
+    const position = computedComponentLocation(point, curPosition, symmetricPoint, trf.props.rotate)
+    console.log(position)
+    if (currentElement.value) {
+      currentElement.value.props.width = position.width
+      currentElement.value.props.height = position.height
+      currentElement.value.props.transform = `matrix(${position.matrix.toString()})`
+    }
+  }
+  const up = () => {
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+  }
+  // 注册和取消移动事件
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
 }
 </script>
 <style scoped lang="scss">
@@ -189,7 +223,7 @@ const handlePointMouseDown = (e: MouseEvent) => {
   line-height: 24px;
   position: absolute;
   text-align: center;
-  top: 50px;
+  bottom: -35px;
   left: 50%;
   margin-left: -5.5px;
 }

@@ -1,6 +1,7 @@
 {
   "name": "design-templates",
   "version": "0.0.1",
+  "license": "ISC",
   "scripts": {
     "serve": "vite --host 0.0.0.0",
     "build": "vue-tsc --noEmit && vite build",

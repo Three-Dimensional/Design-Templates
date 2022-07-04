@@ -9,6 +9,7 @@
       :key="item"
       class="shape-point"
       :style="getPointStyle(item)"
+      @mousedown="handlePointMouseDown"
     ></div>
 
     <div class="rotate" v-show="isActive">
@@ -25,6 +26,7 @@ import { ComponentAllTypes, propsToStyleString } from '@/defaultProps'
 import { PickObjWithRequired } from '@/types/common'
 import { GlobalDataProps } from '@/store'
 import { ComponentAllData } from '@/store/editor'
+import pointCursor from '@/config/editorConfig'
 
 const store = useStore<GlobalDataProps>()
 
@@ -80,13 +82,13 @@ const getPointStyle = (point: string) => {
     marginLeft: '-4px',
     marginTop: '-4px',
     left: `${newLeft}px`,
-    top: `${newTop}px`
-    // cursor: cursors[point]
+    top: `${newTop}px`,
+    cursor: pointCursor[point]
   }
 
   return style
 }
-
+// editBox拖动事件
 const handleMouseDown = (comId: string, e: any) => {
   // 点击开始移动
   e.stopPropagation()
@@ -114,6 +116,40 @@ const handleMouseDown = (comId: string, e: any) => {
   // 注册和取消移动事件
   document.addEventListener('mousemove', move)
   document.addEventListener('mouseup', up)
+}
+
+// 8个位置的点移动的事件
+const handlePointMouseDown = (e: MouseEvent) => {
+  console.log(e)
+  e.stopPropagation()
+  e.preventDefault()
+
+  //   const editorEl = document.querySelector('#canvas-area')!.getBoundingClientRect()
+
+  //   // 获取对称点的坐标
+  //     const symmetricPoint = {
+  //         x: center.x - (curPoint.x - center.x),
+  //         y: center.y - (curPoint.y - center.y),
+  //     }
+
+  //   const move = (moveEvent: any) => {
+  //     const currPoint = {
+  //       x: moveEvent.clientX - editorEl.left,
+  //       y: moveEvent.clientY - editorEl.top
+  //     }
+  //     if (currentElement.value) {
+  //       currentElement.value.props.transform = `matrix(1, 0, 0, 1, ${
+  //         parseInt(matrixX, 10) + currX
+  //       }, ${parseInt(matrixY, 10) + currY})`
+  //     }
+  //   }
+  //   const up = () => {
+  //     document.removeEventListener('mousemove', move)
+  //     document.removeEventListener('mouseup', up)
+  //   }
+  //   // 注册和取消移动事件
+  //   document.addEventListener('mousemove', move)
+  //   document.addEventListener('mouseup', up)
 }
 </script>
 <style scoped lang="scss">

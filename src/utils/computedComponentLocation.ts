@@ -39,13 +39,13 @@ function CoordinateRotateMappingPoint(point: ComputedPoint, center: ComputedPoin
 }
 
 /**
- * 计算左上角的点拖动的前后位置
+ * 计算转角的点拖动的前后位置
  * @param curPoint 当前位置坐标
  * @param symmetriPoint 对称点坐标
  * @param rotate 旋转的角度
  * @returns 计算出来的位置
  */
-function computedLeftTop(
+function computedCornerPoint(
   curPoint: ComputedPoint,
   symmetriPoint: ComputedPoint,
   rotate: number
@@ -56,8 +56,8 @@ function computedLeftTop(
   //   对称点
   const symmetry = CoordinateRotateMappingPoint(symmetriPoint, newCenter, rotate)
   return {
-    width: Math.round(symmetry.x - point.x),
-    height: Math.round(symmetriPoint.y - point.y),
+    width: Math.abs(Math.round(symmetry.x - point.x)),
+    height: Math.abs(Math.round(symmetriPoint.y - point.y)),
     left: Math.round(point.x),
     top: Math.round(point.y)
   }
@@ -117,7 +117,10 @@ const computedMatrix = (x: number, y: number, rotate: number = 0) => {
 
 // 坐标点和计算函数的对应关系
 const pointFunc = {
-  lt: computedLeftTop
+  lt: computedCornerPoint,
+  rt: computedCornerPoint,
+  rb: computedCornerPoint,
+  lb: computedCornerPoint
 }
 
 export default function computedLocation(

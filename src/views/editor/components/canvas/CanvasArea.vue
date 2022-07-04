@@ -1,5 +1,5 @@
 <template>
-  <aside class="canvas-area">
+  <aside class="canvas-area" id="canvas-area">
     <!-- <div
       v-for="com in componentList"
       :key="com.id"

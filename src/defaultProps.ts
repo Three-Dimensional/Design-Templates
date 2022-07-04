@@ -35,6 +35,9 @@ export interface CommonComponentProps {
   textAlign: string
   color: string
   backgroundColor: string
+
+  // 旋转
+  rotate: number
 }
 
 export const commonDefaultProps: Partial<CommonComponentProps> = {
@@ -61,7 +64,8 @@ export const commonDefaultProps: Partial<CommonComponentProps> = {
   left: 0,
   top: 0,
   right: 0,
-  transform: 'matrix(1, 0, 0, 1, 0, 0)'
+  transform: 'matrix(1, 0, 0, 1, 0, 0)',
+  rotate: 0
 }
 
 // 图片组件类型参数

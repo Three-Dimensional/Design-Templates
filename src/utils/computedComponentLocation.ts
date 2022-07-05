@@ -57,7 +57,25 @@ function computedCornerPoint(
   const symmetry = CoordinateRotateMappingPoint(symmetriPoint, newCenter, rotate)
   return {
     width: Math.abs(Math.round(symmetry.x - point.x)),
-    height: Math.abs(Math.round(symmetriPoint.y - point.y)),
+    height: Math.abs(Math.round(symmetry.y - point.y)),
+    left: Math.round(point.x),
+    top: Math.round(point.y)
+  }
+}
+
+function computedRightTop(
+  curPoint: ComputedPoint,
+  symmetriPoint: ComputedPoint,
+  rotate: number
+): ComputedPosition {
+  const newCenter = getCenterPoint(curPoint, symmetriPoint)
+  //   当前点
+  const point = CoordinateRotateMappingPoint(curPoint, newCenter, rotate)
+  //   对称点
+  const symmetry = CoordinateRotateMappingPoint(symmetriPoint, newCenter, rotate)
+  return {
+    width: Math.round(point.x - symmetry.x),
+    height: Math.round(symmetry.y - point.y),
     left: Math.round(point.x),
     top: Math.round(point.y)
   }
@@ -118,7 +136,7 @@ const computedMatrix = (x: number, y: number, rotate: number = 0) => {
 // 坐标点和计算函数的对应关系
 const pointFunc = {
   lt: computedCornerPoint,
-  rt: computedCornerPoint,
+  rt: computedRightTop,
   rb: computedCornerPoint,
   lb: computedCornerPoint
 }

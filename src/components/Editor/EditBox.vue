@@ -163,6 +163,9 @@ const handlePointMouseDown = (point: string, e: MouseEvent) => {
     y: center.y - (curPoint.y - center.y)
   }
 
+  console.log(center)
+  console.log(symmetricPoint)
+
   const move = (moveEvent: any) => {
     const curPosition = {
       x: moveEvent.clientX - editorEl.left,

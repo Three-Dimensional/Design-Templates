@@ -91,7 +91,7 @@ const getPointStyle = (point: string) => {
 const handleMouseDown = (comId: string, e: any) => {
   // 点击开始移动
   e.stopPropagation()
-  store.commit('setActive', comId)
+  store.setActive(comId)
   if (!currentElement.value) return
   const trf = currentElement.value!
   const trfArr: string[] = trf.props.transform!.trim().replace(/()/g, '').split(',')

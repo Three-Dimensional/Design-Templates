@@ -26,8 +26,7 @@
     "lodash-es": "^4.17.21",
     "pinia": "^2.0.14",
     "vue": "^3.2.16",
-    "vue-router": "^4.0.12",
-    "vuex": "^4.0.2"
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",

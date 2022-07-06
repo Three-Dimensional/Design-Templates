@@ -21,15 +21,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useStore } from 'vuex'
 import { ComponentAllTypes, propsToStyleString } from '@/defaultProps'
 import { PickObjWithRequired } from '@/types/common'
-import { GlobalDataProps } from '@/store'
-import { ComponentAllData } from '@/store/editor'
+import useEditorStore from '@/stores/editor'
 import pointCursor from '@/config/editorConfig'
 import computedComponentLocation from '@/utils/computedComponentLocation'
 
-const store = useStore<GlobalDataProps>()
+const store = useEditorStore()
 
 const props = withDefaults(
   defineProps<{
@@ -42,7 +40,7 @@ const props = withDefaults(
 )
 
 // 当前选中的组件
-const currentElement = computed<ComponentAllData | null>(() => store.getters.getCurrentElement)
+const currentElement = computed(() => store.getCurrentElement)
 
 // 当前组件是否选中
 const isActive = computed(() => {

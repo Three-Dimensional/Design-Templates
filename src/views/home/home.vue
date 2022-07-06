@@ -6,12 +6,11 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useStore } from 'vuex'
-import { GlobalDataProps } from '../../store/index'
+import useTemplatetore from '@/stores/templates'
 import TemplateList from '../../components/TemplateList.vue'
 
-const store = useStore<GlobalDataProps>()
-const testData = computed(() => store.state.templates.data)
+const store = useTemplatetore()
+const testData = computed(() => store.templateList)
 </script>
 
 <style>

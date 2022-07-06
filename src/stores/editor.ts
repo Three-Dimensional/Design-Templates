@@ -57,7 +57,7 @@ export const testComponents: ComponentData[] = [
   }
 ]
 
-export const useEditorStore = defineStore('editor', {
+const useEditorStore = defineStore('editor', {
   state: () => ({
     components: testComponents,
     currentElement: ''
@@ -95,3 +95,5 @@ export const useEditorStore = defineStore('editor', {
     }
   }
 })
+
+export default useEditorStore

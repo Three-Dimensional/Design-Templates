@@ -1,10 +1,10 @@
 <template>
-  <a-button type="primary" v-if="!user.isLogin" class="user-profile-component" @click="login">
+  <a-button type="primary" v-if="!isLogin" class="user-profile-component" @click="login">
     登录
   </a-button>
   <div v-else>
     <a-dropdown-button class="user-profile-component">
-      <router-link to="/setting">{{ user.userName }}</router-link>
+      <router-link to="/setting">{{ userName }}</router-link>
       <template #overlay>
         <a-menu class="user-profile-dropdown">
           <a-menu-item key="0" @click="logout">登出</a-menu-item>
@@ -15,35 +15,34 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { message } from 'ant-design-vue'
-import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { UserProps } from '../../store/user'
+import useUserStore from '@/stores/user'
 
 export default defineComponent({
   name: 'UserProfile',
-  props: {
-    user: {
-      type: Object as PropType<UserProps>,
-      required: true
-    }
-  },
   setup() {
-    const store = useStore()
+    const store = useUserStore()
     const router = useRouter()
+
+    const isLogin = computed(() => store.isLogin)
+    const userName = computed(() => store.userName)
     const login = () => {
-      store.commit('login')
+      store.login()
       message.success('登录成功！', 2)
     }
     const logout = () => {
-      store.commit('logout')
+      store.logout()
       message.success('退出登录成功，2秒后跳转到首页', 2)
       setTimeout(() => {
         router.push('/')
       }, 2000)
     }
+
     return {
+      isLogin,
+      userName,
       login,
       logout
     }

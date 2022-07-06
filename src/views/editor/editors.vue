@@ -33,8 +33,8 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
-import { ComponentData } from '../../stores/interface'
-import { useEditorStore } from '../../stores/editor'
+import { ComponentData } from '@/stores/interface'
+import useEditorStore from '@/stores/editor'
 import EditorHeader from './components/EditorHeader.vue'
 import EditorTools from './components/EditorTools.vue'
 import PanelContent from './components/left/PanelContent.vue'

@@ -5,7 +5,7 @@
         <div class="page-title">
           <router-link to="/">模版设计</router-link>
         </div>
-        <UserProfile :user="user"></UserProfile>
+        <UserProfile></UserProfile>
       </a-layout-header>
       <a-layout-content class="home-layout">
         <router-view></router-view>
@@ -16,22 +16,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
-import { useStore } from 'vuex'
-import { GlobalDataProps } from '../store/index'
+import { defineComponent } from 'vue'
 import UserProfile from '../components/login/UserProfile.vue'
 
 export default defineComponent({
   name: 'Index',
   components: {
     UserProfile
-  },
-  setup() {
-    const store = useStore<GlobalDataProps>()
-    const user = computed(() => store.state.user)
-    return {
-      user
-    }
   }
 })
 </script>

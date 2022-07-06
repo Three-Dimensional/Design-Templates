@@ -91,7 +91,7 @@ const getPointStyle = (point: string) => {
 const handleMouseDown = (comId: string, e: any) => {
   // 点击开始移动
   e.stopPropagation()
-  store.commit('setActive', comId)
+  store.setActive(comId)
   if (!currentElement.value) return
   const trf = currentElement.value!
   const trfArr: string[] = trf.props.transform!.trim().replace(/()/g, '').split(',')
@@ -160,6 +160,9 @@ const handlePointMouseDown = (point: string, e: MouseEvent) => {
     x: center.x - (curPoint.x - center.x),
     y: center.y - (curPoint.y - center.y)
   }
+
+  console.log(center)
+  console.log(symmetricPoint)
 
   const move = (moveEvent: any) => {
     const curPosition = {

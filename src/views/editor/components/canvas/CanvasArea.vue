@@ -19,13 +19,12 @@
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useStore } from 'vuex'
-import { GlobalDataProps } from '@/store/index'
+import useEditorStore from '@/stores/editor'
 import LText from '@/components/LText.vue'
 import EditBox from '@/components/Editor/EditBox.vue'
 
-const store = useStore<GlobalDataProps>()
-const componentList = computed(() => store.state.editor.components)
+const store = useEditorStore()
+const componentList = computed(() => store.components)
 </script>
 <style lang="scss" scoped>
 .canvas-area {

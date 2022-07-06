@@ -33,9 +33,8 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
-import { useStore } from 'vuex'
-import { GlobalDataProps } from '../../store/index.js'
-import { ComponentData } from '../../store/editor.js'
+import { ComponentData } from '@/stores/interface'
+import useEditorStore from '@/stores/editor'
 import EditorHeader from './components/EditorHeader.vue'
 import EditorTools from './components/EditorTools.vue'
 import PanelContent from './components/left/PanelContent.vue'
@@ -45,10 +44,10 @@ import PropsTable from '@/components/PropsTable/PropsTable.vue'
 import PageScaleSet from './components/bottom/PageScaleSet.vue'
 import pageScale from './components/bottom/pageScale'
 
-const store = useStore<GlobalDataProps>()
-const currentElement = computed<ComponentData | null>(() => store.getters.getCurrentElement)
+const store = useEditorStore()
+const currentElement = computed<ComponentData | undefined>(() => store.getCurrentElement)
 const handleChange = (e: { key: string; value: any }) => {
-  store.commit('updateComponent', e)
+  store.updateComponent(e)
 }
 
 const activeItem = ref({

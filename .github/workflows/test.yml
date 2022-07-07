@@ -5,29 +5,29 @@
 name: test
 
 # 触发条件
-on: 
-    push:
-        branches:
-            - main
-# 修改文件范围, 不在范围内不触发
-        paths:
-            - '.github/workflows/**'
-            - '__test__/**'
-            - 'src/**'
+on:
+  push:
+    branches:
+      - main
+    # 修改文件范围, 不在范围内不触发
+    paths:
+      - '.github/workflows/**'
+      - '__test__/**'
+      - 'src/**'
 # 任务
 jobs:
-    test:
+  test:
     # 运行的基础
-        runs-on: ubuntu-latest
-# 步骤
-        steps:
-            - uses: actions/checkout@v2  # git pull
-            - name: Use Node.js
-              uses: actions/setup-node@v1
-              with:
-                  node-version: 14
-            - name: lint and test
-              run: |
-                  npm i
-                #   npm run lint
-                #   npm run test:remote
+    runs-on: ubuntu-latest
+    # 步骤
+    steps:
+      - uses: actions/checkout@v2 # git pull
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: lint and test
+        run: |
+          npm i
+        #   npm run lint
+        #   npm run test:remote

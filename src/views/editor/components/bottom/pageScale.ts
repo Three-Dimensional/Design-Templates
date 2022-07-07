@@ -68,13 +68,13 @@ const pageScale = () => {
       previewStyle.transform = `matrix(${canvas.scaleRate},0,0,${canvas.scaleRate},${canvas.offsetX}, ${canvas.offsetY})`
     }
     if (ev.preventDefault) {
-      ev.preventDefault()
+      // ev.preventDefault()
     }
   }
 
   onMounted(() => {
     setOriginScale()
-    previewRef.value!.addEventListener('mousewheel', setWheelScale)
+    previewRef.value!.addEventListener('mousewheel', setWheelScale, { passive: true })
   })
 
   onUnmounted(() => {

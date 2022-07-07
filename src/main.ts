@@ -3,7 +3,7 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 import App from './App.vue'
 import router from './routers/index'
-import store from './store/index'
+import pinia from './stores/index'
 import './assets/scss/global.scss'
 
 import registerComponent from './components'
@@ -14,5 +14,5 @@ registerComponent(app)
 
 app.use(Antd)
 app.use(router)
-app.use(store)
+app.use(pinia)
 app.mount('#app')

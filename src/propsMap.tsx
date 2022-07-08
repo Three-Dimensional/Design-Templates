@@ -29,14 +29,14 @@ export type PropsToFroms = {
 }
 
 export const mapPropsToFroms: PropsToFroms = {
-  text: {
-    component: 'a-textarea',
-    text: '文本',
-    extraProps: {
-      rows: 3
-    },
-    afterTransform: (e: any) => e.target.value
-  },
+  // text: {
+  //   component: 'a-textarea',
+  //   text: '文本',
+  //   extraProps: {
+  //     rows: 3
+  //   },
+  //   afterTransform: (e: any) => e.target.value
+  // },
   fontSize: {
     component: 'a-input-number',
     text: '字号',

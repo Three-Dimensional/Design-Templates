@@ -36,11 +36,13 @@ const componentList = computed(() => store.components)
   margin-top: 60px;
   position: relative;
 }
+
 .editor-wrapper {
   padding: 0px;
   cursor: pointer;
   border: 1px solid transparent;
   user-select: none;
+
   &:hover {
     border: 1px dashed #ccc;
   }

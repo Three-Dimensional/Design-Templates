@@ -50,6 +50,7 @@ const handleClick = (id: number, index: number) => {
   display: flex;
   flex-direction: column;
 }
+
 .nav-menu {
   display: flex;
   height: 36px;

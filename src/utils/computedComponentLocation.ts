@@ -1,7 +1,12 @@
 /* eslint-disable no-undef */
 // 计算组件位置函数，提供给editBox调用，拖动点会改变width、height、left、top
 import { flatten } from 'lodash-es'
-import { ComputedPoint, ComputedPosition, MatrixComputedPosition } from '@/types/location'
+import {
+  ComputedPoint,
+  ComputedPosition,
+  MatrixComputedPosition,
+  OldPosition
+} from '@/types/location'
 
 /**
  * 获取两点的中心点坐标
@@ -64,6 +69,57 @@ function computedCornerPoint(
   }
 }
 
+function computedTopBottom(
+  curPoint: ComputedPoint,
+  symmetriPoint: ComputedPoint,
+  rotate: number,
+  oldPosition: ComputedPoint,
+  oldRect: OldPosition
+) {
+  //   当前点
+  const point = CoordinateRotateMappingPoint(curPoint, oldPosition, rotate)
+
+  // 移动后的top或者bottom的中间点
+  const middleTopOrBottom = CoordinateRotateMappingPoint(
+    {
+      x: oldPosition.x,
+      y: point.y
+    },
+    curPoint,
+    rotate
+  )
+
+  const newHeight = Math.sqrt(
+    Math.abs(middleTopOrBottom.x - symmetriPoint.x) ** 2 +
+      Math.abs(middleTopOrBottom.y - symmetriPoint.y) ** 2
+  )
+
+  const newCenter = getCenterPoint(middleTopOrBottom, symmetriPoint)
+
+  console.log('newHeight===', newHeight)
+
+  console.log('LeftTop', {
+    x: newCenter.x - oldRect.width / 2,
+    y: newCenter.y - newHeight / 2
+  })
+  // 旋转前的topLeft点 -> 计算旋转后的点
+  const leftTop = CoordinateRotateMappingPoint(
+    {
+      x: newCenter.x - oldRect.width / 2,
+      y: newCenter.y - newHeight / 2
+    },
+    newCenter,
+    rotate
+  )
+  //   已知两个点坐标和夹角和三条边长度求坐标
+  return {
+    width: oldRect.width,
+    height: Math.round(newHeight),
+    left: Math.round(leftTop.x),
+    top: Math.round(leftTop.y)
+  }
+}
+
 // deg 转 角度
 function degToAngle(rotate: number) {
   return rotate * (Math.PI / 180)
@@ -94,6 +150,7 @@ function matrixMul(a: number[][], b: number[][]) {
 }
 // 根据位移和旋转计算matrix属性
 const computedMatrix = (x: number, y: number, rotate: number = 0) => {
+  // 位移矩阵
   const a = [
     [1, 0],
     [0, 1],
@@ -105,6 +162,7 @@ const computedMatrix = (x: number, y: number, rotate: number = 0) => {
   //   ]
   const sinAngle = Math.sin(degToAngle(rotate))
   const cosAngle = Math.cos(degToAngle(rotate))
+  //   旋转矩阵
   const b = [
     [cosAngle, sinAngle],
     [-sinAngle, cosAngle]
@@ -121,16 +179,26 @@ const pointFunc = {
   lt: computedCornerPoint,
   rt: computedCornerPoint,
   rb: computedCornerPoint,
-  lb: computedCornerPoint
+  lb: computedCornerPoint,
+  t: computedTopBottom,
+  b: computedTopBottom
 }
 
 export default function computedLocation(
   pointName: string,
   curPoint: ComputedPoint,
   symmetriPoint: ComputedPoint,
-  rotate: number = 0
+  rotate: number | undefined,
+  oldPosition: ComputedPoint,
+  oldRect: OldPosition
 ): MatrixComputedPosition {
-  const p: MatrixComputedPosition = pointFunc[pointName](curPoint, symmetriPoint, rotate)
+  const p: MatrixComputedPosition = pointFunc[pointName](
+    curPoint,
+    symmetriPoint,
+    rotate || 0,
+    oldPosition,
+    oldRect
+  )
   p.matrix = flatten(computedMatrix(p.left, p.top, rotate))
   return p
 }

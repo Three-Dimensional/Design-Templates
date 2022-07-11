@@ -6,6 +6,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import path from 'path'
 
 export default defineConfig({
+  base: './',
   plugins: [
     vue(),
     tsConfigPaths(),

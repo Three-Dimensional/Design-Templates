@@ -14,7 +14,9 @@ watch(
   () => props.activeModule,
   (newVal) => {
     console.log(newVal, 'newVal')
-    const file = defineAsyncComponent(() => import(`../views/editor/module${modules[newVal]}`))
+    const file = defineAsyncComponent(
+      () => import(/* @vite-ignore */ `../views/editor/module${modules[newVal]}`)
+    )
     activeItem.value = file
   },
   {

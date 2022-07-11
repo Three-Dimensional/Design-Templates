@@ -120,6 +120,40 @@ function computedTopBottom(
   }
 }
 
+function computedLeftRight(
+  curPoint: ComputedPoint,
+  symmetriPoint: ComputedPoint,
+  rotate: number,
+  oldPosition: ComputedPoint,
+  oldRect: OldPosition
+) {
+  const point = CoordinateRotateMappingPoint(curPoint, oldPosition, rotate)
+
+  // 正常0角度时的左右中点
+  const leftOrRightPoint = CoordinateRotateMappingPoint(
+    {
+      x: point.x,
+      y: oldPosition.y
+    },
+    oldPosition,
+    rotate
+  )
+
+  const newCenter = getCenterPoint(leftOrRightPoint, symmetriPoint)
+
+  const newWidth = Math.sqrt(
+    Math.abs(leftOrRightPoint.x - symmetriPoint.x) ** 2 +
+      Math.abs(leftOrRightPoint.y - symmetriPoint.y) ** 2
+  )
+
+  return {
+    width: Math.round(newWidth),
+    height: oldRect.height,
+    left: Math.round(newCenter.x - newWidth / 2),
+    top: Math.round(newCenter.y - oldRect.height / 2)
+  }
+}
+
 // deg 转 角度
 function degToAngle(rotate: number) {
   return rotate * (Math.PI / 180)
@@ -181,7 +215,9 @@ const pointFunc = {
   rb: computedCornerPoint,
   lb: computedCornerPoint,
   t: computedTopBottom,
-  b: computedTopBottom
+  b: computedTopBottom,
+  l: computedLeftRight,
+  r: computedLeftRight
 }
 
 export default function computedLocation(

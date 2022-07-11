@@ -16,3 +16,5 @@ export interface ComputedPoint {
   x: number
   y: number
 }
+
+export type OldPosition = Omit<ComputedPosition, 'left' | 'top'>

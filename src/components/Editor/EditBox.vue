@@ -161,6 +161,11 @@ const handlePointMouseDown = (point: string, e: MouseEvent) => {
     y: center.y - (curPoint.y - center.y)
   }
 
+  const oldRect = {
+    width: trf.props.width,
+    height: trf.props.height
+  }
+
   console.log(center)
   console.log(symmetricPoint)
 
@@ -170,7 +175,14 @@ const handlePointMouseDown = (point: string, e: MouseEvent) => {
       y: moveEvent.clientY - editorEl.top
     }
 
-    const position = computedComponentLocation(point, curPosition, symmetricPoint, trf.props.rotate)
+    const position = computedComponentLocation(
+      point,
+      curPosition,
+      symmetricPoint,
+      trf.props.rotate,
+      curPoint,
+      oldRect
+    )
     console.log(position)
     if (currentElement.value) {
       currentElement.value.props.width = position.width

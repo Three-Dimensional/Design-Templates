@@ -1,30 +1,25 @@
-import index from '@/views/index.vue'
-import home from '@/views/home/home.vue'
-import template from '@/views/template/template.vue'
-import editor from '@/views/editor/editors.vue'
-
 const routers = [
   {
     path: '/',
     name: 'index',
-    component: () => index,
+    component: () => import('@/views/Index.vue'),
     children: [
       {
         path: '',
         name: 'home',
-        component: () => home
+        component: () => import('@/views/home/home.vue')
       },
       {
         path: 'template/:id',
         name: 'template',
-        component: () => template
+        component: () => import('@/views/template/template.vue')
       }
     ]
   },
   {
     path: '/editor',
     name: 'editor',
-    component: () => editor
+    component: () => import('@/views/editor/editors.vue')
   }
 ]
 

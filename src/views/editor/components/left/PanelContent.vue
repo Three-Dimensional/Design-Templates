@@ -49,6 +49,7 @@ const handleClick = (id: number, index: number) => {
 .panel {
   display: flex;
   flex-direction: column;
+  padding: 0 10px;
 }
 
 .nav-menu {

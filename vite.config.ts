@@ -24,6 +24,7 @@ export default defineConfig({
     hmr: true
   },
   resolve: {
+    preserveSymlinks: true,
     alias: {
       '@': path.resolve(__dirname, 'src'),
       assets: path.resolve(__dirname, 'src/assets'),

@@ -1,25 +1,27 @@
+// const modules = ('../../views/*/*.vue');
+
 const routers = [
   {
     path: '/',
     name: 'index',
-    component: () => import('@/views/index.vue'),
+    component: () => import.meta.glob('@/views/index.vue'),
     children: [
       {
         path: '',
         name: 'home',
-        component: () => import('@/views/home/home.vue')
+        component: () => import.meta.glob('@/views/home/home.vue')
       },
       {
         path: 'template/:id',
         name: 'template',
-        component: () => import('@/views/template/template.vue')
+        component: () => import.meta.glob('@/views/template/template.vue')
       }
     ]
   },
   {
     path: '/editor',
     name: 'editor',
-    component: () => import('@/views/editor/editors.vue')
+    component: () => import.meta.glob('@/views/editor/editors.vue')
   }
 ]
 

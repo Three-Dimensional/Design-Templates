@@ -28,10 +28,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: Login to build
+      - name: Build Dist
         run: |
-          npm install
-          npm run build
+          # npm install
+          # npm run build
           ls -a
           # docker build --platform linux/amd64 -t design-templates:latest  .
           # docker login --username=${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_PASSWORD }} registry.cn-hangzhou.aliyuncs.com

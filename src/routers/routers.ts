@@ -1,27 +1,30 @@
-// const modules = ('../../views/*/*.vue');
+import index from '@/views/index.vue'
+import home from '@/views/home/home.vue'
+import template from '@/views/template/template.vue'
+import editor from '@/views/editor/editors.vue'
 
 const routers = [
   {
     path: '/',
     name: 'index',
-    component: () => import.meta.glob('@/views/index.vue'),
+    component: () => index,
     children: [
       {
         path: '',
         name: 'home',
-        component: () => import.meta.glob('@/views/home/home.vue')
+        component: () => home
       },
       {
         path: 'template/:id',
         name: 'template',
-        component: () => import.meta.glob('@/views/template/template.vue')
+        component: () => template
       }
     ]
   },
   {
     path: '/editor',
     name: 'editor',
-    component: () => import.meta.glob('@/views/editor/editors.vue')
+    component: () => editor
   }
 ]
 

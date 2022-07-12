@@ -23,7 +23,7 @@ const props = defineProps<propsType>()
 
 const active = ref({
   id: 1,
-  type: 'template'
+  type: 'case'
 })
 interface itemType {
   id: number
@@ -32,7 +32,7 @@ interface itemType {
   iconUrl: string
 }
 const itemList = reactive<itemType[]>([
-  { id: 1, title: '模板', type: 'template', iconUrl: templateUrl },
+  { id: 1, title: '模板', type: 'case', iconUrl: templateUrl },
   { id: 2, title: '图片', type: 'image', iconUrl: templateUrl },
   { id: 3, title: '素材', type: 'material', iconUrl: templateUrl },
   { id: 4, title: '文字', type: 'text', iconUrl: templateUrl },

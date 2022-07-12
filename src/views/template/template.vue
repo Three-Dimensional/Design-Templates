@@ -1,15 +1,15 @@
 <template>
   <div class="work-detail-container">
-    <a-row type="flex" justify="center" v-if="template">
+    <a-row type="flex" justify="center" v-if="templateItem">
       <a-col :span="8" class="cover-img">
-        <img :src="template.coverImg" alt="" />
+        <img :src="templateItem.coverImg" alt="" />
       </a-col>
       <a-col :span="8">
-        <h2>{{ template.title }}</h2>
-        <p>{{ template.title }}</p>
+        <h2>{{ templateItem.title }}</h2>
+        <p>{{ templateItem.title }}</p>
         <div class="author">
           <a-avatar>V</a-avatar>
-          该模版由 <b>{{ template.author }}</b> 创作
+          该模版由 <b>{{ templateItem.author }}</b> 创作
         </div>
         <div class="bar-code-area">
           <span>扫一扫，手机预览</span>
@@ -29,16 +29,12 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
-import { GlobalDataProps } from '../../store/index'
-import { TemplateProps } from '../../store/templates'
+import useTemplatetore from '@/stores/templates'
 
 const route = useRoute()
-const store = useStore<GlobalDataProps>()
+const store = useTemplatetore()
 const currentId = route.params.id as string
-const template = computed<TemplateProps>(() =>
-  store.getters.getTemplateById(parseInt(currentId, 10))
-)
+const templateItem = computed(() => store.getTemplateById(parseInt(currentId, 10)))
 </script>
 
 <style scoped>

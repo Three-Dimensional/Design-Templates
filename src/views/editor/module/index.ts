@@ -7,7 +7,6 @@ path.forEach((item) => {
   const filePath = url.replace(/(.*\/)*([^.]+).*/gi, '$1')
   const file = filePath.split('/')
   const moduleName = `${file[1]}-${key}`
-  modules[moduleName] = url
+  modules[moduleName] = modulesFiles[item].default
 })
-
 export default modules

@@ -3,7 +3,6 @@
 # github actions 中文文档 https://docs.github.com/cn/actions/getting-started-with-github-actions
 
 name: CI/CD
-
 # 触发条件
 on:
   push:
@@ -22,7 +21,6 @@ jobs:
     # 运行的基础
     runs-on: ubuntu-latest
     # 步骤
-    
     steps:
       - uses: actions/checkout@v2 # git pull
       - name: Use Node.js

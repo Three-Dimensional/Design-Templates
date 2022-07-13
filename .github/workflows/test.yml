@@ -33,6 +33,6 @@ jobs:
           yarn install
           yarn build
           docker build --platform linux/amd64 -t design-templates:latest  .
-          docker login --username=${{ secrets.REGISTRY_USERNAME }} --password=${{ secrets.REGISTRY_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
+          docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
           docker tag design-templates:latest ${{ secrets.DOCKER_REPOSITORY }}
           docker push ${{ secrets.DOCKER_REPOSITORY }}

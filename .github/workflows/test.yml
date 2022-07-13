@@ -48,7 +48,7 @@ jobs:
       #     ls
       #     cd zxl
       #     ./deploy.sh
-        - name: 登录服务器, 执行脚本
+        - name: login serve
                 uses: actions/ssh-action@master
                 with:
                   host: ${{ secrets.REMOTE_HOST }}

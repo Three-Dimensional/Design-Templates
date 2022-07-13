@@ -37,19 +37,28 @@ jobs:
       #     docker tag design-templates:latest ${{ secrets.DOCKER_REPOSITORY }}
       #     docker push ${{ secrets.DOCKER_REPOSITORY }}
 
-      - name: 登录服务器, 执行脚本
-        uses: easingthemes/ssh-deploy@main
-        env:
-            SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
-            REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-            REMOTE_USER: root
-            script: |
-              ls
-              cd zxl
-              ./deploy.sh
+      # - name: 登录服务器, 执行脚本
+      #   uses: easingthemes/ssh-deploy@main
+      #   env:
+      #       SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
+      #       REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      #       REMOTE_USER: root
+      #       script: |
+      #         ls
+      #         cd zxl
+      #         ./deploy.sh
 
         # with:
         #   host: ${{ secrets.REMOTE_HOST }}
         #   key: ${{ secrets.ACCESS_TOKEN }}
         #   username: root
 
+      - name: 登录服务器, 执行脚本
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }} # 下面三个配置与上面一样
+        username: root
+        key: ${{ secrets.ACCESS_TOKEN }}
+        # 进入到项目目录，执行依赖更新
+        script: |
+          ls -a

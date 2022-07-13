@@ -1,10 +1,11 @@
 {
   "name": "design-templates",
   "version": "0.0.1",
+  "license": "ISC",
   "scripts": {
-    "serve": "vite",
+    "serve": "vite --host 0.0.0.0",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview",
+    "preview": "vite preview --port 8888",
     "prepare": "husky install",
     "commit": "git-cz"
   },
@@ -23,9 +24,9 @@
   "dependencies": {
     "ant-design-vue": "^2.2.8",
     "lodash-es": "^4.17.21",
+    "pinia": "^2.0.14",
     "vue": "^3.2.16",
-    "vue-router": "^4.0.12",
-    "vuex": "^4.0.2"
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",

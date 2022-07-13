@@ -7,27 +7,45 @@
           <span class="color-block" :style="{ backgroundColor: props.setting.color }"></span>
           <span class="tips-text">调色板</span>
         </li>
-        <li class="hover-tips font-size-choose">
-          <input type="text" v-model="textSize" />
-          <span class="font-pop-icon">
+        <li class="hover-tips">
+          <div
+            class="font-family__wrap"
+            v-html="findFamilyByvalue(fontFamilyValue)"
+            @click="fontFamilyVisible = !fontFamilyVisible"
+          ></div>
+          <span class="font-pop__icon" @click="fontFamilyVisible = !fontFamilyVisible">
             <Icon icon="angle-down" />
           </span>
-          <span class="tips-text">字体大小</span>
+          <span class="tips-text" v-if="!fontFamilyVisible">字体</span>
+          <FontFamily v-model:visible="fontFamilyVisible" v-model:family="fontFamilyValue" />
+        </li>
+        <li class="hover-tips font-size--choose">
+          <input
+            type="text"
+            v-model="fontSizeValue"
+            @focus="fontInputFocus"
+            @blur="fontInputBlur"
+          />
+          <span class="font-pop__icon" @click="fontSizeVisible = !fontSizeVisible">
+            <Icon icon="angle-down" />
+          </span>
+          <span class="tips-text" v-if="!fontSizeVisible">字体大小</span>
+          <FontSize v-model:visible="fontSizeVisible" v-model:size="fontSizeValue" />
         </li>
         <li :class="['hover-tips', props.setting.bold && 'selected']">
-          <span class="icon-wrap">
+          <span class="icon-wrap" @click="emitData('bold', !props.setting.bold)">
             <Icon icon="bold" />
           </span>
           <span class="tips-text">加粗</span>
         </li>
         <li :class="['hover-tips', props.setting.italic && 'selected']">
-          <span class="icon-wrap">
+          <span class="icon-wrap" @click="emitData('italic', !props.setting.italic)">
             <Icon icon="italic" />
           </span>
           <span class="tips-text">斜体</span>
         </li>
         <li :class="['hover-tips', props.setting.underline && 'selected']">
-          <span class="icon-wrap">
+          <span class="icon-wrap" @click="emitData('underline', !props.setting.underline)">
             <Icon icon="underline" />
           </span>
           <span class="tips-text">下划线</span>
@@ -77,12 +95,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
+import { computed, ref } from 'vue'
 import Opacity from '@/components/Tools/Opacity.vue'
+import FontSize from '@/components/Tools/FontSize.vue'
+import FontFamily from '@/components/Tools/FontFamily.vue'
+import { findFamilyByvalue } from '@/config/toolBarConfig'
 
 interface Setting {
   color: string
-  size: number | string
+  family: string
+  size: number
   bold: boolean
   italic: boolean
   underline: boolean
@@ -97,6 +119,7 @@ const props = withDefaults(defineProps<Props>(), {
   setting: () => {
     return {
       color: 'rgb(130, 85, 130)',
+      family: '',
       size: 15,
       bold: false,
       italic: false,
@@ -107,10 +130,6 @@ const props = withDefaults(defineProps<Props>(), {
   }
 })
 
-const textSize = computed(() => {
-  return props.setting.size
-})
-
 const emitData = (key: string, value: string | number | boolean) => {
   const copyData = {
     ...props.setting,
@@ -119,8 +138,9 @@ const emitData = (key: string, value: string | number | boolean) => {
   emit('update:setting', copyData)
 }
 
+// 控制透明度工具栏
 const opacityShow = ref(false)
-const opacityLocation = reactive({
+const opacityLocation = ref({
   left: 0,
   top: 0
 })
@@ -129,13 +149,37 @@ const opacityValue = computed({
   set: (value: number) => emitData('opacity', value)
 })
 
+// 显示弹窗的时候获取坐标，计算透明度弹窗应该显示的位置
 function toggleShow() {
   const ele = document.getElementById('OpacityBtn')
   const rect = ele?.getBoundingClientRect()
-  opacityLocation.left = rect?.x || 0
-  opacityLocation.top = rect?.y || 0
+  opacityLocation.value.left = rect?.x || 0
+  opacityLocation.value.top = rect?.y || 0
   opacityShow.value = !opacityShow.value
 }
+
+// 字体大小显示控制
+const fontSizeVisible = ref(false)
+const fontSizeValue = computed({
+  get: () => props.setting.size,
+  set: (value: number) => emitData('size', value)
+})
+let copyFont = 0
+const fontInputFocus = () => {
+  fontSizeVisible.value = true
+  copyFont = fontSizeValue.value
+}
+const fontInputBlur = () => {
+  if (fontSizeValue.value === copyFont) return
+  fontSizeVisible.value = !fontSizeVisible.value
+}
+
+// 字体显示控制
+const fontFamilyVisible = ref(false)
+const fontFamilyValue = computed({
+  get: () => props.setting.family,
+  set: (value: string) => emitData('family', value)
+})
 </script>
 <style scoped lang="scss">
 .editor-control {
@@ -172,7 +216,7 @@ function toggleShow() {
       align-items: center;
       position: relative;
     }
-    .font-pop-icon {
+    .font-pop__icon {
       cursor: pointer;
     }
     .color-block {
@@ -192,6 +236,7 @@ function toggleShow() {
       line-height: 20px;
     }
     .hover-tips {
+      position: relative;
       &:hover {
         background: #f3f4f9;
         .tips-text {
@@ -229,7 +274,7 @@ function toggleShow() {
       }
     }
 
-    .font-size-choose {
+    .font-size--choose {
       input {
         background: transparent;
         border: none;
@@ -239,7 +284,7 @@ function toggleShow() {
         text-align: left;
         width: 32px;
       }
-      .font-pop-icon {
+      .font-pop__icon {
         display: block;
         height: 20px;
         margin-left: 5px;
@@ -253,6 +298,16 @@ function toggleShow() {
           color: #111a36;
         }
       }
+    }
+
+    .font-family__wrap {
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      height: 20px;
+      overflow: hidden;
+      position: relative;
+      width: 115px;
     }
   }
 }

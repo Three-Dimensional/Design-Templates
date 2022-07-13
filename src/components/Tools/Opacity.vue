@@ -1,22 +1,22 @@
 <template>
-  <div class="full-mask" v-show="props.show" @click.self.stop="changeShow">
-    <!-- <div class="full-mask-bg"></div> -->
+  <div class="full-mask" v-if="props.show" @click.self.stop="changeShow">
     <div
-      class="full-mask-poc"
+      class="full-mask__poc"
       :style="{ left: props.location.left + 'px', top: props.location.top + 'px' }"
     >
-      <div class="tool-opacity-child">
+      <div class="tool-opacity__child">
         <div class="slider">
-          <label class="slider-label">透明度</label>
-          <div class="slider-area" id="slider-area">
-            <div class="slider-back" :style="`--value: ${props.value}%`"></div>
+          <label class="slider__label">透明度</label>
+          <div class="slider__area" id="slider-area">
+            <div class="slider__back" :style="`--value: ${props.value}%`"></div>
             <div
-              class="slider-block"
+              class="slider__block"
               id="slider-block"
               :style="{ left: `calc(${props.value}% - 7.5px)` }"
             ></div>
           </div>
-          <input class="slider-input" type="text" v-model="inputValue" @blur="inputBlur" />
+          <input class="slider__input" type="number" max="100" min="0" v-model="inputValue" />
+          <span class="unit">%</span>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@ const inputValue = computed({
 const mMove = (event: MouseEvent) => {
   event.stopPropagation()
   event.preventDefault()
-  let disWidth = event.clientX - startX + 7.5
+  let disWidth = event.clientX - startX
   if (disWidth > barWidth) {
     disWidth = barWidth
   }
@@ -65,22 +65,18 @@ const mMove = (event: MouseEvent) => {
     disWidth = 0
   }
 
-  inputValue.value = (disWidth / barWidth) * 100
+  inputValue.value = Math.trunc((disWidth / barWidth) * 100)
 }
 
 function bindListener() {
   const box = document.getElementById('slider-area')
-  box?.addEventListener('mousedown', function (event: MouseEvent) {
+  box?.addEventListener('mousedown', (event: MouseEvent) => {
     event.preventDefault()
     event.stopPropagation()
-    startX = event.clientX
-
-    inputValue.value = (event.offsetX / barWidth) * 100
-
+    inputValue.value = Math.trunc(((event.clientX - startX) / barWidth) * 100)
     box?.addEventListener('mousemove', mMove)
   })
-
-  box?.addEventListener('mouseup', function () {
+  box?.addEventListener('mouseup', () => {
     box?.removeEventListener('mousemove', mMove)
   })
 }
@@ -88,52 +84,18 @@ function bindListener() {
 watch([() => props.show], (val) => {
   if (val[0]) {
     nextTick(() => {
+      startX = props.location.left - 132 - 1 + 70
       bindListener()
     })
   }
 })
 
-// function unbindListener() {
-//   // const box = document.getElementById('slider-area');
-//   // console.log(box);
-//   // const ele = document.getElementById('slider-block');
-//   // let startX = 0; //鼠标按下的位置
-//   // box?.addEventListener('mousedown', function(event: MouseEvent) {
-//   //     event.preventDefault();
-//   //     event.stopPropagation();
-//   //     startX = event.clientX
-//   //     console.log(event);
-//   // })
-// }
-
 const changeShow = () => {
   emit('update:show', false)
 }
 
-// 输入框失去焦点，更新透明度
-function inputBlur() {}
-
 onMounted(() => {
-  // const box = document.getElementById('slider-area');
-  // console.log(box);
-  // const ele = document.getElementById('slider-block');
-  // let startX = 0; //鼠标按下的位置
-  // box?.addEventListener('mousedown', function(event: MouseEvent) {
-  //     event.preventDefault();
-  //     event.stopPropagation();
-  //     startX = event.clientX
-  //     console.log(event);
-
-  //     let nowX = event.offsetX;
-  //     const ele = document.getElementById('slider-block');
-  //     if(ele) ele.style.left = nowX + 'px'
-
-  //     ele?.addEventListener('mousemove', mMove)
-  // })
-  // box?.addEventListener('mouseup', function(event: MouseEvent){
-  //     ele?.removeEventListener('mousemove', mMove)
-  // })
-  inputValue.value = barWidth * props.value
+  inputValue.value = barWidth * (props.value / 100)
 })
 </script>
 <style scoped lang="scss">
@@ -145,22 +107,13 @@ onMounted(() => {
   top: 0;
   width: 100%;
   z-index: 99;
-  .full-mask-bg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: transparent;
-    z-index: 1;
-  }
-  .full-mask-poc {
+  .full-mask__poc {
     height: 0;
     position: absolute;
     width: 0;
     z-index: 2;
   }
-  .tool-opacity-child {
+  .tool-opacity__child {
     background: #fff;
     border-radius: 4px;
     box-shadow: 0 9px 28px 8px rgb(42 49 67 / 6%), 0 3px 6px -4px rgb(42 49 67 / 11%),
@@ -169,6 +122,7 @@ onMounted(() => {
     position: absolute;
     top: 44px;
     transform: translateX(-50%);
+    padding: 4px 1px;
   }
   .slider {
     display: flex;
@@ -177,18 +131,19 @@ onMounted(() => {
     box-sizing: border-box;
     cursor: default;
     height: 40px;
-    padding: 0 16px;
+    padding: 0 20px 0 16px;
     z-index: 1;
-    .slider-label {
+    position: relative;
+    .slider__label {
       color: #1b2337;
       width: 54px;
     }
-    .slider-area {
+    .slider__area {
       height: 40px;
       margin: 0 12px 0 0;
       position: relative;
       width: 152px;
-      .slider-back {
+      .slider__back {
         background: #e4e7ed;
         border-radius: 4px;
         cursor: pointer;
@@ -208,7 +163,7 @@ onMounted(() => {
           width: var(--value);
         }
       }
-      .slider-block {
+      .slider__block {
         background: #fff;
         border: 1px solid #0773fc;
         border-radius: 50%;
@@ -222,7 +177,7 @@ onMounted(() => {
         width: 15px;
       }
     }
-    .slider-input {
+    .slider__input {
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 3px;
       box-sizing: border-box;
@@ -231,6 +186,11 @@ onMounted(() => {
       line-height: 30px;
       text-align: center;
       width: 50px;
+    }
+    .unit {
+      position: absolute;
+      right: 5px;
+      top: 10px;
     }
   }
 }

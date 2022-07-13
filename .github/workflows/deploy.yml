@@ -6,10 +6,10 @@ name: CI/CD
 # 触发条件
 on:
   push:
-    branches:
-      - online
-    # tags:
-    #   - 'v*'
+    # branches:
+    #   - online
+    tags:
+      - 'v*.*.*'
     # 修改文件范围, 不在范围内不触发
     paths:
       - '.github/workflows/**'

@@ -54,11 +54,11 @@ jobs:
         #   username: root
 
       - name: 登录服务器, 执行脚本
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.REMOTE_HOST }} # 下面三个配置与上面一样
-        username: root
-        key: ${{ secrets.ACCESS_TOKEN }}
-        # 进入到项目目录，执行依赖更新
-        script: |
-          ls -a
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }} # 下面三个配置与上面一样
+          username: root
+          key: ${{ secrets.ACCESS_TOKEN }}
+          # 进入到项目目录，执行依赖更新
+          script: |
+            ls -a

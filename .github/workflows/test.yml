@@ -28,30 +28,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-      # - name: Build to push
-      #   run: |
-      #     docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
-      #     yarn install
-      #     yarn build
-      #     docker build --platform linux/amd64 -t design-templates:latest  .
-      #     docker tag design-templates:latest ${{ secrets.DOCKER_REPOSITORY }}
-      #     docker push ${{ secrets.DOCKER_REPOSITORY }}
-
-      # - name: 登录服务器, 执行脚本
-      #   uses: easingthemes/ssh-deploy@main
-      #   env:
-      #       SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
-      #       REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-      #       REMOTE_USER: root
-      #       script: |
-      #         ls
-      #         cd zxl
-      #         ./deploy.sh
-
-        # with:
-        #   host: ${{ secrets.REMOTE_HOST }}
-        #   key: ${{ secrets.ACCESS_TOKEN }}
-        #   username: root
+      - name: 打包镜像, 上传 Docker Hub
+        run: |
+          docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
+          docker build --platform linux/amd64 -t design-templates:latest  .
+          docker tag design-templates:latest ${{ secrets.DOCKER_REPOSITORY }}
+          docker push ${{ secrets.DOCKER_REPOSITORY }}
 
       - name: 登录服务器, 执行脚本
         uses: appleboy/ssh-action@master

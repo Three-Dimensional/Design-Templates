@@ -37,25 +37,14 @@ jobs:
       #     docker tag design-templates:latest ${{ secrets.DOCKER_REPOSITORY }}
       #     docker push ${{ secrets.DOCKER_REPOSITORY }}
 
-      # - uses: webfactory/ssh-agent@v0.1.1
-      #   with:
-      #     ssh-private-key: ${{ secrets.ACCESS_TOKEN }}
-      # - name: Setup knownhosts
-      #   run: ssh-keyscan sijie.wang >> ~/.ssh/known_hosts
-      # - name: Run SSH Command
-      #   run: |
-      #     ssh root@${{ secrets.HOST }}
-      #     ls
-      #     cd zxl
-      #     ./deploy.sh
-        - name: 登录服务器, 执行脚本
-                uses: appleboy/ssh-action@master
-                with:
-                  host: ${{ secrets.REMOTE_HOST }}
-                  username: root
-                  key: ${{ secrets.ACCESS_TOKEN }}
+      - name: 登录服务器, 执行脚本
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.REMOTE_HOST }}
+            username: root
+            key: ${{ secrets.ACCESS_TOKEN }}
 
-                  script: |
-                    ls
-                    cd zxl
-                    ./deploy.sh
+            script: |
+              ls
+              cd zxl
+              ./deploy.sh

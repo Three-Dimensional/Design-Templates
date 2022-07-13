@@ -1,0 +1,46 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# github actions 中文文档 https://docs.github.com/cn/actions/getting-started-with-github-actions
+
+name: CI/CD
+# 触发条件
+on:
+  push:
+    branches:
+      - main
+    # tags:
+    #   - 'v*'
+    # 修改文件范围, 不在范围内不触发
+    paths:
+      - '.github/workflows/**'
+      - '__test__/**'
+      - 'src/**'
+# 任务
+jobs:
+  test:
+    # 运行的基础
+    runs-on: ubuntu-latest
+    # 步骤
+    steps:
+      - uses: actions/checkout@v2 # git pull
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: 打包镜像, 上传 Docker Hub
+        run: |
+          docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
+          docker build --platform linux/amd64 -t design-templates:latest  .
+          docker tag design-templates:latest ${{ secrets.DOCKER_REPOSITORY }}
+          docker push ${{ secrets.DOCKER_REPOSITORY }}
+
+      - name: 登录服务器, 执行脚本
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }} # 下面三个配置与上面一样
+          username: root
+          password: ${{ secrets.REMOTE_PASSWORD }}
+          # 进入到项目目录，执行依赖更新
+          script: |
+            cd zxl
+            ./deploy.sh

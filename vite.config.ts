@@ -6,7 +6,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import path from 'path'
 
 export default defineConfig({
-  base: './',
+  base: '/',
   plugins: [
     vue(),
     tsConfigPaths(),
@@ -24,6 +24,7 @@ export default defineConfig({
     hmr: true
   },
   resolve: {
+    preserveSymlinks: true,
     alias: {
       '@': path.resolve(__dirname, 'src'),
       assets: path.resolve(__dirname, 'src/assets'),

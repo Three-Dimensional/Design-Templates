@@ -58,7 +58,8 @@ jobs:
         with:
           host: ${{ secrets.REMOTE_HOST }} # 下面三个配置与上面一样
           username: root
-          key: ${{ secrets.ACCESS_TOKEN }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
+          # key: ${{ secrets.ACCESS_TOKEN }}
           # 进入到项目目录，执行依赖更新
           script: |
             ls -a

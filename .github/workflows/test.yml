@@ -49,7 +49,7 @@ jobs:
       #     cd zxl
       #     ./deploy.sh
         - name: 登录服务器, 执行脚本
-                uses: appleboy/ssh-action@master
+                uses: actions/ssh-action@master
                 with:
                   host: ${{ secrets.REMOTE_HOST }}
                   username: root

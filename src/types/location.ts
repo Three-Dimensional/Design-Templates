@@ -8,7 +8,7 @@ export interface ComputedPosition {
 
 // 附带矩阵计算结果的位置对象属性
 export interface MatrixComputedPosition extends ComputedPosition {
-  matrix: Array<number>
+  matrix: string
 }
 
 // 点位

@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 // 计算组件位置函数，提供给editBox调用，拖动点会改变width、height、left、top
-import { flatten } from 'lodash-es'
 import {
   ComputedPoint,
   ComputedPosition,
@@ -34,12 +33,12 @@ function getCenterPoint(p1: ComputedPoint, p2: ComputedPoint) {
 function CoordinateRotateMappingPoint(point: ComputedPoint, center: ComputedPoint, rotate: number) {
   return {
     x:
-      (point.x - center.x) * Math.cos(rotate * (Math.PI / 180)) -
-      (point.y - center.y) * Math.sin(rotate * (Math.PI / 180)) +
+      (point.x - center.x) * Number(Math.cos(rotate * (Math.PI / 180)).toFixed(6)) -
+      (point.y - center.y) * Number(Math.sin(rotate * (Math.PI / 180)).toFixed(6)) +
       center.x,
     y:
-      (point.x - center.x) * Math.sin(rotate * (Math.PI / 180)) +
-      (point.y - center.y) * Math.cos(rotate * (Math.PI / 180)) +
+      (point.x - center.x) * Number(Math.sin(rotate * (Math.PI / 180)).toFixed(6)) +
+      (point.y - center.y) * Number(Math.cos(rotate * (Math.PI / 180)).toFixed(6)) +
       center.y
   }
 }
@@ -77,7 +76,7 @@ function computedTopBottom(
   oldRect: OldPosition
 ) {
   //   当前点
-  const point = CoordinateRotateMappingPoint(curPoint, oldPosition, rotate)
+  const point = CoordinateRotateMappingPoint(curPoint, oldPosition, -rotate)
 
   // 移动后的top或者bottom的中间点
   const middleTopOrBottom = CoordinateRotateMappingPoint(
@@ -86,7 +85,7 @@ function computedTopBottom(
       y: point.y
     },
     curPoint,
-    rotate
+    -rotate
   )
 
   const newHeight = Math.sqrt(
@@ -182,30 +181,48 @@ function matrixMul(a: number[][], b: number[][]) {
 
   return c
 }
+
+// 根据矩阵获取对应的matrix属性字符串
+function getMatrixString(arr: number[][]) {
+  if (!arr[0].length) return ''
+  const matrix: number[] = []
+  for (let i = 0; i < arr[0].length; i += 1) {
+    matrix.push(arr[0][i])
+    matrix.push(arr[1][i])
+  }
+  return matrix.toString()
+}
+
 // 根据位移和旋转计算matrix属性
 const computedMatrix = (x: number, y: number, rotate: number = 0) => {
   // 位移矩阵
   const a = [
-    [1, 0],
-    [0, 1],
-    [x, y]
+    [1, 0, x],
+    [0, 1, y],
+    [0, 0, 1]
   ]
-  //   const a = [
-  //     [1, 0, x],
-  //     [0, 1, y]
-  //   ]
-  const sinAngle = Math.sin(degToAngle(rotate))
-  const cosAngle = Math.cos(degToAngle(rotate))
+  const sinAngle = Number(Math.sin(degToAngle(rotate)).toFixed(6))
+  const cosAngle = Number(Math.cos(degToAngle(rotate)).toFixed(6))
   //   旋转矩阵
   const b = [
-    [cosAngle, sinAngle],
-    [-sinAngle, cosAngle]
+    [cosAngle, sinAngle, 0],
+    [-sinAngle, cosAngle, 0],
+    [0, 0, 1]
   ]
-  //   const b = [
-  //     [cosAngle, sinAngle, 0],
-  //     [-sinAngle, cosAngle, 0]
-  //   ]
   return matrixMul(a, b)
+}
+/**
+ * 计算matrix字符串
+ * @param x x坐标
+ * @param y y坐标
+ * @param rotate 旋转角度
+ */
+export const computedMatrixString = (
+  x: number | undefined,
+  y: number | undefined,
+  rotate: number
+) => {
+  return getMatrixString(computedMatrix(x || 0, y || 0, rotate))
 }
 
 // 坐标点和计算函数的对应关系
@@ -220,7 +237,7 @@ const pointFunc = {
   r: computedLeftRight
 }
 
-export default function computedLocation(
+export function computedLocation(
   pointName: string,
   curPoint: ComputedPoint,
   symmetriPoint: ComputedPoint,
@@ -235,6 +252,6 @@ export default function computedLocation(
     oldPosition,
     oldRect
   )
-  p.matrix = flatten(computedMatrix(p.left, p.top, rotate))
+  p.matrix = getMatrixString(computedMatrix(p.left, p.top, rotate ? -rotate : 0))
   return p
 }

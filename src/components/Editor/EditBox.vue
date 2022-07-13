@@ -13,7 +13,7 @@
     ></div>
 
     <div class="rotate" v-show="isActive">
-      <Icon icon="weiraogoujianxuanzhuan"></Icon>
+      <Icon icon="weiraogoujianxuanzhuan" @mousedown="handleRotate"></Icon>
     </div>
     <slot></slot>
   </div>
@@ -25,7 +25,7 @@ import { ComponentAllTypes, propsToStyleString } from '@/defaultProps'
 import { PickObjWithRequired } from '@/types/common'
 import useEditorStore from '@/stores/editor'
 import pointCursor from '@/config/editorConfig'
-import computedComponentLocation from '@/utils/computedComponentLocation'
+import { computedLocation, computedMatrixString } from '@/utils/computedComponentLocation'
 
 const store = useEditorStore()
 
@@ -103,9 +103,11 @@ const handleMouseDown = (comId: string, e: any) => {
     const currX = moveEvent.clientX - startX
     const currY = moveEvent.clientY - startY
     if (currentElement.value) {
-      currentElement.value.props.transform = `matrix(1, 0, 0, 1, ${
-        parseInt(matrixX, 10) + currX
-      }, ${parseInt(matrixY, 10) + currY})`
+      const newX = parseInt(matrixX, 10) + currX
+      const newY = parseInt(matrixY, 10) + currY
+      currentElement.value.props.left = newX
+      currentElement.value.props.top = newY
+      currentElement.value.props.transform = `matrix(1, 0, 0, 1, ${newX}, ${newY})`
     }
   }
   const up = () => {
@@ -175,7 +177,7 @@ const handlePointMouseDown = (point: string, e: MouseEvent) => {
       y: moveEvent.clientY - editorEl.top
     }
 
-    const position = computedComponentLocation(
+    const position = computedLocation(
       point,
       curPosition,
       symmetricPoint,
@@ -187,7 +189,67 @@ const handlePointMouseDown = (point: string, e: MouseEvent) => {
     if (currentElement.value) {
       currentElement.value.props.width = position.width
       currentElement.value.props.height = position.height
-      currentElement.value.props.transform = `matrix(${position.matrix.toString()})`
+      currentElement.value.props.left = position.left
+      currentElement.value.props.top = position.top
+      currentElement.value.props.transform = `matrix(${position.matrix})`
+    }
+  }
+  const up = () => {
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+  }
+  // 注册和取消移动事件
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
+}
+
+const handleRotate = (e: MouseEvent) => {
+  console.log(e)
+  e.stopPropagation()
+  e.preventDefault()
+  if (!e.target) return
+  const editorEl = document.querySelector('#canvas-area')!.getBoundingClientRect()
+
+  const pointRect = (e.target as HTMLDivElement).getBoundingClientRect()
+
+  const { top, left, width } = currentElement.value!.props
+
+  // 当前点击的坐标中心点
+  const curPoint = {
+    x: pointRect.left - editorEl.left + 20 / 2,
+    y: pointRect.top - editorEl.top + 20 / 2
+  }
+
+  const topCenter = {
+    x: (left || 0) + width / 2,
+    y: top || 0
+  }
+
+  const oldRotate = Math.atan2(curPoint.y - topCenter.y, curPoint.x - topCenter.x) / (Math.PI / 180)
+
+  console.log(oldRotate)
+
+  const move = (moveEvent: any) => {
+    // 移动后的点
+    const curPosition = {
+      x: moveEvent.clientX - editorEl.left,
+      y: moveEvent.clientY - editorEl.top
+    }
+
+    const newRotate =
+      Math.atan2(curPosition.y - topCenter.y, curPosition.x - topCenter.x) / (Math.PI / 180)
+
+    if (currentElement.value) {
+      const setRotate = (newRotate - oldRotate) % 360
+      console.log(`${newRotate} - ${oldRotate} = ${setRotate}`)
+      const str = computedMatrixString(
+        currentElement.value.props.left,
+        currentElement.value.props.top,
+        -setRotate
+      )
+      console.log(str)
+      currentElement.value.props.rotate = setRotate
+      currentElement.value.props.transform = `matrix(${str})`
     }
   }
   const up = () => {

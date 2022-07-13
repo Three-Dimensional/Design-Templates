@@ -38,13 +38,13 @@ jobs:
       #     docker push ${{ secrets.DOCKER_REPOSITORY }}
 
       - name: 登录服务器, 执行脚本
-          uses: appleboy/ssh-action@master
-          with:
-            host: ${{ secrets.REMOTE_HOST }}
-            username: root
-            key: ${{ secrets.ACCESS_TOKEN }}
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: root
+          key: ${{ secrets.ACCESS_TOKEN }}
 
-            script: |
-              ls
-              cd zxl
-              ./deploy.sh
+          script: |
+            ls
+            cd zxl
+            ./deploy.sh

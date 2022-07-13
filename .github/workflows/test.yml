@@ -23,16 +23,36 @@ jobs:
     runs-on: ubuntu-latest
     # 步骤
     steps:
-      - uses: actions/checkout@v2 # git pull
-      - name: Use Node.js
-        uses: actions/setup-node@v1
+      # - uses: actions/checkout@v2 # git pull
+      # - name: Use Node.js
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: 14
+      # - name: Build to push
+      #   run: |
+      #     docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
+      #     yarn install
+      #     yarn build
+      #     docker build --platform linux/amd64 -t design-templates:latest  .
+      #     docker tag design-templates:latest ${{ secrets.DOCKER_REPOSITORY }}
+      #     docker push ${{ secrets.DOCKER_REPOSITORY }}
+      # - name: Deploy
+      #   uses: easingthemes/ssh-deploy@v2.0.7
+      #   env:
+      #     SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
+      #     ARGS: '-avz --delete'
+      #     SOURCE: 'public/'
+      #     REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      #     REMOTE_USER: ${{ secrets.REMOTE_USER }}
+      #     TARGET: ${{ secrets.TARGET }}
+      - uses: webfactory/ssh-agent@v0.1.1
         with:
-          node-version: 14
-      - name: Build Dist
+          ssh-private-key: ${{ secrets.ACCESS_TOKEN }}
+      - name: Setup knownhosts
+        run: ssh-keyscan sijie.wang >> ~/.ssh/known_hosts
+      - name: Run SSH Command
         run: |
-          docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
-          yarn install
-          yarn build
-          docker build --platform linux/amd64 -t design-templates:latest  .
-          docker tag design-templates:latest ${{ secrets.DOCKER_REPOSITORY }}
-          docker push ${{ secrets.DOCKER_REPOSITORY }}
+          ssh root@${{ secrets.HOST }}
+          ls
+          cd zxl
+          ./deploy.sh

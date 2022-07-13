@@ -59,7 +59,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }} # 下面三个配置与上面一样
           username: root
           password: ${{ secrets.REMOTE_PASSWORD }}
-          # key: ${{ secrets.ACCESS_TOKEN }}
           # 进入到项目目录，执行依赖更新
           script: |
-            ls -a
+            cd zxl
+            ./deploy.sh

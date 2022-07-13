@@ -23,11 +23,11 @@ jobs:
     runs-on: ubuntu-latest
     # 步骤
     steps:
-      # - uses: actions/checkout@v2 # git pull
-      # - name: Use Node.js
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: 14
+      - uses: actions/checkout@v2 # git pull
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
       # - name: Build to push
       #   run: |
       #     docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
@@ -48,8 +48,8 @@ jobs:
       #     ls
       #     cd zxl
       #     ./deploy.sh
-        - name: login serve
-                uses: actions/ssh-action@master
+        - name: 登录服务器, 执行脚本
+                uses: appleboy/ssh-action@master
                 with:
                   host: ${{ secrets.REMOTE_HOST }}
                   username: root

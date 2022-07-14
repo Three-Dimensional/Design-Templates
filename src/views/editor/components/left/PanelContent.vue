@@ -54,9 +54,9 @@ const handleClick = (id: number, index: number) => {
 
 .nav-menu {
   display: flex;
-  height: 36px;
+  // height: 36px;
   justify-content: space-around;
-  margin: 0 auto;
+  margin: 7px auto;
   position: relative;
   width: 256px;
 }

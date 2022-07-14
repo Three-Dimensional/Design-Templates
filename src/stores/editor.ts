@@ -16,6 +16,8 @@ export const testComponents: ComponentData[] = [
       textAlign: 'left',
       fontFamily: '',
       opacity: 1,
+      left: 100,
+      top: 20,
       transform: 'matrix(1, 0, 0, 1, 100, 20)',
       rotate: 0
     }
@@ -33,6 +35,8 @@ export const testComponents: ComponentData[] = [
       textAlign: 'left',
       fontFamily: '',
       opacity: 1,
+      left: 150,
+      top: 50,
       transform: 'matrix(1, 0, 0, 1, 150, 50)',
       rotate: 0
     }
@@ -51,6 +55,8 @@ export const testComponents: ComponentData[] = [
       textAlign: 'left',
       fontFamily: '',
       opacity: 1,
+      left: 200,
+      top: 100,
       transform: 'matrix(1, 0, 0, 1, 200, 100)',
       rotate: 0
     }

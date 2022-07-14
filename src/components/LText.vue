@@ -40,6 +40,5 @@ button.l-text__component {
 .l-text__component {
   box-sizing: border-box;
   white-space: pre-wrap;
-  position: relative !important;
 }
 </style>

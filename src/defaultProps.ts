@@ -20,10 +20,8 @@ export interface CommonComponentProps {
   boxShadow: string
   opacity: number
   // position and x,y
-  position: string
   left: number
   top: number
-  right: number
   transform: string
   // 文字相关
   fontSize: number
@@ -60,10 +58,8 @@ export const commonDefaultProps: Partial<CommonComponentProps> = {
   boxShadow: '0 0 0 #000000',
   opacity: 0,
   // position and x,y
-  position: 'absolute',
   left: 0,
   top: 0,
-  right: 0,
   transform: 'matrix(1, 0, 0, 1, 0, 0)',
   rotate: 0
 }

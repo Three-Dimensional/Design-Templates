@@ -1,5 +1,6 @@
 <template>
   <aside class="text-wrap">
+    2112321
     <div
       v-for="(item, index) in textList"
       :key="index"
@@ -7,8 +8,9 @@
       class="component-item"
     >
       <div class="component-wrapper">
-        <l-text v-bind="item.props" class="inside-component" />
-        <span v-if="item.text" class="tip-text">{{ item.text }}</span>
+        <l-text v-bind="item.props" class="inside-component">
+          <span v-if="item.text" class="tip-text">{{ item.text }}</span>
+        </l-text>
       </div>
     </div>
   </aside>
@@ -68,6 +70,6 @@ const onItemClick = (item: CreateComponentType) => {
 
 .text-wrap {
   margin: 0 auto;
-  padding-top: 30px;
+  /* padding-top: 30px; */
 }
 </style>

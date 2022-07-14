@@ -2,6 +2,7 @@ const modulesFiles = import.meta.glob('./**/*.vue', {
   import: 'default',
   eager: true
 })
+console.log(modulesFiles)
 const path = Object.keys(modulesFiles)
 const modules = {}
 path.forEach((item) => {

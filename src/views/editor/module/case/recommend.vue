@@ -14,7 +14,7 @@ const urls = shallowRef(imageUrls)
 <style lang="scss">
 .template {
   display: flex;
-  margin-top: 20px;
+  margin-top: 10px;
   flex-wrap: wrap;
   overflow: scroll;
   &::-webkit-scrollbar {

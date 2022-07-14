@@ -1,5 +1,5 @@
 <template>
-  <div class="text-wrap">
+  <aside class="text-wrap">
     <div
       v-for="(item, index) in textList"
       :key="index"
@@ -8,11 +8,10 @@
     >
       <div class="component-wrapper">
         <l-text v-bind="item.props" class="inside-component" />
-
         <span v-if="item.text" class="tip-text">{{ item.text }}</span>
       </div>
     </div>
-  </div>
+  </aside>
 </template>
 
 <script lang="ts" setup>
@@ -25,6 +24,7 @@ interface CreateComponentType {
   type?: string
   props: { [key: string]: string }
 }
+
 const textDefaultProps = componentsDefaultProps['l-text'].props
 const textPropsList = [
   {
@@ -43,53 +43,6 @@ const textPropsList = [
   {
     text: '正文内容',
     tag: 'p'
-  },
-  {
-    text: '宋体正文内容',
-    tag: 'p',
-    fontFamily: '"SimSun","STSong"'
-  },
-  {
-    text: 'Arial style',
-    tag: 'p',
-    fontFamily: '"Arial", sans-serif'
-  },
-  {
-    text: 'Comic Sans',
-    tag: 'p',
-    fontFamily: '"Comic Sans MS"'
-  },
-  {
-    text: 'Courier New',
-    tag: 'p',
-    fontFamily: '"Courier New", monospace'
-  },
-  {
-    text: 'Times New Roman',
-    tag: 'p',
-    fontFamily: '"Times New Roman", serif'
-  },
-  {
-    text: '链接内容',
-    color: '#1890ff',
-    textDecoration: 'underline',
-    tag: 'p'
-  },
-  {
-    text: '按钮内容',
-    color: '#ffffff',
-    backgroundColor: '#1890ff',
-    borderWidth: '1px',
-    borderColor: '#1890ff',
-    borderStyle: 'solid',
-    borderRadius: '2px',
-    paddingLeft: '10px',
-    paddingRight: '10px',
-    paddingTop: '5px',
-    paddingBottom: '5px',
-    width: '100px',
-    tag: 'button',
-    textAlign: 'center'
   }
 ]
 
@@ -102,13 +55,17 @@ const textList: CreateComponentType[] = textPropsList.map((prop) => {
     }
   }
 })
-
+console.log(textList)
 const onItemClick = (item: CreateComponentType) => {
   console.log(item)
 }
 </script>
 
 <style scoped>
+.component-item {
+  height: 24px;
+}
+
 .text-wrap {
   margin: 0 auto;
   padding-top: 30px;

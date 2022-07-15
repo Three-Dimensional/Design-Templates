@@ -1,4 +1,5 @@
 import { omit, pick } from 'lodash-es'
+import { StyleValue } from 'vue'
 
 export interface CommonComponentProps {
   // actions
@@ -131,7 +132,10 @@ export const componentsDefaultProps: DefaultPropsType = {
  * @param includeGeometric 是否包含几何属性
  * @returns style字符串
  */
-export const propsToStyleString = (props: ComponentAllTypes, includeGeometric: boolean = false) => {
+export const propsToStyleString = (
+  props: ComponentAllTypes,
+  includeGeometric: boolean = false
+): StyleValue => {
   const geometric = ['width', 'height', 'transform']
   const notNumberProps = ['lineHeight', 'opacity', 'rotate']
   let obj = {}
@@ -145,5 +149,5 @@ export const propsToStyleString = (props: ComponentAllTypes, includeGeometric: b
       obj[key] += 'px'
     }
   })
-  // return start
+  return obj
 }

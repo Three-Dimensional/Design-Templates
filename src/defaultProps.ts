@@ -133,15 +133,17 @@ export const componentsDefaultProps: DefaultPropsType = {
  */
 export const propsToStyleString = (props: ComponentAllTypes, includeGeometric: boolean = false) => {
   const geometric = ['width', 'height', 'transform']
-  let obj = null
+  const notNumberProps = ['lineHeight', 'opacity', 'rotate']
+  let obj = {}
   if (includeGeometric) {
     obj = pick(props, geometric)
   } else {
     obj = omit(props, geometric)
   }
-  let start = ''
-  Object.entries(obj).forEach((current) => {
-    start += `${current[0]}: ${current[1]}${typeof current[1] === 'number' ? 'px' : ''};`
+  Object.keys(obj).forEach((key) => {
+    if (typeof obj[key] === 'number' && !notNumberProps.includes(key)) {
+      obj[key] += 'px'
+    }
   })
   return start
 }

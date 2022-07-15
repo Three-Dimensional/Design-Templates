@@ -23,7 +23,6 @@ interface CreateComponentType {
 }
 
 const textDefaultProps = componentsDefaultProps['l-text'].props
-
 const textPropsList = [
   {
     text: '大标题',

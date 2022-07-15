@@ -1,7 +1,7 @@
 <template>
   <div
     :class="['editor-box', isActive && 'active']"
-    :style="`${propsToStyleString(props.defaultStyle, true)}`"
+    :style="propsToStyleString(props.defaultStyle, true)"
     @mousedown="handleMouseDown(props.comId, $event)"
   >
     <div
@@ -301,6 +301,7 @@ const handleRotate = (e: MouseEvent) => {
   bottom: -35px;
   left: 50%;
   margin-left: -5.5px;
+  cursor: grab;
 }
 .rotate .icon {
   border: 1px solid rgba(0, 0, 0, 0.2);

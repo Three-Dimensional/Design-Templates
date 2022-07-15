@@ -11,9 +11,7 @@
     </div>
   </div>
   <aside class="template">
-    <div>
-      <img class="template-img" v-for="(url, index) in urls" :src="url" :key="index" />
-    </div>
+    <img class="template-img" v-for="(url, index) in urls" :src="url" :key="index" />
   </aside>
 </template>
 

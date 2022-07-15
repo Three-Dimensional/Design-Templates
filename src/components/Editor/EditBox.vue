@@ -1,7 +1,7 @@
 <template>
   <div
     :class="['editor-box', isActive && 'active']"
-    :style="`${propsToStyleString(props.defaultStyle, true)}`"
+    :style="propsToStyleString(props.defaultStyle, true)"
     @mousedown="handleMouseDown(props.comId, $event)"
   >
     <div

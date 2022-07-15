@@ -38,7 +38,7 @@ const handleClick = (id: number) => {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .nav-menu {
   display: flex;
   justify-content: space-around;

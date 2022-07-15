@@ -8,9 +8,9 @@
       class="component-item"
     >
       <div class="component-wrapper">
-        <l-text v-bind="item.props" class="inside-component">
+        <LText v-bind="item.props" class="inside-component">
           <span v-if="item.text" class="tip-text">{{ item.text }}</span>
-        </l-text>
+        </LText>
       </div>
     </div>
   </aside>

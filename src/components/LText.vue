@@ -7,19 +7,12 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { textDefaultProps, TextComponentProps, propsToStyleString } from '../defaultProps'
+import { propsToStyleString } from '../defaultProps'
 
-interface ThisComponentProps {
-  text: string
-  style: TextComponentProps
-}
-
-const props = withDefaults(defineProps<ThisComponentProps>(), {
-  text: '',
-  style: () => {
-    return { ...textDefaultProps }
-  }
-})
+const props = defineProps<{
+  text: string | undefined
+  style: any
+}>()
 
 const styleStr = computed(() => {
   return propsToStyleString(props.style, false)
@@ -27,16 +20,11 @@ const styleStr = computed(() => {
 </script>
 
 <style lang="scss">
-h2,
-p {
-  .l-text__component {
-    margin-bottom: 0;
-  }
-}
 button.l-text__component {
   padding: 5px 10px;
   cursor: pointer;
 }
+
 .l-text__component {
   box-sizing: border-box;
   white-space: pre-wrap;

@@ -2,7 +2,7 @@ const routers = [
   {
     path: '/',
     name: 'index',
-    component: () => import('@/views/index.vue'),
+    component: () => import('@/views/Index.vue'),
     children: [
       {
         path: '',

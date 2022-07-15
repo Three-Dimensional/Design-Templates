@@ -1,4 +1,7 @@
-const modulesFiles = import.meta.globEager('./**/*.vue')
+const modulesFiles = import.meta.glob('./**/*.vue', {
+  import: 'default',
+  eager: true
+})
 const path = Object.keys(modulesFiles)
 const modules = {}
 path.forEach((item) => {
@@ -7,7 +10,6 @@ path.forEach((item) => {
   const filePath = url.replace(/(.*\/)*([^.]+).*/gi, '$1')
   const file = filePath.split('/')
   const moduleName = `${file[1]}-${key}`
-  modules[moduleName] = url
+  modules[moduleName] = modulesFiles[item]
 })
-
 export default modules

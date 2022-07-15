@@ -8,12 +8,6 @@
     <main class="preview-container" ref="previewRef" style="width: calc(100% - 400px)">
       <EditorTools v-model:setting="toolSetting" @copy="handleCopy" />
       <!-- 画布区域 -->
-      <!-- 画布缩放配置 :style="{
-          width: '1080px',
-          height: '1920px',
-          transform: previewStyle.transform,
-          transformOrigin: previewStyle.transformOrigin
-        }" -->
       <CanvasArea ref="canvasRef"></CanvasArea>
       <PageScaleSet></PageScaleSet>
     </main>
@@ -51,9 +45,9 @@ const handleChange = (e: { key: string; value: any }) => {
 }
 
 const activeItem = ref({
-  id: 0,
-  title: '',
-  type: ''
+  id: 1,
+  title: '模板',
+  type: 'case'
 })
 const handleChangeItem = (e: any): void => {
   activeItem.value = e

@@ -145,5 +145,5 @@ export const propsToStyleString = (props: ComponentAllTypes, includeGeometric: b
       obj[key] += 'px'
     }
   })
-  return start
+  // return start
 }

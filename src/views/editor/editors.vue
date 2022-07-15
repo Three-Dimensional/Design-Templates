@@ -13,14 +13,14 @@
     </main>
 
     <aside class="settings-panel">
-      <PropsTable
+      <!-- <PropsTable
         :props="(currentElement.props as any)"
         v-if="currentElement"
         @change="handleChange"
       >
-      </PropsTable>
+      </PropsTable> -->
       <!-- 具体数据 -->
-      <p>{{ currentElement && currentElement.props }}</p>
+      {{ currentElement && currentElement.props }}
     </aside>
   </main>
 </template>
@@ -34,15 +34,15 @@ import EditorTools from './components/EditorTools.vue'
 import PanelContent from './components/left/PanelContent.vue'
 import LeftPanel from './components/left/LeftPanel.vue'
 import CanvasArea from './components/canvas/CanvasArea.vue'
-import PropsTable from '@/components/PropsTable/PropsTable.vue'
+// import PropsTable from '@/components/PropsTable/PropsTable.vue'
 import PageScaleSet from './components/bottom/PageScaleSet.vue'
 import pageScale from './components/bottom/pageScale'
 
 const store = useEditorStore()
 const currentElement = computed<ComponentData | undefined>(() => store.getCurrentElement)
-const handleChange = (e: { key: string; value: any }) => {
-  store.updateComponent(e)
-}
+// const handleChange = (e: { key: string; value: any }) => {
+//   store.updateComponent(e)
+// }
 
 const activeItem = ref({
   id: 1,

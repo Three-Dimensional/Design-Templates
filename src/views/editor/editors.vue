@@ -5,7 +5,7 @@
       <LeftPanel :handleChangeItem="handleChangeItem"></LeftPanel>
       <PanelContent :activeItem="activeItem"></PanelContent>
     </aside>
-    <main class="preview-container" ref="previewRef" style="width: calc(100% - 400px)">
+    <main class="preview-container" ref="previewRef">
       <EditorTools v-model:setting="toolSetting" @copy="handleCopy" />
       <!-- 画布区域 -->
       <CanvasArea ref="canvasRef"></CanvasArea>
@@ -13,14 +13,14 @@
     </main>
 
     <aside class="settings-panel">
-      <PropsTable
+      <!-- <PropsTable
         :props="(currentElement.props as any)"
         v-if="currentElement"
         @change="handleChange"
       >
-      </PropsTable>
+      </PropsTable> -->
       <!-- 具体数据 -->
-      <p>{{ currentElement && currentElement.props }}</p>
+      {{ currentElement && currentElement.props }}
     </aside>
   </main>
 </template>
@@ -34,15 +34,15 @@ import EditorTools from './components/EditorTools.vue'
 import PanelContent from './components/left/PanelContent.vue'
 import LeftPanel from './components/left/LeftPanel.vue'
 import CanvasArea from './components/canvas/CanvasArea.vue'
-import PropsTable from '@/components/PropsTable/PropsTable.vue'
+// import PropsTable from '@/components/PropsTable/PropsTable.vue'
 import PageScaleSet from './components/bottom/PageScaleSet.vue'
 import pageScale from './components/bottom/pageScale'
 
 const store = useEditorStore()
 const currentElement = computed<ComponentData | undefined>(() => store.getCurrentElement)
-const handleChange = (e: { key: string; value: any }) => {
-  store.updateComponent(e)
-}
+// const handleChange = (e: { key: string; value: any }) => {
+//   store.updateComponent(e)
+// }
 
 const activeItem = ref({
   id: 1,
@@ -94,11 +94,13 @@ const { /* previewStyle, */ previewRef, canvasRef } = pageScale()
     align-items: center;
     justify-content: center;
     position: relative;
+    width: calc(100vw - 650px);
+    min-width: 800px;
     height: calc(100vh - 70px);
   }
 
   .settings-panel {
-    width: 20%;
+    width: 250px;
     height: 100%;
     background: #fff;
   }

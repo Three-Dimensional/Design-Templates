@@ -1,17 +1,5 @@
 <template>
   <aside class="canvas-area" id="canvas-area">
-    <!-- <div
-      v-for="com in componentList"
-      :key="com.id"
-      :detail="com"
-      :id="com.id"
-      class="editor-wrapper"
-      :class="{ active: currentElement ? com.id === currentElement.id : false }"
-      @click.stop="onItemClick(com.id)"
-      @mousedown="handleMouseDown"
-    >
-      <LText v-bind="com.props" />
-    </div> -->
     <EditBox v-for="com in componentList" :key="com.id" :comId="com.id" :defaultStyle="com.props">
       <LText :style="com.props" :text="com.text" />
     </EditBox>
@@ -25,15 +13,19 @@ import EditBox from '@/components/Editor/EditBox.vue'
 
 const store = useEditorStore()
 const componentList = computed(() => store.components)
+console.log(
+  '%c 🍨 componentList: ',
+  'font-size:20px;background-color: #2EAFB0;color:#fff;',
+  componentList
+)
 </script>
 <style lang="scss" scoped>
 .canvas-area {
-  width: 375px;
-  min-height: 660px;
+  width: 335px;
+  min-height: 600px;
   border: 1px solid #efefef;
   background: #fff;
   max-height: 80vh;
-  margin-top: 60px;
   position: relative;
 }
 

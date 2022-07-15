@@ -73,8 +73,8 @@ export const textDefaultProps: TextComponentProps = {
   fontWeight: 'normal',
   fontStyle: 'normal',
   textDecoration: 'none',
-  lineHeight: 1,
-  textAlign: 'left',
+  lineHeight: 24,
+  textAlign: 'center',
   color: '#000000',
   backgroundColor: '',
   ...commonDefaultProps
@@ -104,8 +104,6 @@ type DefaultPropsType = {
   }
 }
 
-// this contains all default props for all the components
-// useful for inserting new component into the store
 export const componentsDefaultProps: DefaultPropsType = {
   'l-text': {
     props: {
@@ -145,6 +143,5 @@ export const propsToStyleString = (props: ComponentAllTypes, includeGeometric: b
   Object.entries(obj).forEach((current) => {
     start += `${current[0]}: ${current[1]}${typeof current[1] === 'number' ? 'px' : ''};`
   })
-  //   console.log(start)
   return start
 }

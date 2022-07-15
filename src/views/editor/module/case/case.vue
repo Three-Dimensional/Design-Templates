@@ -76,24 +76,23 @@ const handleClick = (id: number) => {
     width: 100%;
   }
 }
-
 .active:after {
-  background: #0773fc;
-  bottom: -1px;
-  box-shadow: 0 4px 6px 0 rgba(7, 115, 252, 0.26);
-  content: '';
-  height: 3px;
-  left: 28px;
-  position: absolute;
-  width: 30px;
-  z-index: 1;
-}
+    background: #0773fc;
+    bottom: -1px;
+    box-shadow: 0 4px 6px 0 rgba(7, 115, 252, 0.26);
+    content: '';
+    height: 3px;
+    left: 28px;
+    position: absolute;
+    width: 30px;
+    z-index: 1;
+  }
 
-.active span {
-  color: #000;
-  font-weight: 600;
+  .active span {
+    color: #000;
+    font-weight: 600;
+  }
 }
-
 .template {
   display: flex;
   margin-top: 8px;

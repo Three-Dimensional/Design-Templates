@@ -8,7 +8,7 @@ export const testComponents: ComponentData[] = [
     name: 'LText',
     text: 'hello',
     props: {
-      fontSize: 20,
+      fontSize: 40,
       width: 125,
       height: 36,
       color: 'red',
@@ -16,48 +16,28 @@ export const testComponents: ComponentData[] = [
       textAlign: 'left',
       fontFamily: '',
       opacity: 1,
-      left: 100,
-      top: 20,
-      transform: 'matrix(1, 0, 0, 1, 100, 20)',
+      left: 0,
+      top: 0,
+      transform: 'matrix(1, 0, 0, 1, 0, 0)',
       rotate: 0
     }
   },
   {
     id: uuidv4(),
     name: 'LText',
-    text: 'hello2',
+    text: 'hello2222',
     props: {
-      fontSize: 10,
+      fontSize: 40,
       width: 125,
       height: 36,
-      fontWeight: 'bold',
-      lineHeight: 2,
+      color: 'red',
+      lineHeight: 1,
       textAlign: 'left',
       fontFamily: '',
       opacity: 1,
-      left: 150,
-      top: 50,
-      transform: 'matrix(1, 0, 0, 1, 150, 50)',
-      rotate: 0
-    }
-  },
-  {
-    id: uuidv4(),
-    name: 'LText',
-    text: 'hello3',
-    props: {
-      fontSize: 15,
-      width: 125,
-      height: 36,
-      actionType: 'url',
-      url: 'https://www.baidu.com',
-      lineHeight: 3,
-      textAlign: 'left',
-      fontFamily: '',
-      opacity: 1,
-      left: 200,
-      top: 100,
-      transform: 'matrix(1, 0, 0, 1, 200, 100)',
+      left: 0,
+      top: 0,
+      transform: 'matrix(1, 0, 0, 1, 50, 50)',
       rotate: 0
     }
   }

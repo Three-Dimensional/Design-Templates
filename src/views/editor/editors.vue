@@ -5,7 +5,7 @@
       <LeftPanel :handleChangeItem="handleChangeItem"></LeftPanel>
       <PanelContent :activeItem="activeItem"></PanelContent>
     </aside>
-    <main class="preview-container" ref="previewRef" style="width: calc(100% - 400px)">
+    <main class="preview-container" ref="previewRef">
       <EditorTools v-model:setting="toolSetting" @copy="handleCopy" />
       <!-- 画布区域 -->
       <CanvasArea ref="canvasRef"></CanvasArea>
@@ -94,11 +94,13 @@ const { /* previewStyle, */ previewRef, canvasRef } = pageScale()
     align-items: center;
     justify-content: center;
     position: relative;
+    width: calc(100vw - 650px);
+    min-width: 800px;
     height: calc(100vh - 70px);
   }
 
   .settings-panel {
-    width: 20%;
+    width: 250px;
     height: 100%;
     background: #fff;
   }

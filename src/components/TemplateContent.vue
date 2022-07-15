@@ -18,7 +18,8 @@ watch(
     activeItem.value = file
   },
   {
-    deep: true
+    deep: true,
+    immediate: true
   }
 )
 </script>

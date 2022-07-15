@@ -13,10 +13,11 @@
 
 
 ## 已完成
+- 通过 Github Active 实现 CI/CD 自动化流程(Docker)
 
 ## 开发中
-- 拖拽控制节点
-- test
+- 组件拖动,旋转,拉伸控制
 
 ## 注意
+- 启动命令 `yarn install`, `yarn run`
 - 可以通过 `yarn build`, `yarn preview` 本地启动服务检查打包后状态

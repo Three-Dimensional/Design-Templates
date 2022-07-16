@@ -57,7 +57,7 @@ export const commonDefaultProps: Partial<CommonComponentProps> = {
   borderRadius: '0',
   // shadow and opacity
   boxShadow: '0 0 0 #000000',
-  opacity: 0,
+  opacity: 1,
   // position and x,y
   left: 0,
   top: 0,
@@ -74,7 +74,6 @@ export const textDefaultProps: TextComponentProps = {
   fontWeight: 'normal',
   fontStyle: 'normal',
   textDecoration: 'none',
-  lineHeight: 24,
   textAlign: 'center',
   color: '#000000',
   backgroundColor: '',
@@ -108,9 +107,7 @@ type DefaultPropsType = {
 export const componentsDefaultProps: DefaultPropsType = {
   'l-text': {
     props: {
-      ...textDefaultProps,
-      width: 125,
-      height: 36
+      ...textDefaultProps
     }
   },
   'l-image': {

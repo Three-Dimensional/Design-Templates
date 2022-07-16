@@ -21,7 +21,8 @@ defineProps<{
 .panel {
   display: flex;
   flex-direction: column;
-  padding: 0 10px;
+  margin: 0 24px;
   flex: 1;
+  width: 300px;
 }
 </style>

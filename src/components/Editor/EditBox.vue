@@ -105,9 +105,14 @@ const handleMouseDown = (comId: string, e: any) => {
     if (currentElement.value) {
       const newX = parseInt(matrixX, 10) + currX
       const newY = parseInt(matrixY, 10) + currY
+      const str = computedMatrixString(
+        newX,
+        newY,
+        currentElement.value.props.rotate ? -currentElement.value.props.rotate : 0
+      )
       currentElement.value.props.left = newX
       currentElement.value.props.top = newY
-      currentElement.value.props.transform = `matrix(1, 0, 0, 1, ${newX}, ${newY})`
+      currentElement.value.props.transform = `matrix(${str})`
     }
   }
   const up = () => {
@@ -168,8 +173,8 @@ const handlePointMouseDown = (point: string, e: MouseEvent) => {
     height: trf.props.height
   }
 
-  console.log(center)
-  console.log(symmetricPoint)
+  // console.log(center)
+  // console.log(symmetricPoint)
 
   const move = (moveEvent: any) => {
     const curPosition = {
@@ -185,7 +190,7 @@ const handlePointMouseDown = (point: string, e: MouseEvent) => {
       curPoint,
       oldRect
     )
-    console.log(position)
+    // console.log(position)
     if (currentElement.value) {
       currentElement.value.props.width = position.width
       currentElement.value.props.height = position.height

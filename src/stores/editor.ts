@@ -28,15 +28,15 @@ export const testComponents: ComponentData[] = [
     text: 'hello2222',
     props: {
       fontSize: 40,
-      width: 125,
-      height: 36,
+      width: 250,
+      height: 150,
       color: 'red',
       lineHeight: 1,
       textAlign: 'left',
       fontFamily: '',
       opacity: 1,
-      left: 0,
-      top: 0,
+      left: 50,
+      top: 50,
       transform: 'matrix(1, 0, 0, 1, 50, 50)',
       rotate: 0
     }

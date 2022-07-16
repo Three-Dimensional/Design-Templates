@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 // 计算组件位置函数，提供给editBox调用，拖动点会改变width、height、left、top
 import {
   ComputedPoint,
@@ -76,7 +75,7 @@ function computedTopBottom(
   oldRect: OldPosition
 ) {
   //   当前点
-  const point = CoordinateRotateMappingPoint(curPoint, oldPosition, -rotate)
+  const point = CoordinateRotateMappingPoint(curPoint, oldPosition, rotate)
 
   // 移动后的top或者bottom的中间点
   const middleTopOrBottom = CoordinateRotateMappingPoint(
@@ -85,7 +84,7 @@ function computedTopBottom(
       y: point.y
     },
     curPoint,
-    -rotate
+    rotate
   )
 
   const newHeight = Math.sqrt(
@@ -119,6 +118,7 @@ function computedTopBottom(
   }
 }
 
+// 计算左右点拖动
 function computedLeftRight(
   curPoint: ComputedPoint,
   symmetriPoint: ComputedPoint,

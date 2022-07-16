@@ -212,7 +212,7 @@ const handleRotate = (e: MouseEvent) => {
 
   const pointRect = (e.target as HTMLDivElement).getBoundingClientRect()
 
-  const { top, left, width } = currentElement.value!.props
+  const { top, left, width, rotate } = currentElement.value!.props
 
   // 当前点击的坐标中心点
   const curPoint = {
@@ -225,9 +225,14 @@ const handleRotate = (e: MouseEvent) => {
     y: top || 0
   }
 
-  const oldRotate = Math.atan2(curPoint.y - topCenter.y, curPoint.x - topCenter.x) / (Math.PI / 180)
+  // 缓存老的角度
+  const oldRotate = rotate || 0
 
-  console.log(oldRotate)
+  // 记录点击坐标点的角度
+  const clickRotate =
+    Math.atan2(curPoint.y - topCenter.y, curPoint.x - topCenter.x) / (Math.PI / 180)
+
+  console.log(clickRotate)
 
   const move = (moveEvent: any) => {
     // 移动后的点
@@ -240,8 +245,8 @@ const handleRotate = (e: MouseEvent) => {
       Math.atan2(curPosition.y - topCenter.y, curPosition.x - topCenter.x) / (Math.PI / 180)
 
     if (currentElement.value) {
-      const setRotate = (newRotate - oldRotate) % 360
-      console.log(`${newRotate} - ${oldRotate} = ${setRotate}`)
+      const setRotate = oldRotate + ((newRotate - clickRotate) % 360)
+      console.log(`${newRotate} - ${clickRotate} = ${setRotate}`)
       const str = computedMatrixString(
         currentElement.value.props.left,
         currentElement.value.props.top,

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 // 计算组件位置函数，提供给editBox调用，拖动点会改变width、height、left、top
 import {
   ComputedPoint,
@@ -57,9 +56,9 @@ function computedCornerPoint(
 ): ComputedPosition {
   const newCenter = getCenterPoint(curPoint, symmetriPoint)
   //   当前点
-  const point = CoordinateRotateMappingPoint(curPoint, newCenter, rotate)
+  const point = CoordinateRotateMappingPoint(curPoint, newCenter, -rotate)
   //   对称点
-  const symmetry = CoordinateRotateMappingPoint(symmetriPoint, newCenter, rotate)
+  const symmetry = CoordinateRotateMappingPoint(symmetriPoint, newCenter, -rotate)
   return {
     width: Math.abs(Math.round(symmetry.x - point.x)),
     height: Math.abs(Math.round(symmetry.y - point.y)),
@@ -77,15 +76,19 @@ function computedTopBottom(
 ) {
   //   当前点
   const point = CoordinateRotateMappingPoint(curPoint, oldPosition, -rotate)
+  const symmetriRotatePoint = CoordinateRotateMappingPoint(symmetriPoint, oldPosition, -rotate)
 
-  // 移动后的top或者bottom的中间点
+  console.log(point)
+  console.log(symmetriRotatePoint)
+
+  // 正常0角度的top或者bottom的中间点
   const middleTopOrBottom = CoordinateRotateMappingPoint(
     {
       x: oldPosition.x,
       y: point.y
     },
-    curPoint,
-    -rotate
+    oldPosition,
+    rotate
   )
 
   const newHeight = Math.sqrt(
@@ -101,24 +104,15 @@ function computedTopBottom(
     x: newCenter.x - oldRect.width / 2,
     y: newCenter.y - newHeight / 2
   })
-  // 旋转前的topLeft点 -> 计算旋转后的点
-  const leftTop = CoordinateRotateMappingPoint(
-    {
-      x: newCenter.x - oldRect.width / 2,
-      y: newCenter.y - newHeight / 2
-    },
-    newCenter,
-    rotate
-  )
-  //   已知两个点坐标和夹角和三条边长度求坐标
   return {
     width: oldRect.width,
     height: Math.round(newHeight),
-    left: Math.round(leftTop.x),
-    top: Math.round(leftTop.y)
+    left: newCenter.x - oldRect.width / 2,
+    top: newCenter.y - newHeight / 2
   }
 }
 
+// 计算左右点拖动
 function computedLeftRight(
   curPoint: ComputedPoint,
   symmetriPoint: ComputedPoint,
@@ -126,7 +120,7 @@ function computedLeftRight(
   oldPosition: ComputedPoint,
   oldRect: OldPosition
 ) {
-  const point = CoordinateRotateMappingPoint(curPoint, oldPosition, rotate)
+  const point = CoordinateRotateMappingPoint(curPoint, oldPosition, -rotate)
 
   // 正常0角度时的左右中点
   const leftOrRightPoint = CoordinateRotateMappingPoint(

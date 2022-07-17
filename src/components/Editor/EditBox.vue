@@ -105,9 +105,14 @@ const handleMouseDown = (comId: string, e: any) => {
     if (currentElement.value) {
       const newX = parseInt(matrixX, 10) + currX
       const newY = parseInt(matrixY, 10) + currY
+      const str = computedMatrixString(
+        newX,
+        newY,
+        currentElement.value.props.rotate ? -currentElement.value.props.rotate : 0
+      )
       currentElement.value.props.left = newX
       currentElement.value.props.top = newY
-      currentElement.value.props.transform = `matrix(1, 0, 0, 1, ${newX}, ${newY})`
+      currentElement.value.props.transform = `matrix(${str})`
     }
   }
   const up = () => {
@@ -168,8 +173,8 @@ const handlePointMouseDown = (point: string, e: MouseEvent) => {
     height: trf.props.height
   }
 
-  console.log(center)
-  console.log(symmetricPoint)
+  // console.log(center)
+  // console.log(symmetricPoint)
 
   const move = (moveEvent: any) => {
     const curPosition = {
@@ -185,7 +190,7 @@ const handlePointMouseDown = (point: string, e: MouseEvent) => {
       curPoint,
       oldRect
     )
-    console.log(position)
+    // console.log(position)
     if (currentElement.value) {
       currentElement.value.props.width = position.width
       currentElement.value.props.height = position.height
@@ -212,7 +217,7 @@ const handleRotate = (e: MouseEvent) => {
 
   const pointRect = (e.target as HTMLDivElement).getBoundingClientRect()
 
-  const { top, left, width } = currentElement.value!.props
+  const { top, left, width, rotate } = currentElement.value!.props
 
   // 当前点击的坐标中心点
   const curPoint = {
@@ -225,9 +230,14 @@ const handleRotate = (e: MouseEvent) => {
     y: top || 0
   }
 
-  const oldRotate = Math.atan2(curPoint.y - topCenter.y, curPoint.x - topCenter.x) / (Math.PI / 180)
+  // 缓存老的角度
+  const oldRotate = rotate || 0
 
-  console.log(oldRotate)
+  // 记录点击坐标点的角度
+  const clickRotate =
+    Math.atan2(curPoint.y - topCenter.y, curPoint.x - topCenter.x) / (Math.PI / 180)
+
+  console.log(clickRotate)
 
   const move = (moveEvent: any) => {
     // 移动后的点
@@ -240,8 +250,8 @@ const handleRotate = (e: MouseEvent) => {
       Math.atan2(curPosition.y - topCenter.y, curPosition.x - topCenter.x) / (Math.PI / 180)
 
     if (currentElement.value) {
-      const setRotate = (newRotate - oldRotate) % 360
-      console.log(`${newRotate} - ${oldRotate} = ${setRotate}`)
+      const setRotate = oldRotate + ((newRotate - clickRotate) % 360)
+      console.log(`${newRotate} - ${clickRotate} = ${setRotate}`)
       const str = computedMatrixString(
         currentElement.value.props.left,
         currentElement.value.props.top,

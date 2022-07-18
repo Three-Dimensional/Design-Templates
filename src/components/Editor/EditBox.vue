@@ -78,8 +78,8 @@ const getPointStyle = (point: string) => {
   }
 
   const style = {
-    marginLeft: '-4px',
-    marginTop: '-4px',
+    marginLeft: '-6px',
+    marginTop: '-6px',
     left: `${newLeft}px`,
     top: `${newTop}px`,
     cursor: pointCursor[point]
@@ -283,7 +283,7 @@ const handleRotate = (e: MouseEvent) => {
 }
 
 .editor-box.active {
-  outline: 2px solid #70c0ff;
+  outline: 2px solid #3294ff;
   user-select: none;
   &:hover {
     cursor: move;
@@ -292,10 +292,11 @@ const handleRotate = (e: MouseEvent) => {
 
 .shape-point {
   position: absolute;
-  background: #fff;
-  border: 1px solid #59c7f9;
-  width: 8px;
-  height: 8px;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   z-index: 1;
 }

@@ -39,6 +39,7 @@ export interface CommonComponentProps {
   rotate: number
 }
 
+// 基本组件类型参数
 export const commonDefaultProps: Partial<CommonComponentProps> = {
   // actions
   actionType: '',
@@ -57,7 +58,7 @@ export const commonDefaultProps: Partial<CommonComponentProps> = {
   borderRadius: '0',
   // shadow and opacity
   boxShadow: '0 0 0 #000000',
-  opacity: 0,
+  opacity: 1,
   // position and x,y
   left: 0,
   top: 0,
@@ -65,20 +66,22 @@ export const commonDefaultProps: Partial<CommonComponentProps> = {
   rotate: 0
 }
 
-// 图片组件类型参数
+// 文字组件类型参数
 export interface TextComponentProps extends Partial<CommonComponentProps> {}
 
 export const textDefaultProps: TextComponentProps = {
+  ...commonDefaultProps,
   fontSize: 14,
+  height: 20,
+  lineHeight: 1.5,
+  width: 200,
   fontFamily: '',
   fontWeight: 'normal',
   fontStyle: 'normal',
   textDecoration: 'none',
-  lineHeight: 24,
   textAlign: 'center',
   color: '#000000',
-  backgroundColor: '',
-  ...commonDefaultProps
+  backgroundColor: ''
 }
 
 // 图片组件类型参数
@@ -108,9 +111,7 @@ type DefaultPropsType = {
 export const componentsDefaultProps: DefaultPropsType = {
   'l-text': {
     props: {
-      ...textDefaultProps,
-      width: 125,
-      height: 36
+      ...textDefaultProps
     }
   },
   'l-image': {

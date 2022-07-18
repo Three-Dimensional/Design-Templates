@@ -71,6 +71,7 @@ const useEditorStore = defineStore('editor', {
     setActive(id: string) {
       this.currentElement = id
     },
+    // 动态改变属性值
     updateComponent({ key, value }: { key: string; value: any }) {
       const updatedComponent = this.components.find(
         (component) => component.id === this.currentElement

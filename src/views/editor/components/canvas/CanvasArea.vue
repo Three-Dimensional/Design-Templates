@@ -13,11 +13,6 @@ import EditBox from '@/components/Editor/EditBox.vue'
 
 const store = useEditorStore()
 const componentList = computed(() => store.components)
-console.log(
-  '%c 🍨 componentList: ',
-  'font-size:20px;background-color: #2EAFB0;color:#fff;',
-  componentList
-)
 </script>
 <style lang="scss" scoped>
 .canvas-area {

@@ -34,9 +34,9 @@ interface itemType {
 }
 const itemList = reactive<itemType[]>([
   { id: 1, title: '模板', type: 'case', iconName: 'zhinengjiqirenmoban' },
-  { id: 2, title: '图片', type: 'image', iconName: 'tupian' },
-  { id: 3, title: '素材', type: 'material', iconName: 'jihebiaoshi23' },
-  { id: 4, title: '文字', type: 'text', iconName: 'bianjiwenzi' },
+  { id: 2, title: '文字', type: 'text', iconName: 'bianjiwenzi' },
+  { id: 3, title: '图片', type: 'image', iconName: 'tupian' },
+  { id: 4, title: '素材', type: 'material', iconName: 'jihebiaoshi23' },
   { id: 5, title: '背景', type: 'background', iconName: 'beijing' },
   { id: 6, title: '工具', type: 'tool', iconName: 'gongjuxiang' },
   { id: 7, title: '上传', type: 'upload', iconName: 'shangchuan' }

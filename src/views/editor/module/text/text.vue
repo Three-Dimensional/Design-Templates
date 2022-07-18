@@ -7,65 +7,77 @@
       class="text-item"
       draggable="true"
     >
-      <LText :style="item.props" :text="item.props.text"> </LText>
+      <LText :style="item.props" :text="item.text" />
     </div>
   </aside>
 </template>
 
 <script lang="ts" setup>
+import { reactive } from 'vue'
 import LText from '@/components/LText.vue'
-import { componentsDefaultProps } from '@/defaultProps'
-import useEditorStore from '@/stores/editor'
-
-const store = useEditorStore()
+import { componentsDefaultProps, ComponentAllTypes } from '@/defaultProps'
+import { pushComponentCommon } from '@/hooks/useComponentCommon'
 
 interface CreateComponentType {
+  text: string
+  props: ComponentAllTypes
   name: string
-  text?: string
-  type?: string
+  tag: string
   id?: string
-  props: { [key: string]: string }
 }
-
 const textDefaultProps = componentsDefaultProps['l-text'].props
-const textPropsList = [
+// 模拟数据
+const textPropsList: CreateComponentType[] = [
   {
     text: '点击添加文字标题',
-    fontSize: '24',
-    fontWeight: 'bolder',
-    fontFamily: 'cursive',
+    name: 'LText',
     tag: 'h1',
-    height: '40',
-    width: '100'
+    props: {
+      fontSize: 24,
+      fontWeight: 'bolder',
+      fontFamily: 'cursive',
+      height: 40,
+      lineHeight: 2
+    }
   },
   {
     text: '点击添加副标题',
-    fontSize: '16',
-    fontWeight: 'bold',
-    fontFamily: 'KaiTi',
-    tag: 'h2'
+    name: 'LText',
+    tag: 'h2',
+    props: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      fontFamily: 'KaiTi',
+      lineHeight: 2
+    }
   },
   {
     text: '正文内容',
-    fontSize: '14',
-    tag: 'p'
+    name: 'LText',
+    tag: 'p',
+    props: {
+      lineHeight: 2
+    }
   }
 ]
 
-const textList: CreateComponentType[] = textPropsList.map((prop) => {
-  return {
-    name: 'LText',
-    text: '测试',
-    props: {
-      ...textDefaultProps,
-      ...(prop as any)
+const textList: CreateComponentType[] = reactive(
+  textPropsList.map((prop) => {
+    return {
+      name: prop.name,
+      text: prop.text,
+      tag: prop.tag,
+      props: {
+        ...textDefaultProps,
+        ...(prop.props as any)
+      }
     }
-  }
-})
+  })
+)
+
 const onItemClick = (item: CreateComponentType) => {
-  const target = JSON.parse(JSON.stringify(item))
-  target.id = new Date().getTime().toString()
-  store.components.push(target)
+  // 添加组件到画布
+  pushComponentCommon(item)
 }
 </script>
 

@@ -13,12 +13,6 @@
     </main>
 
     <aside class="settings-panel">
-      <!-- <PropsTable
-        :props="(currentElement.props as any)"
-        v-if="currentElement"
-        @change="handleChange"
-      >
-      </PropsTable> -->
       <!-- 具体数据 -->
       {{ currentElement && currentElement.props }}
     </aside>
@@ -34,7 +28,6 @@ import EditorTools from './components/EditorTools.vue'
 import PanelContent from './components/left/PanelContent.vue'
 import LeftPanel from './components/left/LeftPanel.vue'
 import CanvasArea from './components/canvas/CanvasArea.vue'
-// import PropsTable from '@/components/PropsTable/PropsTable.vue'
 import PageScaleSet from './components/bottom/PageScaleSet.vue'
 import pageScale from './components/bottom/pageScale'
 

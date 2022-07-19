@@ -22,7 +22,7 @@ interface CreateComponentType {
   text: string
   props: ComponentAllTypes
   name: string
-  tag: string
+  tag?: string
   id?: string
 }
 const textDefaultProps = componentsDefaultProps['l-text'].props
@@ -36,8 +36,7 @@ const textPropsList: CreateComponentType[] = [
       fontSize: 24,
       fontWeight: 'bolder',
       fontFamily: 'cursive',
-      height: 40,
-      lineHeight: 2
+      height: 40
     }
   },
   {
@@ -47,17 +46,14 @@ const textPropsList: CreateComponentType[] = [
     props: {
       fontSize: 16,
       fontWeight: 'bold',
-      fontFamily: 'KaiTi',
-      lineHeight: 2
+      fontFamily: 'KaiTi'
     }
   },
   {
     text: '正文内容',
     name: 'LText',
     tag: 'p',
-    props: {
-      lineHeight: 2
-    }
+    props: {}
   }
 ]
 
@@ -91,5 +87,6 @@ const onItemClick = (item: CreateComponentType) => {
 }
 .text-item {
   cursor: pointer;
+  margin-bottom: 8px;
 }
 </style>

@@ -5,6 +5,8 @@ import { ComponentAllTypes } from '../defaultProps'
 import useEditorStore from '@/stores/editor'
 import { ComponentData } from '@/stores/interface'
 
+const store = useEditorStore()
+
 export const useComponentCommon = (props: ComponentAllTypes, picks: string[]) => {
   const styleProps = computed(() => pick(props, picks))
   const handleClick = () => {
@@ -18,8 +20,11 @@ export const useComponentCommon = (props: ComponentAllTypes, picks: string[]) =>
   }
 }
 
-// 添加组件到画布
-const store = useEditorStore()
+/**
+ * 添加组件到画布
+ * @param item 画布元素的属性
+ * @returns 空
+ */
 export const pushComponentCommon = (item: ComponentData): void => {
   const target = JSON.parse(JSON.stringify(item))
   target.id = uuidv4()

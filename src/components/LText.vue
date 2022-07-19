@@ -1,6 +1,6 @@
 <template>
   <div :style="styleStr" class="l-text__component">
-    {{ text }}
+    {{ comProps.text }}
     <slot />
   </div>
 </template>
@@ -10,7 +10,9 @@ import { computed } from 'vue'
 import { propsToStyleString } from '../defaultProps'
 
 const props = defineProps<{
-  text: string | undefined
+  comProps: {
+    [key in string]: string
+  }
   style: any
 }>()
 

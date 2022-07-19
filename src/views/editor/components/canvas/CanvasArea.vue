@@ -1,7 +1,8 @@
 <template>
   <aside class="canvas-area" id="canvas-area">
-    <EditBox v-for="com in componentList" :key="com.id" :comId="com.id" :defaultStyle="com.props">
-      <LText :style="com.props" :text="com.text" />
+    <EditBox v-for="com in componentList" :key="com.id" :comId="com.id" :defaultStyle="com.style">
+      <LText :style="com.style" :comProps="com.props" />
+      <!-- <component :is="com.name" :style="com.props" :comProps="com.props"></component> -->
     </EditBox>
   </aside>
 </template>

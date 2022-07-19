@@ -94,7 +94,7 @@ const handleMouseDown = (comId: string, e: any) => {
   store.setActive(comId)
   if (!currentElement.value) return
   const trf = currentElement.value!
-  const trfArr: string[] = trf.props.transform!.trim().replace(/()/g, '').split(',')
+  const trfArr: string[] = trf.style.transform!.trim().replace(/()/g, '').split(',')
   const matrixX = trfArr[trfArr.length - 2]
   const matrixY = trfArr[trfArr.length - 1]
   const startY = e.clientY
@@ -105,14 +105,10 @@ const handleMouseDown = (comId: string, e: any) => {
     if (currentElement.value) {
       const newX = parseInt(matrixX, 10) + currX
       const newY = parseInt(matrixY, 10) + currY
-      const str = computedMatrixString(
-        newX,
-        newY,
-        currentElement.value.props.rotate ? -currentElement.value.props.rotate : 0
-      )
-      currentElement.value.props.left = newX
-      currentElement.value.props.top = newY
-      currentElement.value.props.transform = `matrix(${str})`
+      const str = computedMatrixString(newX, newY, trf.style.rotate ? -trf.style.rotate : 0)
+      trf.style.left = newX
+      trf.style.top = newY
+      trf.style.transform = `matrix(${str})`
     }
   }
   const up = () => {
@@ -140,14 +136,14 @@ const handlePointMouseDown = (point: string, e: MouseEvent) => {
   if (!e.target) return
 
   const trf = currentElement.value!
-  const trfArr: string[] = trf.props.transform!.trim().replace(/()/g, '').split(',')
+  const trfArr: string[] = trf.style.transform!.trim().replace(/()/g, '').split(',')
   const matrixX = trfArr[trfArr.length - 2]
   const matrixY = trfArr[trfArr.length - 1]
 
   // 中心点
   const center = {
-    x: parseInt(matrixX, 10) + trf.props.width / 2,
-    y: parseInt(matrixY, 10) + trf.props.height / 2
+    x: parseInt(matrixX, 10) + trf.style.width / 2,
+    y: parseInt(matrixY, 10) + trf.style.height / 2
   }
 
   const editorEl = document.querySelector('#canvas-area')!.getBoundingClientRect()
@@ -169,8 +165,8 @@ const handlePointMouseDown = (point: string, e: MouseEvent) => {
   }
 
   const oldRect = {
-    width: trf.props.width,
-    height: trf.props.height
+    width: trf.style.width,
+    height: trf.style.height
   }
 
   // console.log(center)
@@ -186,17 +182,17 @@ const handlePointMouseDown = (point: string, e: MouseEvent) => {
       point,
       curPosition,
       symmetricPoint,
-      trf.props.rotate,
+      trf.style.rotate,
       curPoint,
       oldRect
     )
     // console.log(position)
     if (currentElement.value) {
-      currentElement.value.props.width = position.width
-      currentElement.value.props.height = position.height
-      currentElement.value.props.left = position.left
-      currentElement.value.props.top = position.top
-      currentElement.value.props.transform = `matrix(${position.matrix})`
+      trf.style.width = position.width
+      trf.style.height = position.height
+      trf.style.left = position.left
+      trf.style.top = position.top
+      trf.style.transform = `matrix(${position.matrix})`
     }
   }
   const up = () => {
@@ -217,7 +213,7 @@ const handleRotate = (e: MouseEvent) => {
 
   const pointRect = (e.target as HTMLDivElement).getBoundingClientRect()
 
-  const { top, left, width, rotate } = currentElement.value!.props
+  const { top, left, width, rotate } = currentElement.value!.style
 
   // 当前点击的坐标中心点
   const curPoint = {
@@ -253,13 +249,13 @@ const handleRotate = (e: MouseEvent) => {
       const setRotate = oldRotate + ((newRotate - clickRotate) % 360)
       console.log(`${newRotate} - ${clickRotate} = ${setRotate}`)
       const str = computedMatrixString(
-        currentElement.value.props.left,
-        currentElement.value.props.top,
+        currentElement.value.style.left,
+        currentElement.value.style.top,
         -setRotate
       )
       console.log(str)
-      currentElement.value.props.rotate = setRotate
-      currentElement.value.props.transform = `matrix(${str})`
+      currentElement.value.style.rotate = setRotate
+      currentElement.value.style.transform = `matrix(${str})`
     }
   }
   const up = () => {

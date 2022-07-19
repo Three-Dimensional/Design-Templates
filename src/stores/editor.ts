@@ -7,6 +7,7 @@ export const testComponents: ComponentData[] = [
     id: uuidv4(),
     name: 'LText',
     text: 'hello',
+    tag: 'h1',
     props: {
       fontSize: 40,
       width: 125,
@@ -26,6 +27,7 @@ export const testComponents: ComponentData[] = [
     id: uuidv4(),
     name: 'LText',
     text: 'hello2222',
+    tag: 'h1',
     props: {
       fontSize: 40,
       width: 250,
@@ -60,7 +62,8 @@ const useEditorStore = defineStore('editor', {
       const addComponent: ComponentData = {
         name: 'LText',
         id: uuidv4(),
-        text: 'test',
+        text: 'hello',
+        tag: 'h1',
         props
       }
       this.components.push(addComponent)

@@ -1,7 +1,7 @@
 <template>
   <aside class="canvas-area" id="canvas-area">
     <EditBox v-for="com in componentList" :key="com.id" :comId="com.id" :defaultStyle="com.props">
-      <LText :style="com.props" :text="com.text" />
+      <LText :style="com" />
     </EditBox>
   </aside>
 </template>

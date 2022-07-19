@@ -7,62 +7,67 @@
       class="text-item"
       draggable="true"
     >
-      <LText :style="item.props" :text="item.text" />
+      <LText :style="item" />
     </div>
   </aside>
 </template>
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
 import LText from '@/components/LText.vue'
-import { componentsDefaultProps, ComponentAllTypes } from '@/defaultProps'
+import { componentsDefaultProps } from '@/defaultProps'
 import { pushComponentCommon } from '@/hooks/useComponentCommon'
+import { ComponentData } from '@/stores/interface'
 
-interface CreateComponentType {
-  text: string
-  props: ComponentAllTypes
-  name: string
-  tag?: string
-  id?: string
-}
 const textDefaultProps = componentsDefaultProps['l-text'].props
 // 模拟数据
-const textPropsList: CreateComponentType[] = [
+const textPropsList: ComponentData[] = [
   {
     text: '点击添加文字标题',
     name: 'LText',
     tag: 'h1',
+    id: uuidv4(),
     props: {
       fontSize: 24,
       fontWeight: 'bolder',
       fontFamily: 'cursive',
-      height: 40
+      height: 40,
+      width: 200
     }
   },
   {
     text: '点击添加副标题',
     name: 'LText',
     tag: 'h2',
+    id: uuidv4(),
     props: {
       fontSize: 16,
       fontWeight: 'bold',
-      fontFamily: 'KaiTi'
+      fontFamily: 'KaiTi',
+      width: 200,
+      height: 20
     }
   },
   {
     text: '正文内容',
     name: 'LText',
     tag: 'p',
-    props: {}
+    id: uuidv4(),
+    props: {
+      width: 200,
+      height: 20
+    }
   }
 ]
 
-const textList: CreateComponentType[] = reactive(
+const textList: ComponentData[] = reactive(
   textPropsList.map((prop) => {
     return {
       name: prop.name,
       text: prop.text,
       tag: prop.tag,
+      id: prop.id,
       props: {
         ...textDefaultProps,
         ...(prop.props as any)
@@ -71,7 +76,7 @@ const textList: CreateComponentType[] = reactive(
   })
 )
 
-const onItemClick = (item: CreateComponentType) => {
+const onItemClick = (item: ComponentData) => {
   // 添加组件到画布
   pushComponentCommon(item)
 }

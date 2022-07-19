@@ -31,6 +31,7 @@ export type ComponentData = {
   props: NewComponentProps
   // id，uuid v4 生成
   id: string
+  tag: string
 }
 
 export type ComponentAllData = ComponentData

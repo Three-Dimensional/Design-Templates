@@ -33,9 +33,6 @@ import pageScale from './components/bottom/pageScale'
 
 const store = useEditorStore()
 const currentElement = computed<ComponentData | undefined>(() => store.getCurrentElement)
-// const handleChange = (e: { key: string; value: any }) => {
-//   store.updateComponent(e)
-// }
 
 const activeItem = ref({
   id: 1,

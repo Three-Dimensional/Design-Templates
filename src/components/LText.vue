@@ -1,21 +1,20 @@
 <template>
-  <div :style="styleStr" class="l-text__component">
-    {{ text }}
+  <component :is="style.tag" :style="styleStr" class="l-text__component">
+    {{ style.text }}
     <slot />
-  </div>
+  </component>
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { propsToStyleString } from '../defaultProps'
+import { propsToStyleString } from '@/hooks/useComponentCommon'
+import { ComponentData } from '@/stores/interface'
 
 const props = defineProps<{
-  text: string | undefined
-  style: any
+  style: ComponentData
 }>()
-
 const styleStr = computed(() => {
-  return propsToStyleString(props.style, false)
+  return propsToStyleString(props.style.props, false)
 })
 </script>
 

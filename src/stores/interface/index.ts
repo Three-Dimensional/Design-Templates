@@ -26,9 +26,10 @@ export type NewComponentProps = PickObjWithRequired<ComponentAllTypes, 'width' |
 export type ComponentData = {
   // 业务组件库名称 LText，l-image 等等
   name: string
-  // 业务组件库名称 LText的内容
-  text?: string
-  props: NewComponentProps
+  props: {
+    [key in string]: string
+  }
+  style: NewComponentProps
   // id，uuid v4 生成
   id: string
   tag: string

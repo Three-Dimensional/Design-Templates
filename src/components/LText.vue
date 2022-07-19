@@ -14,7 +14,7 @@ const props = defineProps<{
   style: ComponentData
 }>()
 const styleStr = computed(() => {
-  return propsToStyleString(props.style.props, false)
+  return propsToStyleString(props.style.style, false)
 })
 </script>
 

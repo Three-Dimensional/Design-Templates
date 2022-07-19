@@ -67,6 +67,15 @@ function computedCornerPoint(
   }
 }
 
+/**
+ * 计算top和bottom两个点的前后位置
+ * @param curPoint 当前位置坐标
+ * @param symmetriPoint 对称点坐标
+ * @param rotate 旋转的角度
+ * @param oldPosition 老的坐标
+ * @param oldRect 老的宽高属性
+ * @returns 计算出来的位置
+ */
 function computedTopBottom(
   curPoint: ComputedPoint,
   symmetriPoint: ComputedPoint,
@@ -74,14 +83,10 @@ function computedTopBottom(
   oldPosition: ComputedPoint,
   oldRect: OldPosition
 ) {
-  //   当前点
+  // 找到当前点旋转之前的点坐标
   const point = CoordinateRotateMappingPoint(curPoint, oldPosition, -rotate)
-  const symmetriRotatePoint = CoordinateRotateMappingPoint(symmetriPoint, oldPosition, -rotate)
 
-  console.log(point)
-  console.log(symmetriRotatePoint)
-
-  // 正常0角度的top或者bottom的中间点
+  // 正常0角度的top或者bottom的中间点，再旋转对应角度，得到旋转后的左右中间点
   const middleTopOrBottom = CoordinateRotateMappingPoint(
     {
       x: oldPosition.x,
@@ -91,19 +96,15 @@ function computedTopBottom(
     rotate
   )
 
+  // 根据勾股定理得到最新高度
   const newHeight = Math.sqrt(
     Math.abs(middleTopOrBottom.x - symmetriPoint.x) ** 2 +
       Math.abs(middleTopOrBottom.y - symmetriPoint.y) ** 2
   )
 
+  // 通过两个对称点得到中心点
   const newCenter = getCenterPoint(middleTopOrBottom, symmetriPoint)
 
-  console.log('newHeight===', newHeight)
-
-  console.log('LeftTop', {
-    x: newCenter.x - oldRect.width / 2,
-    y: newCenter.y - newHeight / 2
-  })
   return {
     width: oldRect.width,
     height: Math.round(newHeight),
@@ -112,7 +113,15 @@ function computedTopBottom(
   }
 }
 
-// 计算左右点拖动
+/**
+ * 计算左右点拖动
+ * @param curPoint 当前位置坐标
+ * @param symmetriPoint 对称点坐标
+ * @param rotate 旋转的角度
+ * @param oldPosition 老的坐标
+ * @param oldRect 老的宽高属性
+ * @returns 计算出来的位置
+ */
 function computedLeftRight(
   curPoint: ComputedPoint,
   symmetriPoint: ComputedPoint,
@@ -120,9 +129,10 @@ function computedLeftRight(
   oldPosition: ComputedPoint,
   oldRect: OldPosition
 ) {
+  // 找到当前点旋转之前的点坐标
   const point = CoordinateRotateMappingPoint(curPoint, oldPosition, -rotate)
 
-  // 正常0角度时的左右中点
+  // 正常0角度时的左右中点，再旋转对应角度，得到旋转后的左右中间点
   const leftOrRightPoint = CoordinateRotateMappingPoint(
     {
       x: point.x,
@@ -132,8 +142,10 @@ function computedLeftRight(
     rotate
   )
 
+  // 根据旋转后的左右中心点和对称点计算新的中心点
   const newCenter = getCenterPoint(leftOrRightPoint, symmetriPoint)
 
+  // 根据勾股定理得出最新的宽度
   const newWidth = Math.sqrt(
     Math.abs(leftOrRightPoint.x - symmetriPoint.x) ** 2 +
       Math.abs(leftOrRightPoint.y - symmetriPoint.y) ** 2
@@ -156,7 +168,7 @@ function degToAngle(rotate: number) {
 function matrixMul(a: number[][], b: number[][]) {
   // 相乘约束
   if (a[0].length !== b.length) {
-    throw new Error('矩阵异常，不能计算')
+    throw new Error('矩阵异常，不能做计算')
   }
   const m = a.length
   const p = a[0].length

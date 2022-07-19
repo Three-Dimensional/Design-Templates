@@ -8,7 +8,7 @@ export const testComponents: ComponentData[] = [
     name: 'LText',
     text: 'hello',
     tag: 'h1',
-    props: {
+    style: {
       fontSize: 40,
       width: 125,
       height: 36,
@@ -28,7 +28,7 @@ export const testComponents: ComponentData[] = [
     name: 'LText',
     text: 'hello2222',
     tag: 'h1',
-    props: {
+    style: {
       fontSize: 40,
       width: 250,
       height: 150,
@@ -58,13 +58,13 @@ const useEditorStore = defineStore('editor', {
   },
 
   actions: {
-    addComponent(props: NewComponentProps) {
+    addComponent(style: NewComponentProps) {
       const addComponent: ComponentData = {
         name: 'LText',
         id: uuidv4(),
         text: 'hello',
         tag: 'h1',
-        props
+        style,
       }
       this.components.push(addComponent)
     },

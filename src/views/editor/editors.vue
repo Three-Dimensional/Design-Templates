@@ -14,7 +14,7 @@
 
     <aside class="settings-panel">
       <!-- 具体数据 -->
-      {{ currentElement && currentElement.props }}
+      {{ currentElement && currentElement.style }}
     </aside>
   </main>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <component :is="style.tag" :style="styleStr" class="l-text__component">
-    {{ style.text }}
+    {{ style.props.text }}
     <slot />
   </component>
 </template>

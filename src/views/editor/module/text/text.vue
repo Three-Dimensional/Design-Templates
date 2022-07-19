@@ -70,7 +70,7 @@ const textList: ComponentData[] = reactive(
       id: prop.id,
       props: {
         ...textDefaultProps,
-        ...(prop.props as any)
+        ...(prop.style as any)
       }
     }
   })

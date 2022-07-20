@@ -7,75 +7,82 @@
       class="text-item"
       draggable="true"
     >
-      <LText :style="item.props" :text="item.text" />
+      <LText :style="item" />
     </div>
   </aside>
 </template>
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
 import LText from '@/components/LText.vue'
-import { componentsDefaultProps, ComponentAllTypes } from '@/defaultProps'
+import { componentsDefaultProps } from '@/defaultProps'
 import { pushComponentCommon } from '@/hooks/useComponentCommon'
+import { ComponentData } from '@/stores/interface'
 
-interface CreateComponentType {
-  text: string
-  props: ComponentAllTypes
-  name: string
-  tag: string
-  id?: string
-}
 const textDefaultProps = componentsDefaultProps['l-text'].props
 // 模拟数据
-const textPropsList: CreateComponentType[] = [
+const textPropsList: ComponentData[] = [
   {
-    text: '点击添加文字标题',
     name: 'LText',
     tag: 'h1',
+    id: uuidv4(),
     props: {
+      text: '点击添加文字标题'
+    },
+    style: {
       fontSize: 24,
       fontWeight: 'bolder',
       fontFamily: 'cursive',
       height: 40,
-      lineHeight: 2
+      width: 200
     }
   },
   {
-    text: '点击添加副标题',
     name: 'LText',
     tag: 'h2',
+    id: uuidv4(),
     props: {
+      text: '点击添加副标题'
+    },
+    style: {
       fontSize: 16,
       fontWeight: 'bold',
       fontFamily: 'KaiTi',
-      lineHeight: 2
+      width: 200,
+      height: 20
     }
   },
   {
-    text: '正文内容',
     name: 'LText',
     tag: 'p',
+    id: uuidv4(),
     props: {
-      lineHeight: 2
+      text: '正文内容'
+    },
+    style: {
+      width: 200,
+      height: 20
     }
   }
 ]
 
-const textList: CreateComponentType[] = reactive(
+const textList: ComponentData[] = reactive(
   textPropsList.map((prop) => {
     return {
       name: prop.name,
-      text: prop.text,
       tag: prop.tag,
-      props: {
+      id: prop.id,
+      props: prop.props,
+      style: {
         ...textDefaultProps,
-        ...(prop.props as any)
+        ...(prop.style as any)
       }
     }
   })
 )
 
-const onItemClick = (item: CreateComponentType) => {
+const onItemClick = (item: ComponentData) => {
   // 添加组件到画布
   pushComponentCommon(item)
 }
@@ -91,5 +98,6 @@ const onItemClick = (item: CreateComponentType) => {
 }
 .text-item {
   cursor: pointer;
+  margin-bottom: 8px;
 }
 </style>

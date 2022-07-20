@@ -14,7 +14,7 @@
 
     <aside class="settings-panel">
       <!-- 具体数据 -->
-      {{ currentElement && currentElement.props }}
+      {{ currentElement && currentElement.style }}
     </aside>
   </main>
 </template>
@@ -33,9 +33,6 @@ import pageScale from './components/bottom/pageScale'
 
 const store = useEditorStore()
 const currentElement = computed<ComponentData | undefined>(() => store.getCurrentElement)
-// const handleChange = (e: { key: string; value: any }) => {
-//   store.updateComponent(e)
-// }
 
 const activeItem = ref({
   id: 1,

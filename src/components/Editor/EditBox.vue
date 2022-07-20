@@ -21,7 +21,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ComponentAllTypes, propsToStyleString } from '@/defaultProps'
+import { ComponentAllTypes } from '@/defaultProps'
+import { propsToStyleString } from '@/hooks/useComponentCommon'
 import { PickObjWithRequired } from '@/types/common'
 import useEditorStore from '@/stores/editor'
 import pointCursor from '@/config/editorConfig'

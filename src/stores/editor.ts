@@ -6,6 +6,7 @@ export const testComponents: ComponentData[] = [
   {
     id: uuidv4(),
     name: 'LText',
+    tag: 'h1',
     props: {
       text: 'hello'
     },
@@ -27,6 +28,7 @@ export const testComponents: ComponentData[] = [
   {
     id: uuidv4(),
     name: 'LText',
+    tag: 'h1',
     props: {
       text: 'hello2222'
     },
@@ -64,10 +66,11 @@ const useEditorStore = defineStore('editor', {
       const addComponent: ComponentData = {
         name: 'LText',
         id: uuidv4(),
-        style,
         props: {
-          text: 'test'
-        }
+          text: 'hello'
+        },
+        tag: 'h1',
+        style
       }
       this.components.push(addComponent)
     },

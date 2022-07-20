@@ -17,7 +17,7 @@ on:
       - 'src/**'
 # 任务
 jobs:
-  test:
+  deploy:
     # 运行的基础
     runs-on: ubuntu-latest
     # 步骤

@@ -2,7 +2,10 @@
     "compilerOptions": {
       "paths": {
         "@/*": ["./src/*"],
-        "@components/*": ["./src/components/*"]
+        "@components/*": ["./src/components/*"],
+        "@assets/*": ["./src/assets/*"],
+        "@styles/*": ["./src/styles/*"],
+        "@apis/*": ["./src/apis/*"],
       },
       "target": "esnext",
       "useDefineForClassFields": true,

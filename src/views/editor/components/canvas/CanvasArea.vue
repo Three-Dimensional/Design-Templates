@@ -23,6 +23,7 @@ const componentList = computed(() => store.components)
   background: #fff;
   max-height: 80vh;
   position: relative;
+  overflow: hidden;
 }
 
 .editor-wrapper {

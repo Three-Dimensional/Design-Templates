@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
-import { ComponentData, NewComponentProps } from './interface'
+import { ComponentData } from './interface'
 
-export const testComponents: ComponentData[] = [
+export const defaultComponents: ComponentData[] = [
   {
     id: uuidv4(),
     name: 'LText',
@@ -51,7 +51,7 @@ export const testComponents: ComponentData[] = [
 
 const useEditorStore = defineStore('editor', {
   state: () => ({
-    components: testComponents,
+    components: defaultComponents,
     currentElement: ''
   }),
 
@@ -62,21 +62,15 @@ const useEditorStore = defineStore('editor', {
   },
 
   actions: {
-    addComponent(style: NewComponentProps) {
-      const addComponent: ComponentData = {
-        name: 'LText',
-        id: uuidv4(),
-        props: {
-          text: 'hello'
-        },
-        tag: 'h1',
-        style
-      }
-      this.components.push(addComponent)
+    // 增加画布元素
+    addComponent(compomtedItem: ComponentData) {
+      this.components.push(compomtedItem)
     },
+    // 删除画布元素
     removeComponent(id: string) {
       this.components = this.components.filter((item) => item.id !== id)
     },
+    // 设置当前选中的组件
     setActive(id: string) {
       this.currentElement = id
     },

@@ -20,11 +20,15 @@ export const useComponentCommon = (props: ComponentAllTypes, picks: string[]) =>
   }
 }
 
-// 添加组件到画布
+/**
+ * 添加组件到画布
+ * @param item 画布元素的属性
+ * @returns 空
+ */
 export const pushComponentCommon = (item: ComponentData): void => {
   const target = JSON.parse(JSON.stringify(item))
   target.id = uuidv4()
-  store.addComponent(target)
+  store.components.push(target)
 }
 
 /**

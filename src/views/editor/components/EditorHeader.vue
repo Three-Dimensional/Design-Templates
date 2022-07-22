@@ -3,6 +3,8 @@
     <aside class="editor-header dfac">
       <img class="logo" src="../../../assets/svg/planet.svg" />
       <h2 class="header-title">海报编辑</h2>
+      <Icon class="header-icon" :icon="'houtui'" />
+      <Icon class="header-icon" :icon="'qianjin'" />
     </aside>
   </header>
 </template>
@@ -26,8 +28,13 @@
     }
 
     .header-title {
-      margin-left: 16px;
+      margin: 0 24px;
       font-family: cursive;
+    }
+    .header-icon {
+      width: 32px;
+      height: 70px;
+      margin-right: 16px;
     }
   }
 }

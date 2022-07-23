@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
-import { ComponentData, NewComponentProps } from './interface'
+import { ComponentData, NewComponentProps, PageStyle } from './interface'
 
 export const testComponents: ComponentData[] = [
   {
@@ -51,6 +51,19 @@ export const testComponents: ComponentData[] = [
 
 const useEditorStore = defineStore('editor', {
   state: () => ({
+    id: uuidv4(),
+    title: '海报标题',
+    description: '描述描述',
+    author: '我是作者',
+    style: {
+      width: '750px',
+      height: '1334px',
+      backgroundColor: '#ffffff',
+      backgroundImage: '',
+      backgroundSize: '',
+      backgroundRepeat: '',
+      backgroundPosition: ''
+    },
     components: testComponents,
     currentElement: ''
   }),
@@ -62,6 +75,12 @@ const useEditorStore = defineStore('editor', {
   },
 
   actions: {
+    updatePageStyle(style: Partial<PageStyle>) {
+      this.style = {
+        ...this.style,
+        ...style
+      }
+    },
     addComponent(style: NewComponentProps) {
       const addComponent: ComponentData = {
         name: 'LText',

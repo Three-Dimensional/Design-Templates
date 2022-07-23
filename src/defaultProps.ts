@@ -1,4 +1,12 @@
-export interface CommonComponentProps {
+export interface PageStyle {
+  // 背景
+  backgroundColor: string
+  backgroundImage: string
+  backgroundSize: string
+  backgroundRepeat: string
+  backgroundPosition: string
+}
+export interface CommonComponentProps extends PageStyle {
   // actions
   actionType: string
   url: string
@@ -30,8 +38,6 @@ export interface CommonComponentProps {
   lineHeight: number
   textAlign: string
   color: string
-  backgroundColor: string
-
   // 旋转
   rotate: number
 }

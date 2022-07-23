@@ -1,6 +1,7 @@
 import { PickObjWithRequired } from '@/types/common'
 import { ComponentAllTypes } from '../../defaultProps'
 
+export { PageStyle } from '../../defaultProps'
 // 用户接口
 export interface UserProps {
   isLogin: boolean

@@ -1,18 +1,19 @@
 import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
-import { ComponentData, NewComponentProps } from './interface'
+import { ComponentData, PageStyle } from './interface'
 
-export const testComponents: ComponentData[] = [
+export const defaultComponents: ComponentData[] = [
   {
     id: uuidv4(),
     name: 'LText',
+    tag: 'h1',
     props: {
       text: 'hello'
     },
     style: {
-      fontSize: 40,
       width: 125,
       height: 36,
+      fontSize: 40,
       color: 'red',
       lineHeight: 1,
       textAlign: 'left',
@@ -27,13 +28,14 @@ export const testComponents: ComponentData[] = [
   {
     id: uuidv4(),
     name: 'LText',
+    tag: 'h1',
     props: {
       text: 'hello2222'
     },
     style: {
-      fontSize: 40,
       width: 250,
       height: 150,
+      fontSize: 40,
       color: 'red',
       lineHeight: 1,
       textAlign: 'left',
@@ -46,10 +48,23 @@ export const testComponents: ComponentData[] = [
     }
   }
 ]
-
+// 页面数据属性
 const useEditorStore = defineStore('editor', {
   state: () => ({
-    components: testComponents,
+    id: uuidv4(),
+    title: '海报标题',
+    description: '描述描述',
+    author: '我是作者',
+    style: {
+      width: '750px',
+      height: '1334px',
+      backgroundColor: '#ffffff',
+      backgroundImage: '',
+      backgroundSize: '',
+      backgroundRepeat: '',
+      backgroundPosition: ''
+    },
+    components: defaultComponents,
     currentElement: ''
   }),
 
@@ -60,22 +75,26 @@ const useEditorStore = defineStore('editor', {
   },
 
   actions: {
-    addComponent(style: NewComponentProps) {
-      const addComponent: ComponentData = {
-        name: 'LText',
-        id: uuidv4(),
-        style,
-        props: {
-          text: 'test'
-        }
+    updatePageStyle(style: Partial<PageStyle>) {
+      this.style = {
+        ...this.style,
+        ...style
       }
-      this.components.push(addComponent)
     },
+    // 增加画布元素
+    addComponent(compomtedItem: ComponentData) {
+      this.components.push(compomtedItem)
+    },
+    // 删除画布元素
     removeComponent(id: string) {
       this.components = this.components.filter((item) => item.id !== id)
     },
     setActive(id: string) {
       this.currentElement = id
+    },
+    // 赋值操作
+    handleChange(state: any) {
+      this.$state = state
     },
     // 动态改变属性值
     updateComponent({ key, value }: { key: string; value: any }) {

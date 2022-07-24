@@ -1,6 +1,7 @@
 import { PickObjWithRequired } from '@/types/common'
 import { ComponentAllTypes } from '../../defaultProps'
 
+export { PageStyle } from '../../defaultProps'
 // 用户接口
 export interface UserProps {
   isLogin: boolean
@@ -26,12 +27,13 @@ export type NewComponentProps = PickObjWithRequired<ComponentAllTypes, 'width' |
 export type ComponentData = {
   // 业务组件库名称 LText，l-image 等等
   name: string
+  // id，uuid v4 生成
+  id: string
+  tag: string
   props: {
     [key in string]: string
   }
   style: NewComponentProps
-  // id，uuid v4 生成
-  id: string
 }
 
 export type ComponentAllData = ComponentData

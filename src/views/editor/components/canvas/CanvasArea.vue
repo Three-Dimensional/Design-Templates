@@ -1,5 +1,5 @@
 <template>
-  <aside class="canvas-area" id="canvas-area">
+  <aside class="canvas-area" id="canvas-area" :style="propsToStyleString(canvasStyle, false)">
     <EditBox v-for="com in componentList" :key="com.id" :comId="com.id" :defaultStyle="com.style">
       <LText :style="com" />
       <!-- <component :is="com.name" :style="com.props" :comProps="com.props"></component> -->
@@ -11,9 +11,11 @@ import { computed } from 'vue'
 import useEditorStore from '@/stores/editor'
 import LText from '@/components/LText.vue'
 import EditBox from '@/components/Editor/EditBox.vue'
+import { propsToStyleString } from '@/hooks/useComponentCommon'
 
-const store = useEditorStore()
-const componentList = computed(() => store.components)
+const editeorStore = useEditorStore()
+const componentList = computed(() => editeorStore.components)
+const canvasStyle = computed(() => editeorStore.style)
 </script>
 <style lang="scss" scoped>
 .canvas-area {

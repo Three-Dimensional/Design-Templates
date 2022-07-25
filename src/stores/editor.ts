@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
-import { ComponentData, NewComponentProps, PageStyle } from './interface'
+import { ComponentData, PageStyle } from './interface'
 
-export const testComponents: ComponentData[] = [
+export const defaultComponents: ComponentData[] = [
   {
     id: uuidv4(),
     name: 'LText',
@@ -64,7 +64,7 @@ const useEditorStore = defineStore('editor', {
       backgroundRepeat: '',
       backgroundPosition: ''
     },
-    components: testComponents,
+    components: defaultComponents,
     currentElement: ''
   }),
 
@@ -81,18 +81,11 @@ const useEditorStore = defineStore('editor', {
         ...style
       }
     },
-    addComponent(style: NewComponentProps) {
-      const addComponent: ComponentData = {
-        name: 'LText',
-        id: uuidv4(),
-        props: {
-          text: 'hello'
-        },
-        tag: 'h1',
-        style
-      }
-      this.components.push(addComponent)
+    // 增加画布元素
+    addComponent(compomtedItem: ComponentData) {
+      this.components.push(compomtedItem)
     },
+    // 删除画布元素
     removeComponent(id: string) {
       this.components = this.components.filter((item) => item.id !== id)
     },

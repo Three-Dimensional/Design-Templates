@@ -32,7 +32,9 @@ import PageScaleSet from './components/bottom/PageScaleSet.vue'
 import pageScale from './components/bottom/pageScale'
 
 const store = useEditorStore()
-const currentElement = computed<ComponentData | undefined>(() => store.getCurrentElement)
+const currentElement = computed<ComponentData | undefined>(() => {
+  return store.getCurrentElement
+})
 
 const activeItem = ref({
   id: 1,

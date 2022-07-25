@@ -1,30 +1,33 @@
-import { computed, StyleValue } from 'vue'
+import { StyleValue } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import { omit, pick } from 'lodash-es'
-import { ComponentAllTypes } from '../defaultProps'
+import { ComponentAllTypes, PageStyle } from '../defaultProps'
 import useEditorStore from '@/stores/editor'
 import { ComponentData } from '@/stores/interface'
+import { recordSnapshot } from '@/hooks/useRecordSnapshot'
 
 const store = useEditorStore()
 
-export const useComponentCommon = (props: ComponentAllTypes, picks: string[]) => {
-  const styleProps = computed(() => pick(props, picks))
-  const handleClick = () => {
-    if (props.actionType === 'url' && props.url) {
-      window.location.href = props.url
-    }
-  }
-  return {
-    styleProps,
-    handleClick
-  }
-}
+// 组件的点击事件
+// export const useComponentCommon = (props: ComponentAllTypes, picks: string[]) => {
+//   const styleProps = computed(() => pick(props, picks))
+//   const handleClick = () => {
+//     if (props.actionType === 'url' && props.url) {
+//       window.location.href = props.url
+//     }
+//   }
+//   return {
+//     styleProps,
+//     handleClick
+//   }
+// }
 
 // 添加组件到画布
 export const pushComponentCommon = (item: ComponentData): void => {
   const target = JSON.parse(JSON.stringify(item))
   target.id = uuidv4()
   store.addComponent(target)
+  recordSnapshot(store)
 }
 
 /**
@@ -34,7 +37,7 @@ export const pushComponentCommon = (item: ComponentData): void => {
  * @returns style字符串
  */
 export const propsToStyleString = (
-  props: ComponentAllTypes,
+  props: ComponentAllTypes | PageStyle,
   includeGeometric: boolean = false
 ): StyleValue => {
   const geometric = ['width', 'height', 'transform']

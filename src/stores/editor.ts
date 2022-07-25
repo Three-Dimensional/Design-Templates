@@ -11,9 +11,9 @@ export const defaultComponents: ComponentData[] = [
       text: 'hello'
     },
     style: {
-      fontSize: 40,
       width: 125,
       height: 36,
+      fontSize: 40,
       color: 'red',
       lineHeight: 1,
       textAlign: 'left',
@@ -33,9 +33,9 @@ export const defaultComponents: ComponentData[] = [
       text: 'hello2222'
     },
     style: {
-      fontSize: 40,
       width: 250,
       height: 150,
+      fontSize: 40,
       color: 'red',
       lineHeight: 1,
       textAlign: 'left',
@@ -48,7 +48,7 @@ export const defaultComponents: ComponentData[] = [
     }
   }
 ]
-
+// 页面数据属性
 const useEditorStore = defineStore('editor', {
   state: () => ({
     id: uuidv4(),
@@ -91,6 +91,10 @@ const useEditorStore = defineStore('editor', {
     },
     setActive(id: string) {
       this.currentElement = id
+    },
+    // 赋值操作
+    handleChange(state: any) {
+      this.$state = state
     },
     // 动态改变属性值
     updateComponent({ key, value }: { key: string; value: any }) {

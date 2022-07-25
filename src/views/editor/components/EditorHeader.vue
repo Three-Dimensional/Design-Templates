@@ -3,12 +3,33 @@
     <aside class="editor-header dfac">
       <img class="logo" src="../../../assets/svg/planet.svg" />
       <h2 class="header-title">海报编辑</h2>
-      <Icon class="header-icon" :icon="'houtui'" />
-      <Icon class="header-icon" :icon="'qianjin'" />
+      <Icon
+        class="header-icon"
+        :icon="'houtui'"
+        v-if="snapshot.snapshotIndex > -1"
+        @click="backOperation"
+      />
+      <Icon class="header-icon" v-else :icon="'houtui-01-copy'" />
+      <Icon
+        class="header-icon"
+        v-if="snapshot.snapshotIndex < snapshot.snapshotData.length - 1"
+        :icon="'qianjin'"
+        @click="forwardOperation"
+      />
+      <Icon class="header-icon" v-else :icon="'qianjin-01'" />
     </aside>
   </header>
 </template>
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { back, forward, snapshot } from '@/hooks/useRecordSnapshot'
+
+const backOperation = () => {
+  back()
+}
+const forwardOperation = () => {
+  forward()
+}
+</script>
 <style lang="scss" scoped>
 .base-header {
   height: 70px;

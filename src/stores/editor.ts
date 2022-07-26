@@ -94,7 +94,7 @@ const useEditorStore = defineStore('editor', {
     },
     // 赋值操作
     handleChange(state: any) {
-      this.$state = state
+      this.$state = JSON.parse(JSON.stringify(state))
     },
     // 动态改变属性值
     updateComponent({ key, value }: { key: string; value: any }) {

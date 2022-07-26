@@ -6,7 +6,7 @@
       <Icon
         class="header-icon"
         :icon="'houtui'"
-        v-if="snapshot.snapshotIndex > -1"
+        v-if="snapshot.snapshotIndex > 0"
         @click="backOperation"
       />
       <Icon class="header-icon" v-else :icon="'houtui-01-copy'" />
@@ -56,6 +56,7 @@ const forwardOperation = () => {
       width: 32px;
       height: 70px;
       margin-right: 16px;
+      cursor: pointer;
     }
   }
 }

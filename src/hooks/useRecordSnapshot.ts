@@ -14,23 +14,23 @@ export const snapshot: snapshotType = reactive({
 })
 
 // 记录操作步骤
-export const recordSnapshot = (state: any) => {
+export const recordSnapshot = (snap: any) => {
   // 在 back 过程中，添加新的快照时，将它后面的快照清理掉
   if (snapshot.snapshotIndex !== snapshot.snapshotData.length - 1) {
     snapshot.snapshotData = snapshot.snapshotData.slice(0, snapshot.snapshotIndex + 1)
   }
   snapshot.snapshotIndex += 1
-  snapshot.snapshotData.push(JSON.parse(JSON.stringify(state)))
+  snapshot.snapshotData.push(JSON.parse(JSON.stringify(snap)))
 }
 
 // 回退撤销
 export const forward = () => {
   snapshot.snapshotIndex += 1
-  store.handleChange(snapshot.snapshotData[snapshot.snapshotIndex])
+  store.handleChange(JSON.parse(JSON.stringify(snapshot.snapshotData[snapshot.snapshotIndex])))
 }
 
 // 撤销
 export const back = () => {
   snapshot.snapshotIndex -= 1
-  store.handleChange(snapshot.snapshotData[snapshot.snapshotIndex])
+  store.handleChange(JSON.parse(JSON.stringify(snapshot.snapshotData[snapshot.snapshotIndex])))
 }

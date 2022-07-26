@@ -34,5 +34,3 @@ export const back = () => {
   snapshot.snapshotIndex -= 1
   store.handleChange(snapshot.snapshotData[snapshot.snapshotIndex])
 }
-// 初始化面板数据
-recordSnapshot(store)

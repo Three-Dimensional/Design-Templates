@@ -92,7 +92,6 @@ const getPointStyle = (point: string) => {
   return style
 }
 const handleMouseup = () => {
-  console.log(123123)
   recordSnapshot(store)
 }
 // editBox拖动事件

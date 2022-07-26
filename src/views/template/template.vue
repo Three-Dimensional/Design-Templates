@@ -29,10 +29,10 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import useTemplatetore from '@/stores/templates'
+import useTemplateStore from '@/stores/templates'
 
 const route = useRoute()
-const store = useTemplatetore()
+const store = useTemplateStore()
 const currentId = route.params.id as string
 const templateItem = computed(() => store.getTemplateById(parseInt(currentId, 10)))
 </script>

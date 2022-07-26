@@ -11,7 +11,7 @@ const testData: TemplateProps[] = [
   }
 ]
 
-const useTemplatetore = defineStore('template', {
+const useTemplateStore = defineStore('template', {
   state: () => ({
     templateList: testData
   }),
@@ -23,4 +23,4 @@ const useTemplatetore = defineStore('template', {
   }
 })
 
-export default useTemplatetore
+export default useTemplateStore

@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { ComponentData } from '@/stores/interface'
 import useEditorStore from '@/stores/editor'
 import EditorHeader from './components/EditorHeader.vue'
@@ -30,9 +30,17 @@ import LeftPanel from './components/left/LeftPanel.vue'
 import CanvasArea from './components/canvas/CanvasArea.vue'
 import PageScaleSet from './components/bottom/PageScaleSet.vue'
 import pageScale from './components/bottom/pageScale'
+import { recordSnapshot } from '@/hooks/useRecordSnapshot'
 
 const store = useEditorStore()
-const currentElement = computed<ComponentData | undefined>(() => store.getCurrentElement)
+const currentElement = computed<ComponentData | undefined>(() => {
+  return store.getCurrentElement
+})
+
+// 初始化面板数据
+onMounted(() => {
+  recordSnapshot(store)
+})
 
 const activeItem = ref({
   id: 1,

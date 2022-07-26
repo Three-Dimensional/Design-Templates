@@ -46,7 +46,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/no-absolute-path': 'off',
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/no-unused-vars': ['warn'],
     'vue/attribute-hyphenation': [
       'error',
       'never',

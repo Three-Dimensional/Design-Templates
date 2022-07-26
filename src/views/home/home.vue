@@ -6,10 +6,10 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import useTemplatetore from '@/stores/templates'
+import useTemplateStore from '@/stores/templates'
 import TemplateList from '../../components/TemplateList.vue'
 
-const store = useTemplatetore()
+const store = useTemplateStore()
 const testData = computed(() => store.templateList)
 </script>
 

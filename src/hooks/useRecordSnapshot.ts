@@ -1,4 +1,5 @@
 import { reactive } from 'vue'
+import { cloneDeep } from 'lodash-es'
 import useEditorStore from '@/stores/editor'
 
 const store = useEditorStore()
@@ -20,17 +21,17 @@ export const recordSnapshot = (snap: any) => {
     snapshot.snapshotData = snapshot.snapshotData.slice(0, snapshot.snapshotIndex + 1)
   }
   snapshot.snapshotIndex += 1
-  snapshot.snapshotData.push(JSON.parse(JSON.stringify(snap)))
+  snapshot.snapshotData.push(cloneDeep(snap))
 }
 
 // 回退撤销
 export const forward = () => {
   snapshot.snapshotIndex += 1
-  store.handleChange(JSON.parse(JSON.stringify(snapshot.snapshotData[snapshot.snapshotIndex])))
+  store.handleChange(cloneDeep(snapshot.snapshotData[snapshot.snapshotIndex]))
 }
 
 // 撤销
 export const back = () => {
   snapshot.snapshotIndex -= 1
-  store.handleChange(JSON.parse(JSON.stringify(snapshot.snapshotData[snapshot.snapshotIndex])))
+  store.handleChange(cloneDeep(snapshot.snapshotData[snapshot.snapshotIndex]))
 }

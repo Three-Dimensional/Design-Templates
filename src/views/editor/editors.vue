@@ -39,7 +39,7 @@ const currentElement = computed<ComponentData | undefined>(() => {
 
 // 初始化面板数据
 onMounted(() => {
-  recordSnapshot(store)
+  recordSnapshot(store.$state)
 })
 
 const activeItem = ref({

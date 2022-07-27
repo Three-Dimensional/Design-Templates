@@ -92,7 +92,7 @@ const getPointStyle = (point: string) => {
   return style
 }
 const handleMouseup = () => {
-  recordSnapshot(store)
+  recordSnapshot(store.$state)
 }
 // editBox拖动事件
 const handleMouseDown = (comId: string, e: any) => {

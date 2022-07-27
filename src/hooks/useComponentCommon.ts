@@ -27,7 +27,7 @@ export const pushComponentCommon = (item: ComponentData): void => {
   const target = JSON.parse(JSON.stringify(item))
   target.id = uuidv4()
   store.addComponent(target)
-  recordSnapshot(store)
+  recordSnapshot(store.$state)
 }
 
 /**

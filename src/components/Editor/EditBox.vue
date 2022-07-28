@@ -4,6 +4,7 @@
     :class="['editor-box', isActive && 'active']"
     :style="propsToStyleString(props.defaultStyle, true)"
     @mousedown="handleMouseDown(props.comId, $event)"
+    @mouseup="handleMouseup"
   >
     <div
       v-for="item in isActive ? pointList : []"
@@ -11,6 +12,7 @@
       class="editor-point"
       :style="getPointStyle(item)"
       @mousedown="handlePointMouseDown(item, $event)"
+      @mouseup="handleMouseup"
     ></div>
 
     <div class="editor-rotate" v-show="isActive">
@@ -22,11 +24,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ComponentAllTypes, propsToStyleString } from '@/defaultProps'
+import { ComponentAllTypes } from '@/defaultProps'
+import { propsToStyleString } from '@/hooks/useComponentCommon'
 import { PickObjWithRequired } from '@/types/common'
 import useEditorStore from '@/stores/editor'
 import pointCursor from '@/config/editorConfig'
 import { computedLocation, computedMatrixString } from '@/utils/computedComponentLocation'
+import { recordSnapshot } from '@/hooks/useRecordSnapshot'
 
 const store = useEditorStore()
 
@@ -82,6 +86,9 @@ const getPointStyle = (point: string) => {
   }
 
   return style
+}
+const handleMouseup = () => {
+  recordSnapshot(store.$state)
 }
 // editBox拖动事件
 const handleMouseDown = (comId: string, e: MouseEvent) => {

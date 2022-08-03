@@ -11,13 +11,13 @@
           <div
             class="font-family__wrap"
             v-html="findFamilyByvalue(fontFamilyValue)"
-            @click="fontFamilyVisible = !fontFamilyVisible"
+            @click="showFontFamily = !showFontFamily"
           ></div>
-          <span class="font-pop__icon" @click="fontFamilyVisible = !fontFamilyVisible">
+          <span class="font-pop__icon" @click="showFontFamily = !showFontFamily">
             <Icon icon="angle-down" />
           </span>
-          <span class="tips-text" v-if="!fontFamilyVisible">字体</span>
-          <FontFamily v-model:visible="fontFamilyVisible" v-model:family="fontFamilyValue" />
+          <span class="tips-text" v-if="!showFontFamily">字体</span>
+          <FontFamily v-model:visible="showFontFamily" v-model:family="fontFamilyValue" />
         </li>
         <li class="hover-tips font-size--choose">
           <input
@@ -26,11 +26,11 @@
             @focus="fontInputFocus"
             @blur="fontInputBlur"
           />
-          <span class="font-pop__icon" @click="fontSizeVisible = !fontSizeVisible">
+          <span class="font-pop__icon" @click="showFontSize = !showFontSize">
             <Icon icon="angle-down" />
           </span>
-          <span class="tips-text" v-if="!fontSizeVisible">字体大小</span>
-          <FontSize v-model:visible="fontSizeVisible" v-model:size="fontSizeValue" />
+          <span class="tips-text" v-if="!showFontSize">字体大小</span>
+          <FontSize v-model:visible="showFontSize" v-model:size="fontSizeValue" />
         </li>
         <li :class="['hover-tips', props.setting.bold && 'selected']">
           <span class="icon-wrap" @click="emitData('bold', !props.setting.bold)">
@@ -58,6 +58,7 @@
         </li>
       </ul>
     </div>
+
     <div class="right-tools">
       <ul class="tools">
         <li class="hover-tips" @click="emit('copy')">
@@ -100,6 +101,13 @@ import Opacity from '@/components/Tools/Opacity.vue'
 import FontSize from '@/components/Tools/FontSize.vue'
 import FontFamily from '@/components/Tools/FontFamily.vue'
 import { findFamilyByvalue } from '@/config/toolBarConfig'
+import useEditorStore from '@/stores/editor'
+import { ComponentData } from '@/stores/interface'
+
+const store = useEditorStore()
+const currentElement = computed<ComponentData | undefined>(() => {
+  return store.getCurrentElement
+})
 
 interface Setting {
   color: string
@@ -159,23 +167,23 @@ function toggleShow() {
 }
 
 // 字体大小显示控制
-const fontSizeVisible = ref(false)
+const showFontSize = ref(false)
 const fontSizeValue = computed({
   get: () => props.setting.size,
   set: (value: number) => emitData('size', value)
 })
 let copyFont = 0
 const fontInputFocus = () => {
-  fontSizeVisible.value = true
+  showFontSize.value = true
   copyFont = fontSizeValue.value
 }
 const fontInputBlur = () => {
   if (fontSizeValue.value === copyFont) return
-  fontSizeVisible.value = !fontSizeVisible.value
+  showFontSize.value = !showFontSize.value
 }
 
 // 字体显示控制
-const fontFamilyVisible = ref(false)
+const showFontFamily = ref(false)
 const fontFamilyValue = computed({
   get: () => props.setting.family,
   set: (value: string) => emitData('family', value)

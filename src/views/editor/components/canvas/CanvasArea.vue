@@ -20,11 +20,17 @@ const canvasStyle = computed(() => editeorStore.style)
 <style lang="scss" scoped>
 .canvas-area {
   width: 335px;
-  min-height: 600px;
+  height: 600px;
   border: 1px solid #efefef;
   background: #fff;
-  max-height: 80vh;
   position: relative;
+  margin: 0 auto;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 .editor-wrapper {

@@ -1,9 +1,9 @@
 <template>
   <div class="pageScale-menu">
     <div class="pageScale-menu_adjust pageScale-menu_item">调整尺寸</div>
-    <div class="pageScale-menu_sub pageScale-menu_item">-</div>
-    <div class="pageScale-menu_value pageScale-menu_item">56%</div>
-    <div class="pageScale-menu_add pageScale-menu_item">+</div>
+    <div class="pageScale-menu_sub pageScale-menu_item" @click="addOrSubtract('subtract')">-</div>
+    <div class="pageScale-menu_value pageScale-menu_item">{{ Math.round(scale * 100) }}%</div>
+    <div class="pageScale-menu_add pageScale-menu_item" @click="addOrSubtract('add')">+</div>
     <div class="pageScale-menu_lineSwitch pageScale-menu_item" @click="scaleMenu.showSwitch = true">
       <div class="lineSwitch-wrapper" v-show="scaleMenu.showSwitch">
         <div class="triangle"></div>
@@ -19,6 +19,12 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
 
+defineProps<{
+  scale: number
+}>()
+
+const emit = defineEmits(['changeScale'])
+
 const scaleMenu = reactive({
   showSwitch: false,
   lineType: ''
@@ -26,6 +32,10 @@ const scaleMenu = reactive({
 const lineSwitch = (type: string) => {
   scaleMenu.showSwitch = false
   scaleMenu.lineType = type
+}
+
+const addOrSubtract = (type: 'add' | 'subtract') => {
+  emit('changeScale', type)
 }
 </script>
 

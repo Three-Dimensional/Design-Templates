@@ -5,11 +5,13 @@
       <LeftPanel :handleChangeItem="handleChangeItem"></LeftPanel>
       <PanelContent :activeItem="activeItem"></PanelContent>
     </aside>
-    <main class="preview-container" ref="previewRef">
+    <main class="preview-container">
       <EditorTools v-model:setting="toolSetting" @copy="handleCopy" />
       <!-- 画布区域 -->
-      <CanvasArea ref="canvasRef"></CanvasArea>
-      <PageScaleSet></PageScaleSet>
+      <div class="preview-canvas" ref="previewRef">
+        <CanvasArea ref="canvasRef" :style="{ transform: previewStyle.transform }"></CanvasArea>
+      </div>
+      <PageScaleSet :scale="scaleRate" @change-scale="changeScaleRate"></PageScaleSet>
     </main>
 
     <aside class="settings-panel">
@@ -67,7 +69,7 @@ const handleCopy = () => {
 }
 
 // 底部组件
-const { /* previewStyle, */ previewRef, canvasRef } = pageScale()
+const { previewStyle, previewRef, canvasRef, scaleRate, changeScaleRate } = pageScale()
 </script>
 
 <style lang="scss">
@@ -95,6 +97,11 @@ const { /* previewStyle, */ previewRef, canvasRef } = pageScale()
     width: calc(100vw - 650px);
     min-width: 800px;
     height: calc(100vh - 70px);
+  }
+
+  .preview-canvas {
+    width: 100%;
+    height: 100%;
   }
 
   .settings-panel {

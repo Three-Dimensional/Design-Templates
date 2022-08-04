@@ -193,6 +193,7 @@ const fontFamilyValue = computed({
   min-width: 474px;
   padding: 0 16px;
   position: absolute;
+  z-index: 2;
   top: 0;
   left: 0;
   width: 100%;

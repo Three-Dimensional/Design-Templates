@@ -1,4 +1,5 @@
 <template>
+  <!-- EditBox -->
   <div
     :class="['editor-box', isActive && 'active']"
     :style="propsToStyleString(props.defaultStyle, true)"
@@ -8,13 +9,13 @@
     <div
       v-for="item in isActive ? pointList : []"
       :key="item"
-      class="shape-point"
+      class="editor-point"
       :style="getPointStyle(item)"
       @mousedown="handlePointMouseDown(item, $event)"
       @mouseup="handleMouseup"
     ></div>
 
-    <div class="rotate" v-show="isActive">
+    <div class="editor-rotate" v-show="isActive">
       <Icon icon="weiraogoujianxuanzhuan" @mousedown="handleRotate"></Icon>
     </div>
     <slot></slot>
@@ -56,36 +57,31 @@ const pointList: string[] = ['lt', 't', 'rt', 'r', 'rb', 'b', 'lb', 'l']
 // 获取8个拖动点的位置样式
 const getPointStyle = (point: string) => {
   const { width, height } = props.defaultStyle
-  const hasT = /t/.test(point)
-  const hasB = /b/.test(point)
-  const hasL = /l/.test(point)
-  const hasR = /r/.test(point)
+  const isTop = point.indexOf('t') > -1
+  const isLeft = point.indexOf('l') > -1
   let newLeft = 0
   let newTop = 0
-
-  // 四个角的点
+  // 转角的点
   if (point.length === 2) {
-    newLeft = hasL ? 0 : width
-    newTop = hasT ? 0 : height
+    newLeft = isLeft ? 0 : width
+    newTop = isTop ? 0 : height
   } else {
     // 上下两点的点，宽度居中
-    if (hasT || hasB) {
+    if (['t', 'b'].includes(point)) {
       newLeft = width / 2
-      newTop = hasT ? 0 : height
+      newTop = isTop ? 0 : height
     }
-
     // 左右两边的点，高度居中
-    if (hasL || hasR) {
-      newLeft = hasL ? 0 : width
+    if (['l', 'r'].includes(point)) {
+      newLeft = isLeft ? 0 : width
       newTop = Math.floor(height / 2)
     }
   }
 
   const style = {
-    marginLeft: '-6px',
-    marginTop: '-6px',
     left: `${newLeft}px`,
     top: `${newTop}px`,
+    transform: 'translate(-50%, -50%)',
     cursor: pointCursor[point]
   }
 
@@ -95,23 +91,23 @@ const handleMouseup = () => {
   recordSnapshot(store.$state)
 }
 // editBox拖动事件
-const handleMouseDown = (comId: string, e: any) => {
+const handleMouseDown = (comId: string, e: MouseEvent) => {
   // 点击开始移动
   e.stopPropagation()
   store.setActive(comId)
   if (!currentElement.value) return
   const trf = currentElement.value!
-  const trfArr: string[] = trf.style.transform!.trim().replace(/()/g, '').split(',')
-  const matrixX = trfArr[trfArr.length - 2]
-  const matrixY = trfArr[trfArr.length - 1]
+  const offsetX = trf.style.left || 0
+  const offsetY = trf.style.top || 0
   const startY = e.clientY
   const startX = e.clientX
-  const move = (moveEvent: any) => {
+  const move = (moveEvent: MouseEvent) => {
     const currX = moveEvent.clientX - startX
     const currY = moveEvent.clientY - startY
     if (currentElement.value) {
-      const newX = parseInt(matrixX, 10) + currX
-      const newY = parseInt(matrixY, 10) + currY
+      const newX = offsetX + currX
+      const newY = offsetY + currY
+      // 根据位移和旋转算出对应的matrix
       const str = computedMatrixString(newX, newY, trf.style.rotate ? -trf.style.rotate : 0)
       trf.style.left = newX
       trf.style.top = newY
@@ -122,7 +118,6 @@ const handleMouseDown = (comId: string, e: any) => {
     document.removeEventListener('mousemove', move)
     document.removeEventListener('mouseup', up)
   }
-  // 注册和取消移动事件
   document.addEventListener('mousemove', move)
   document.addEventListener('mouseup', up)
 }
@@ -293,7 +288,7 @@ const handleRotate = (e: MouseEvent) => {
   }
 }
 
-.shape-point {
+.editor-point {
   position: absolute;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -304,7 +299,7 @@ const handleRotate = (e: MouseEvent) => {
   z-index: 1;
 }
 
-.rotate {
+.editor-rotate {
   border-radius: 2px;
   color: #fff;
   font-size: 12px;
@@ -317,7 +312,7 @@ const handleRotate = (e: MouseEvent) => {
   margin-left: -5.5px;
   cursor: grab;
 }
-.rotate .icon {
+.editor-rotate .icon {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   box-shadow: 0 0 4px 0 rgb(24 49 81 / 10%);

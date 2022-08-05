@@ -7,6 +7,7 @@
           <span class="color-block" :style="{ backgroundColor: props.setting.color }"></span>
           <span class="tips-text">调色板</span>
         </li>
+        <!-- 字体 -->
         <li class="hover-tips">
           <div
             class="font-family__wrap"
@@ -19,6 +20,7 @@
           <span class="tips-text" v-if="!showFontFamily">字体</span>
           <FontFamily v-model:visible="showFontFamily" v-model:family="fontFamilyValue" />
         </li>
+
         <li class="hover-tips font-size--choose">
           <input
             type="text"

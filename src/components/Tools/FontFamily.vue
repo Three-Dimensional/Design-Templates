@@ -28,6 +28,7 @@ const chooseFamily = (value: string) => {
   emit('update:visible', false)
 }
 </script>
+
 <style scoped lang="scss">
 .family-child {
   background: #fff;

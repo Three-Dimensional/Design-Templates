@@ -103,13 +103,6 @@ import Opacity from '@/components/Tools/Opacity.vue'
 import FontSize from '@/components/Tools/FontSize.vue'
 import FontFamily from '@/components/Tools/FontFamily.vue'
 import { findFamilyByvalue } from '@/config/toolBarConfig'
-import useEditorStore from '@/stores/editor'
-import { ComponentData } from '@/stores/interface'
-
-const store = useEditorStore()
-const currentElement = computed<ComponentData | undefined>(() => {
-  return store.getCurrentElement
-})
 
 interface Setting {
   color: string

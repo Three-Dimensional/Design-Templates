@@ -33,7 +33,9 @@ const emit = defineEmits(['update:visible', 'update:family'])
 
 const chooseFamily = (value: string) => {
   emit('update:family', value)
-  currentElement.value.style.fontFamily = value
+  if (currentElement.value) {
+    currentElement.value.style.fontFamily = value
+  }
   emit('update:visible', false)
 }
 </script>

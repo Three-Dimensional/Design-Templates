@@ -20,7 +20,7 @@
           <span class="tips-text" v-if="!showFontFamily">字体</span>
           <FontFamily v-model:visible="showFontFamily" v-model:family="fontFamilyValue" />
         </li>
-
+        <!-- 字体大小 -->
         <li class="hover-tips font-size--choose">
           <input
             type="text"
@@ -34,24 +34,28 @@
           <span class="tips-text" v-if="!showFontSize">字体大小</span>
           <FontSize v-model:visible="showFontSize" v-model:size="fontSizeValue" />
         </li>
+        <!-- 粗体 -->
         <li :class="['hover-tips', props.setting.bold && 'selected']">
           <span class="icon-wrap" @click="emitData('bold', !props.setting.bold)">
             <Icon icon="bold" />
           </span>
           <span class="tips-text">加粗</span>
         </li>
+        <!-- 斜体 -->
         <li :class="['hover-tips', props.setting.italic && 'selected']">
           <span class="icon-wrap" @click="emitData('italic', !props.setting.italic)">
             <Icon icon="italic" />
           </span>
           <span class="tips-text">斜体</span>
         </li>
+        <!-- 下划线 -->
         <li :class="['hover-tips', props.setting.underline && 'selected']">
           <span class="icon-wrap" @click="emitData('underline', !props.setting.underline)">
             <Icon icon="underline" />
           </span>
           <span class="tips-text">下划线</span>
         </li>
+        <!-- 对齐方式 -->
         <li class="hover-tips">
           <span class="icon-wrap">
             <Icon :icon="`text-align-${props.setting.align}`" />
@@ -60,7 +64,7 @@
         </li>
       </ul>
     </div>
-
+    <!-- 统一功能区 -->
     <div class="right-tools">
       <ul class="tools">
         <li class="hover-tips" @click="emit('copy')">

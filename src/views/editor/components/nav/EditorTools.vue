@@ -1,12 +1,12 @@
-<script lang="ts"></script>
 <template>
-  <div class="editor-control">
+  <aside class="editor-control">
     <div class="left-tools">
       <ul class="tools">
-        <li class="hover-tips">
+        <Popover>
+          <!-- <li class="hover-tips"> -->
           <span class="color-block" :style="{ backgroundColor: props.setting.color }"></span>
-          <span class="tips-text">调色板</span>
-        </li>
+          <!-- </li> -->
+        </Popover>
         <!-- 字体 -->
         <li class="hover-tips">
           <div
@@ -98,11 +98,12 @@
         </li>
       </ul>
     </div>
-  </div>
+  </aside>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import Popover from '@/components/Popover.vue'
 import Opacity from '@/components/Tools/Opacity.vue'
 import FontSize from '@/components/Tools/FontSize.vue'
 import FontFamily from '@/components/Tools/FontFamily.vue'
@@ -243,44 +244,44 @@ const fontFamilyValue = computed({
       text-align: center;
       line-height: 20px;
     }
-    .hover-tips {
-      position: relative;
-      &:hover {
-        background: #f3f4f9;
-        .tips-text {
-          visibility: initial;
-        }
-      }
-      &.selected {
-        background: #f3f4f9;
-      }
+    // .hover-tips {
+    //   position: relative;
+    //   &:hover {
+    //     background: #f3f4f9;
+    //     .tips-text {
+    //       visibility: initial;
+    //     }
+    //   }
+    //   &.selected {
+    //     background: #f3f4f9;
+    //   }
 
-      .tips-text {
-        background-color: #000;
-        border-radius: 4px;
-        box-shadow: 0 2px 8px 0 rgb(0 0 0 / 24%);
-        color: #fff;
-        font-size: 12px;
-        left: 50%;
-        line-height: 12px;
-        padding: 4px 8px;
-        position: absolute;
-        top: 49px;
-        transform: translateX(-50%);
-        visibility: hidden;
-        white-space: pre;
-        z-index: 1;
-        &::after {
-          border: 4px solid transparent;
-          border-bottom-color: #000;
-          bottom: 100%;
-          content: '';
-          left: 50%;
-          margin-left: -4px;
-          position: absolute;
-        }
-      }
-    }
+    //   .tips-text {
+    //     background-color: #000;
+    //     border-radius: 4px;
+    //     box-shadow: 0 2px 8px 0 rgb(0 0 0 / 24%);
+    //     color: #fff;
+    //     font-size: 12px;
+    //     left: 50%;
+    //     line-height: 12px;
+    //     padding: 4px 8px;
+    //     position: absolute;
+    //     top: 49px;
+    //     transform: translateX(-50%);
+    //     visibility: hidden;
+    //     white-space: pre;
+    //     z-index: 1;
+    //     &::after {
+    //       border: 4px solid transparent;
+    //       border-bottom-color: #000;
+    //       bottom: 100%;
+    //       content: '';
+    //       left: 50%;
+    //       margin-left: -4px;
+    //       position: absolute;
+    //     }
+    //   }
+    // }
 
     .font-size--choose {
       input {

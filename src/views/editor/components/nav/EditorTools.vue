@@ -1,24 +1,26 @@
-<script lang="ts"></script>
 <template>
-  <div class="editor-control">
+  <aside class="editor-control">
     <div class="left-tools">
       <ul class="tools">
-        <li class="hover-tips">
+        <Popover>
+          <!-- <li class="hover-tips"> -->
           <span class="color-block" :style="{ backgroundColor: props.setting.color }"></span>
-          <span class="tips-text">调色板</span>
-        </li>
+          <!-- </li> -->
+        </Popover>
+        <!-- 字体 -->
         <li class="hover-tips">
           <div
             class="font-family__wrap"
             v-html="findFamilyByvalue(fontFamilyValue)"
-            @click="fontFamilyVisible = !fontFamilyVisible"
+            @click="showFontFamily = !showFontFamily"
           ></div>
-          <span class="font-pop__icon" @click="fontFamilyVisible = !fontFamilyVisible">
+          <span class="font-pop__icon" @click="showFontFamily = !showFontFamily">
             <Icon icon="angle-down" />
           </span>
-          <span class="tips-text" v-if="!fontFamilyVisible">字体</span>
-          <FontFamily v-model:visible="fontFamilyVisible" v-model:family="fontFamilyValue" />
+          <span class="tips-text" v-if="!showFontFamily">字体</span>
+          <FontFamily v-model:visible="showFontFamily" v-model:family="fontFamilyValue" />
         </li>
+        <!-- 字体大小 -->
         <li class="hover-tips font-size--choose">
           <input
             type="text"
@@ -26,30 +28,34 @@
             @focus="fontInputFocus"
             @blur="fontInputBlur"
           />
-          <span class="font-pop__icon" @click="fontSizeVisible = !fontSizeVisible">
+          <span class="font-pop__icon" @click="showFontSize = !showFontSize">
             <Icon icon="angle-down" />
           </span>
-          <span class="tips-text" v-if="!fontSizeVisible">字体大小</span>
-          <FontSize v-model:visible="fontSizeVisible" v-model:size="fontSizeValue" />
+          <span class="tips-text" v-if="!showFontSize">字体大小</span>
+          <FontSize v-model:visible="showFontSize" v-model:size="fontSizeValue" />
         </li>
+        <!-- 粗体 -->
         <li :class="['hover-tips', props.setting.bold && 'selected']">
           <span class="icon-wrap" @click="emitData('bold', !props.setting.bold)">
             <Icon icon="bold" />
           </span>
           <span class="tips-text">加粗</span>
         </li>
+        <!-- 斜体 -->
         <li :class="['hover-tips', props.setting.italic && 'selected']">
           <span class="icon-wrap" @click="emitData('italic', !props.setting.italic)">
             <Icon icon="italic" />
           </span>
           <span class="tips-text">斜体</span>
         </li>
+        <!-- 下划线 -->
         <li :class="['hover-tips', props.setting.underline && 'selected']">
           <span class="icon-wrap" @click="emitData('underline', !props.setting.underline)">
             <Icon icon="underline" />
           </span>
           <span class="tips-text">下划线</span>
         </li>
+        <!-- 对齐方式 -->
         <li class="hover-tips">
           <span class="icon-wrap">
             <Icon :icon="`text-align-${props.setting.align}`" />
@@ -58,6 +64,7 @@
         </li>
       </ul>
     </div>
+    <!-- 统一功能区 -->
     <div class="right-tools">
       <ul class="tools">
         <li class="hover-tips" @click="emit('copy')">
@@ -91,11 +98,12 @@
         </li>
       </ul>
     </div>
-  </div>
+  </aside>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import Popover from '@/components/Popover.vue'
 import Opacity from '@/components/Tools/Opacity.vue'
 import FontSize from '@/components/Tools/FontSize.vue'
 import FontFamily from '@/components/Tools/FontFamily.vue'
@@ -159,23 +167,23 @@ function toggleShow() {
 }
 
 // 字体大小显示控制
-const fontSizeVisible = ref(false)
+const showFontSize = ref(false)
 const fontSizeValue = computed({
   get: () => props.setting.size,
   set: (value: number) => emitData('size', value)
 })
 let copyFont = 0
 const fontInputFocus = () => {
-  fontSizeVisible.value = true
+  showFontSize.value = true
   copyFont = fontSizeValue.value
 }
 const fontInputBlur = () => {
   if (fontSizeValue.value === copyFont) return
-  fontSizeVisible.value = !fontSizeVisible.value
+  showFontSize.value = !showFontSize.value
 }
 
 // 字体显示控制
-const fontFamilyVisible = ref(false)
+const showFontFamily = ref(false)
 const fontFamilyValue = computed({
   get: () => props.setting.family,
   set: (value: string) => emitData('family', value)
@@ -236,44 +244,44 @@ const fontFamilyValue = computed({
       text-align: center;
       line-height: 20px;
     }
-    .hover-tips {
-      position: relative;
-      &:hover {
-        background: #f3f4f9;
-        .tips-text {
-          visibility: initial;
-        }
-      }
-      &.selected {
-        background: #f3f4f9;
-      }
+    // .hover-tips {
+    //   position: relative;
+    //   &:hover {
+    //     background: #f3f4f9;
+    //     .tips-text {
+    //       visibility: initial;
+    //     }
+    //   }
+    //   &.selected {
+    //     background: #f3f4f9;
+    //   }
 
-      .tips-text {
-        background-color: #000;
-        border-radius: 4px;
-        box-shadow: 0 2px 8px 0 rgb(0 0 0 / 24%);
-        color: #fff;
-        font-size: 12px;
-        left: 50%;
-        line-height: 12px;
-        padding: 4px 8px;
-        position: absolute;
-        top: 49px;
-        transform: translateX(-50%);
-        visibility: hidden;
-        white-space: pre;
-        z-index: 1;
-        &::after {
-          border: 4px solid transparent;
-          border-bottom-color: #000;
-          bottom: 100%;
-          content: '';
-          left: 50%;
-          margin-left: -4px;
-          position: absolute;
-        }
-      }
-    }
+    //   .tips-text {
+    //     background-color: #000;
+    //     border-radius: 4px;
+    //     box-shadow: 0 2px 8px 0 rgb(0 0 0 / 24%);
+    //     color: #fff;
+    //     font-size: 12px;
+    //     left: 50%;
+    //     line-height: 12px;
+    //     padding: 4px 8px;
+    //     position: absolute;
+    //     top: 49px;
+    //     transform: translateX(-50%);
+    //     visibility: hidden;
+    //     white-space: pre;
+    //     z-index: 1;
+    //     &::after {
+    //       border: 4px solid transparent;
+    //       border-bottom-color: #000;
+    //       bottom: 100%;
+    //       content: '';
+    //       left: 50%;
+    //       margin-left: -4px;
+    //       position: absolute;
+    //     }
+    //   }
+    // }
 
     .font-size--choose {
       input {

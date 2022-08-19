@@ -14,7 +14,15 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { fontFamily } from '@/config/toolBarConfig'
+import { ComponentData } from '@/stores/interface'
+import useEditorStore from '@/stores/editor'
+
+const store = useEditorStore()
+const currentElement = computed<ComponentData | undefined>(() => {
+  return store.getCurrentElement
+})
 
 defineProps<{
   visible: boolean
@@ -25,9 +33,13 @@ const emit = defineEmits(['update:visible', 'update:family'])
 
 const chooseFamily = (value: string) => {
   emit('update:family', value)
+  if (currentElement.value) {
+    currentElement.value.style.fontFamily = value
+  }
   emit('update:visible', false)
 }
 </script>
+
 <style scoped lang="scss">
 .family-child {
   background: #fff;

@@ -1,13 +1,26 @@
 <template>
-  <aside class="hover-tips">
+  <aside class="hover-tips tools-item">
     <slot></slot>
-    <span class="tips-text">调色板</span>
+    <span class="tips-text">{{ props.title }}</span>
   </aside>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const props = defineProps<{
+  title: String
+}>()
+</script>
 
 <style lang="scss">
+.tools-item {
+  display: flex;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 0 5px;
+  align-items: center;
+  position: relative;
+}
+
 .hover-tips {
   position: relative;
   &:hover {

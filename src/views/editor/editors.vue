@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import { ComponentData } from '@/stores/interface'
 import useEditorStore from '@/stores/editor'
 import EditorHeader from './components/EditorHeader.vue'
@@ -38,6 +38,17 @@ const store = useEditorStore()
 const currentElement = computed<ComponentData | undefined>(() => {
   return store.getCurrentElement
 })
+
+watch(
+  () => currentElement,
+  (newVal) => {
+    console.log('%c 🍷 newVal', 'color:#7f2b82', newVal)
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
 
 // 初始化面板数据
 onMounted(() => {

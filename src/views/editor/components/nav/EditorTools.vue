@@ -5,19 +5,13 @@
         <Popover :title="'调色板'">
           <span class="color-block" :style="{ backgroundColor: props.setting.color }"></span>
         </Popover>
+
         <!-- 字体 -->
-        <Popover title="字体">
-          <div
-            class="font-family__wrap"
-            v-html="findFamilyByvalue(fontFamilyValue)"
-            @click="showFontFamily = !showFontFamily"
-          ></div>
-          <span class="font-pop__icon" @click="showFontFamily = !showFontFamily">
-            <Icon icon="angle-down" />
-          </span>
-          <span class="tips-text" v-if="!showFontFamily">字体</span>
-          <FontFamily v-model:visible="showFontFamily" v-model:family="fontFamilyValue" />
+        <Popover title="字体" @click="showFontFamily = !showFontFamily">
+          <div class="font-family__wrap" v-html="findFamilyByvalue(fontFamilyValue)"></div>
+          <FontFamilyList v-model:visible="showFontFamily" v-model:family="fontFamilyValue" />
         </Popover>
+
         <!-- 字体大小 -->
         <Popover title="字体大小" class="hover-tips tools-item font-size--choose">
           <input
@@ -96,7 +90,7 @@ import { computed, ref } from 'vue'
 import Popover from '@/components/Popover.vue'
 import Opacity from '@/components/Tools/Opacity.vue'
 import FontSize from '@/components/Tools/FontSize.vue'
-import FontFamily from '@/components/Tools/FontFamily.vue'
+import FontFamilyList from '@/components/Tools/FontFamilyList.vue'
 import { findFamilyByvalue } from '@/config/toolBarConfig'
 
 interface Setting {

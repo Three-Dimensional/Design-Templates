@@ -6,7 +6,7 @@
       <PanelContent :activeItem="activeItem"></PanelContent>
     </aside>
     <main class="preview-container">
-      <EditorTools v-model:setting="toolSetting" @copy="handleCopy" />
+      <EditorTools v-if="currentElement" v-model:setting="toolSetting" @copy="handleCopy" />
       <!-- 画布区域 -->
       <div class="preview-canvas" ref="previewRef">
         <CanvasArea ref="canvasRef" :style="{ transform: previewStyle.transform }"></CanvasArea>
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, watch, toRaw } from 'vue'
 import { ComponentData } from '@/stores/interface'
 import useEditorStore from '@/stores/editor'
 import EditorHeader from './components/EditorHeader.vue'
@@ -39,9 +39,21 @@ const currentElement = computed<ComponentData | undefined>(() => {
   return store.getCurrentElement
 })
 
+watch(
+  () => currentElement,
+  (newVal) => {
+    console.log('%c 🍷 newVal', 'color:#7f2b82', toRaw(newVal.value))
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
+
 // 初始化面板数据
 onMounted(() => {
   recordSnapshot(store.$state)
+  console.log('%c Line:57 🥐', 'color:#3f7cff', currentElement.value)
 })
 
 const activeItem = ref({

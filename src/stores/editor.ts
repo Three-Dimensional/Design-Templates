@@ -69,12 +69,14 @@ const useEditorStore = defineStore('editor', {
   }),
 
   getters: {
+    // 获取当前选中的元素
     getCurrentElement(state) {
       return state.components.find((component) => component.id === state.currentElement)
     }
   },
 
   actions: {
+    // 添加元素
     updatePageStyle(style: Partial<PageStyle>) {
       this.style = {
         ...this.style,

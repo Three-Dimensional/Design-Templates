@@ -1,27 +1,19 @@
 <template>
   <aside class="editor-control">
     <div class="left-tools">
-      <ul class="tools">
-        <Popover>
-          <!-- <li class="hover-tips"> -->
+      <div class="tools">
+        <Popover :title="'调色板'">
           <span class="color-block" :style="{ backgroundColor: props.setting.color }"></span>
-          <!-- </li> -->
         </Popover>
+
         <!-- 字体 -->
-        <li class="hover-tips">
-          <div
-            class="font-family__wrap"
-            v-html="findFamilyByvalue(fontFamilyValue)"
-            @click="showFontFamily = !showFontFamily"
-          ></div>
-          <span class="font-pop__icon" @click="showFontFamily = !showFontFamily">
-            <Icon icon="angle-down" />
-          </span>
-          <span class="tips-text" v-if="!showFontFamily">字体</span>
-          <FontFamily v-model:visible="showFontFamily" v-model:family="fontFamilyValue" />
-        </li>
+        <Popover title="字体" @click="showFontFamily = !showFontFamily">
+          <div class="font-family__wrap" v-html="findFamilyByvalue(fontFamilyValue)"></div>
+          <FontFamilyList v-model:visible="showFontFamily" v-model:family="fontFamilyValue" />
+        </Popover>
+
         <!-- 字体大小 -->
-        <li class="hover-tips font-size--choose">
+        <Popover title="字体大小" class="hover-tips tools-item font-size--choose">
           <input
             type="text"
             v-model="fontSizeValue"
@@ -33,69 +25,61 @@
           </span>
           <span class="tips-text" v-if="!showFontSize">字体大小</span>
           <FontSize v-model:visible="showFontSize" v-model:size="fontSizeValue" />
-        </li>
+        </Popover>
         <!-- 粗体 -->
-        <li :class="['hover-tips', props.setting.bold && 'selected']">
+        <Popover title="加粗" :class="[props.setting.bold && 'selected']">
           <span class="icon-wrap" @click="emitData('bold', !props.setting.bold)">
             <Icon icon="bold" />
           </span>
-          <span class="tips-text">加粗</span>
-        </li>
+        </Popover>
         <!-- 斜体 -->
-        <li :class="['hover-tips', props.setting.italic && 'selected']">
+        <Popover title="斜体" :class="[props.setting.italic && 'selected']">
           <span class="icon-wrap" @click="emitData('italic', !props.setting.italic)">
             <Icon icon="italic" />
           </span>
-          <span class="tips-text">斜体</span>
-        </li>
+        </Popover>
         <!-- 下划线 -->
-        <li :class="['hover-tips', props.setting.underline && 'selected']">
+        <Popover title="下划线" :class="[props.setting.underline && 'selected']">
           <span class="icon-wrap" @click="emitData('underline', !props.setting.underline)">
             <Icon icon="underline" />
           </span>
-          <span class="tips-text">下划线</span>
-        </li>
+        </Popover>
         <!-- 对齐方式 -->
-        <li class="hover-tips">
+        <Popover title="对齐" class="hover-tips tools-item">
           <span class="icon-wrap">
             <Icon :icon="`text-align-${props.setting.align}`" />
           </span>
-          <span class="tips-text">对齐</span>
-        </li>
-      </ul>
+        </Popover>
+      </div>
     </div>
     <!-- 统一功能区 -->
     <div class="right-tools">
       <ul class="tools">
-        <li class="hover-tips" @click="emit('copy')">
+        <Popover title="复制" class="hover-tips tools-item" @click="emit('copy')">
           <span class="icon-wrap">
             <Icon icon="fuzhi" />
           </span>
-          <span class="tips-text">复制</span>
-        </li>
-        <li class="hover-tips" id="OpacityBtn">
+        </Popover>
+        <Popover title="透明度" class="hover-tips tools-item" id="OpacityBtn">
           <span class="icon-wrap" @click="toggleShow">
             <Icon icon="touming" />
           </span>
-          <span class="tips-text">透明度</span>
           <Opacity
             v-model:show="opacityShow"
             v-model:value="opacityValue"
             :location="opacityLocation"
           />
-        </li>
-        <li class="hover-tips" @click="emit('reverse')">
+        </Popover>
+        <Popover title="翻转" class="hover-tips tools-item" @click="emit('reverse')">
           <span class="icon-wrap">
             <Icon icon="duicheng" />
           </span>
-          <span class="tips-text">翻转</span>
-        </li>
-        <li class="hover-tips" @click="emit('delete')">
+        </Popover>
+        <Popover title="删除" class="hover-tips tools-item" @click="emit('delete')">
           <span class="icon-wrap">
             <Icon icon="shanchu" />
           </span>
-          <span class="tips-text">删除</span>
-        </li>
+        </Popover>
       </ul>
     </div>
   </aside>
@@ -106,7 +90,7 @@ import { computed, ref } from 'vue'
 import Popover from '@/components/Popover.vue'
 import Opacity from '@/components/Tools/Opacity.vue'
 import FontSize from '@/components/Tools/FontSize.vue'
-import FontFamily from '@/components/Tools/FontFamily.vue'
+import FontFamilyList from '@/components/Tools/FontFamilyList.vue'
 import { findFamilyByvalue } from '@/config/toolBarConfig'
 
 interface Setting {
@@ -189,6 +173,7 @@ const fontFamilyValue = computed({
   set: (value: string) => emitData('family', value)
 })
 </script>
+
 <style scoped lang="scss">
 .editor-control {
   background-color: #fff;
@@ -217,14 +202,6 @@ const fontFamilyValue = computed({
     display: flex;
     height: 100%;
     align-items: center;
-    li {
-      display: flex;
-      border-radius: 4px;
-      padding: 8px;
-      margin: 0 5px;
-      align-items: center;
-      position: relative;
-    }
     .font-pop__icon {
       cursor: pointer;
     }
@@ -244,44 +221,6 @@ const fontFamilyValue = computed({
       text-align: center;
       line-height: 20px;
     }
-    // .hover-tips {
-    //   position: relative;
-    //   &:hover {
-    //     background: #f3f4f9;
-    //     .tips-text {
-    //       visibility: initial;
-    //     }
-    //   }
-    //   &.selected {
-    //     background: #f3f4f9;
-    //   }
-
-    //   .tips-text {
-    //     background-color: #000;
-    //     border-radius: 4px;
-    //     box-shadow: 0 2px 8px 0 rgb(0 0 0 / 24%);
-    //     color: #fff;
-    //     font-size: 12px;
-    //     left: 50%;
-    //     line-height: 12px;
-    //     padding: 4px 8px;
-    //     position: absolute;
-    //     top: 49px;
-    //     transform: translateX(-50%);
-    //     visibility: hidden;
-    //     white-space: pre;
-    //     z-index: 1;
-    //     &::after {
-    //       border: 4px solid transparent;
-    //       border-bottom-color: #000;
-    //       bottom: 100%;
-    //       content: '';
-    //       left: 50%;
-    //       margin-left: -4px;
-    //       position: absolute;
-    //     }
-    //   }
-    // }
 
     .font-size--choose {
       input {

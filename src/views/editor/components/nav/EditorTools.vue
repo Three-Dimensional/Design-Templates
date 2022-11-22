@@ -173,6 +173,7 @@ const fontFamilyValue = computed({
   set: (value: string) => emitData('family', value)
 })
 </script>
+
 <style scoped lang="scss">
 .editor-control {
   background-color: #fff;

@@ -8,19 +8,19 @@ export const defaultComponents: ComponentData[] = [
     name: 'LText',
     tag: 'h1',
     props: {
-      text: 'hello'
+      text: '文案数据二'
     },
     style: {
-      width: 125,
+      width: 225,
       height: 36,
-      fontSize: 40,
+      fontSize: 24,
       color: 'red',
       lineHeight: 1,
-      textAlign: 'left',
+      textAlign: 'center',
       fontFamily: '',
       opacity: 1,
       left: 0,
-      top: 0,
+      top: 20,
       transform: 'matrix(1, 0, 0, 1, 0, 0)',
       rotate: 0
     }
@@ -30,19 +30,19 @@ export const defaultComponents: ComponentData[] = [
     name: 'LText',
     tag: 'h1',
     props: {
-      text: 'hello2222'
+      text: '文案数据一'
     },
     style: {
       width: 250,
-      height: 150,
-      fontSize: 40,
+      height: 36,
+      fontSize: 24,
       color: 'red',
       lineHeight: 1,
-      textAlign: 'left',
+      textAlign: 'center',
       fontFamily: '',
       opacity: 1,
-      left: 50,
-      top: 50,
+      left: 0,
+      top: 200,
       transform: 'matrix(1, 0, 0, 1, 50, 50)',
       rotate: 0
     }

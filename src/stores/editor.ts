@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 import { ComponentData, PageStyle } from './interface'
 
+// 初始化数据
 export const defaultComponents: ComponentData[] = [
   {
     id: uuidv4(),
@@ -17,12 +18,17 @@ export const defaultComponents: ComponentData[] = [
       color: 'red',
       lineHeight: 1,
       textAlign: 'center',
-      fontFamily: '',
+      fontFamily: 'Microsoft YaHei',
       opacity: 1,
       left: 0,
       top: 20,
       transform: 'matrix(1, 0, 0, 1, 0, 0)',
-      rotate: 0
+      rotate: 0,
+      bold: false,
+      italic: false,
+      underline: false,
+      strike: false
+      // transform: 'matrix(1, 0, 0, 1, 0, 0)'
     }
   },
   {
@@ -39,7 +45,7 @@ export const defaultComponents: ComponentData[] = [
       color: 'red',
       lineHeight: 1,
       textAlign: 'center',
-      fontFamily: '',
+      fontFamily: 'Microsoft YaHei',
       opacity: 1,
       left: 0,
       top: 200,

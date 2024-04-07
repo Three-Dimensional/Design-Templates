@@ -109,16 +109,7 @@ interface Props {
 const emit = defineEmits(['update:setting', 'delete', 'reverse', 'copy'])
 const props = withDefaults(defineProps<Props>(), {
   setting: () => {
-    return {
-      color: 'rgb(130, 85, 130)',
-      family: '',
-      size: 15,
-      bold: false,
-      italic: false,
-      underline: false,
-      align: 'left',
-      opacity: 0
-    }
+    return {}
   }
 })
 

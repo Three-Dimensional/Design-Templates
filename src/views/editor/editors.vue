@@ -6,6 +6,7 @@
       <PanelContent :activeItem="activeItem"></PanelContent>
     </aside>
     <main class="preview-container">
+      <!-- 工具栏 -->
       <EditorTools v-if="currentElement" v-model:setting="toolSetting" @copy="handleCopy" />
       <!-- 画布区域 -->
       <div class="preview-canvas" ref="previewRef">
@@ -22,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted, watch, toRaw } from 'vue'
+import { computed, reactive, onMounted, watch, ref } from 'vue'
 import { ComponentData } from '@/stores/interface'
 import useEditorStore from '@/stores/editor'
 import EditorHeader from './components/EditorHeader.vue'
@@ -38,11 +39,27 @@ const store = useEditorStore()
 const currentElement = computed<ComponentData | undefined>(() => {
   return store.getCurrentElement
 })
+// 底部组件
+const { previewStyle, previewRef, canvasRef, scaleRate, changeScaleRate } = pageScale()
+
+// 工具栏默认数据
+const toolSetting = reactive({
+  color: 'rgb(130, 85, 130)',
+  family: 'Microsoft YouYuan',
+  size: 155555,
+  bold: false,
+  italic: false,
+  underline: false,
+  align: 'left',
+  opacity: 0
+})
 
 watch(
   () => currentElement,
   (newVal) => {
-    console.log('%c 🍷 newVal', 'color:#7f2b82', toRaw(newVal.value))
+    if (newVal.value) {
+      // toolSetting = JSON.parse(JSON.stringify(newVal.value.style))
+    }
   },
   {
     deep: true,
@@ -53,7 +70,6 @@ watch(
 // 初始化面板数据
 onMounted(() => {
   recordSnapshot(store.$state)
-  console.log('%c Line:57 🥐', 'color:#3f7cff', currentElement.value)
 })
 
 const activeItem = ref({
@@ -64,24 +80,11 @@ const activeItem = ref({
 const handleChangeItem = (e: any): void => {
   activeItem.value = e
 }
-// 工具栏相关
-const toolSetting = ref({
-  color: 'rgb(130, 85, 130)',
-  family: 'SimSun,STSong',
-  size: 15,
-  bold: false,
-  italic: false,
-  underline: false,
-  align: 'left',
-  opacity: 0
-})
+
 // 工具栏复制事件
 const handleCopy = () => {
   console.info('handleCopy')
 }
-
-// 底部组件
-const { previewStyle, previewRef, canvasRef, scaleRate, changeScaleRate } = pageScale()
 </script>
 
 <style lang="scss">

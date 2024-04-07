@@ -2,27 +2,33 @@ import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 import { ComponentData, PageStyle } from './interface'
 
+// 初始化数据
 export const defaultComponents: ComponentData[] = [
   {
     id: uuidv4(),
     name: 'LText',
     tag: 'h1',
     props: {
-      text: 'hello'
+      text: '文案数据二'
     },
     style: {
-      width: 125,
+      width: 225,
       height: 36,
-      fontSize: 40,
+      fontSize: 24,
       color: 'red',
       lineHeight: 1,
-      textAlign: 'left',
-      fontFamily: '',
+      textAlign: 'center',
+      fontFamily: 'Microsoft YaHei',
       opacity: 1,
       left: 0,
-      top: 0,
+      top: 20,
       transform: 'matrix(1, 0, 0, 1, 0, 0)',
-      rotate: 0
+      rotate: 0,
+      bold: false,
+      italic: false,
+      underline: false,
+      strike: false
+      // transform: 'matrix(1, 0, 0, 1, 0, 0)'
     }
   },
   {
@@ -30,19 +36,19 @@ export const defaultComponents: ComponentData[] = [
     name: 'LText',
     tag: 'h1',
     props: {
-      text: 'hello2222'
+      text: '文案数据一'
     },
     style: {
       width: 250,
-      height: 150,
-      fontSize: 40,
+      height: 36,
+      fontSize: 24,
       color: 'red',
       lineHeight: 1,
-      textAlign: 'left',
-      fontFamily: '',
+      textAlign: 'center',
+      fontFamily: 'Microsoft YaHei',
       opacity: 1,
-      left: 50,
-      top: 50,
+      left: 0,
+      top: 200,
       transform: 'matrix(1, 0, 0, 1, 50, 50)',
       rotate: 0
     }

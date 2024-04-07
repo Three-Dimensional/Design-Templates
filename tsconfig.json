@@ -12,9 +12,10 @@
       "jsx": "preserve",
       "sourceMap": true,
       "resolveJsonModule": true,
+      "suppressImplicitAnyIndexErrors": true,
       "esModuleInterop": true,
       "lib": ["esnext", "dom"],
-      "suppressImplicitAnyIndexErrors":true
+      "ignoreDeprecations": "5.0"
     },
     "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
   }

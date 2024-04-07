@@ -16,7 +16,7 @@
 - 通过 Github Active 实现 CI/CD 自动化流程(Docker)
 
 ## 开发中
-- 组件拖动,旋转,拉伸控制
+- 组件拖动、旋转、拉伸控制
 
 ## 注意
 - 启动命令 `yarn install`, `yarn run`

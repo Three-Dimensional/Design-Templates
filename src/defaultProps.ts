@@ -6,6 +6,7 @@ export interface PageStyle {
   backgroundRepeat: string
   backgroundPosition: string
 }
+// 基础属性
 export interface CommonComponentProps extends PageStyle {
   // actions
   actionType: string
@@ -38,6 +39,10 @@ export interface CommonComponentProps extends PageStyle {
   lineHeight: number
   textAlign: string
   color: string
+  bold: boolean
+  align: string
+  italic: boolean
+  underline: boolean
   // 旋转
   rotate: number
 }
@@ -78,11 +83,12 @@ export const textDefaultProps: TextComponentProps = {
   height: 20,
   lineHeight: 1.5,
   width: 200,
-  fontFamily: '',
+  fontFamily: 'Microsoft YaHei',
   fontWeight: 'normal',
   fontStyle: 'normal',
   textDecoration: 'none',
   textAlign: 'center',
+  bold: false,
   color: '#000000',
   backgroundColor: ''
 }

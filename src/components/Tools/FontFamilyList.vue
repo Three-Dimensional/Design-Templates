@@ -1,8 +1,10 @@
 <template>
-  <div class="family-child" v-if="visible">
+  {{ props.fontFamily }}12312322
+  {{ fontFamily }}
+  <div class="family-child">
     <ul class="list">
       <li
-        v-for="item in fontFamily"
+        v-for="item in fontFamilyArr"
         :key="item.text"
         :style="{ fontFamily: item.value }"
         @click="chooseFamily(item.value)"
@@ -13,30 +15,30 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { fontFamily } from '@/config/toolBarConfig'
-import { ComponentData } from '@/stores/interface'
-import useEditorStore from '@/stores/editor'
+<script lang="ts" setup>
+import { watch } from 'vue'
+import { fontFamilyArr } from '@/config/toolBarConfig'
 
-const store = useEditorStore()
-const currentElement = computed<ComponentData | undefined>(() => {
-  return store.getCurrentElement
-})
-
-defineProps<{
-  visible: boolean
-  family: string
+const props = defineProps<{
+  visible: { type: Boolean; default: false }
+  fontFamily: { type: String; default: '' }
 }>()
 
-const emit = defineEmits(['update:visible', 'update:family'])
+watch(
+  () => props.fontFamily,
+  (newVal) => {
+    console.log('%c Line:40 🥪 newVal', 'color:#b03734', newVal)
+    // let fontFamily = reactive(newVal)
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
 
 const chooseFamily = (value: string) => {
-  emit('update:family', value)
-  if (currentElement.value) {
-    currentElement.value.style.fontFamily = value
-  }
-  emit('update:visible', false)
+  // store.setCurrentElementStyle({ fontFamily: value })
+  console.log(value)
 }
 </script>
 

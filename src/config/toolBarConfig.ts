@@ -3,7 +3,7 @@ type Font = {
   value: string
 }
 // 字体的默认配置
-export const fontFamily: Font[] = [
+export const fontFamilyArr: Font[] = [
   { text: '隶书', value: 'LiSu' },
   { text: '幼圆', value: 'Microsoft YouYuan' },
   { text: '华文楷体', value: 'STKaiti' },
@@ -19,9 +19,9 @@ export const fontSize: number[] = [
   144, 200, 250, 300, 350, 400, 500, 600, 700
 ]
 
-// 根据字体value查找
+// 根据字体 value 查找
 export const findFamilyByvalue = (value: string) => {
-  const find = fontFamily.find((i) => i.value === value)
+  const find = fontFamilyArr.find((i) => i.value === value)
   if (!find) return ''
   return `
         <span style="font-family: ${find.value}">${find.text}</span>

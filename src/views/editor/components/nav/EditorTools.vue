@@ -1,15 +1,20 @@
 <template>
   <aside class="editor-control">
+    {{ TextStyle.fontFamily }}
     <div class="left-tools">
       <div class="tools">
+        <!-- {{ setting }} -->
         <Popover :title="'调色板'">
           <span class="color-block" :style="{ backgroundColor: props.setting.color }"></span>
         </Popover>
 
         <!-- 字体 -->
         <Popover title="字体" @click="showFontFamily = !showFontFamily">
-          <div class="font-family__wrap" v-html="findFamilyByvalue(fontFamilyValue)"></div>
-          <FontFamilyList v-model:visible="showFontFamily" v-model:family="fontFamilyValue" />
+          <div class="font-family__wrap" v-html="findFamilyByvalue(TextStyle.fontFamily)"></div>
+          <FontFamilyList
+            v-model:visible="showFontFamily"
+            v-model:fontFamily="TextStyle.fontFamily"
+          />
         </Popover>
 
         <!-- 字体大小 -->
@@ -86,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref, watch, reactive } from 'vue'
 import Popover from '@/components/Popover.vue'
 import Opacity from '@/components/Tools/Opacity.vue'
 import FontSize from '@/components/Tools/FontSize.vue'
@@ -95,74 +100,97 @@ import { findFamilyByvalue } from '@/config/toolBarConfig'
 
 interface Setting {
   color: string
-  family: string
-  size: number
-  bold: boolean
-  italic: boolean
-  underline: boolean
-  align: string
-  opacity: number
+  fontFamily: string
+  // size: number
+  // bold: boolean
+  // italic: boolean
+  // underline: boolean
+  // align: string
+  // opacity: number
 }
-interface Props {
-  setting: Setting
-}
-const emit = defineEmits(['update:setting', 'delete', 'reverse', 'copy'])
-const props = withDefaults(defineProps<Props>(), {
-  setting: () => {
-    return {}
+
+const props = defineProps({
+  setting: {
+    type: Object,
+    required: true
   }
 })
 
-const emitData = (key: string, value: string | number | boolean) => {
-  const copyData = {
-    ...props.setting,
-    [key]: value
+// 选中的文字数据
+let TextStyle: Setting = {
+  color: 'red',
+  fontFamily: 'Microsoft YaHei'
+  // size: 0,
+  // bold: false,
+  // italic: false,
+  // underline: false,
+  // align: '',
+  // opacity: 0
+}
+
+// 监听文字Style数据变化
+watch(
+  () => props.setting,
+  (newVal) => {
+    TextStyle = reactive({
+      ...newVal.style
+    })
+    console.log('%c Line:136 🍐 TextStyle', 'color:#7f2b82', TextStyle.fontFamily)
+  },
+  {
+    deep: true,
+    immediate: true
   }
-  emit('update:setting', copyData)
-}
+)
 
-// 控制透明度工具栏
-const opacityShow = ref(false)
-const opacityLocation = ref({
-  left: 0,
-  top: 0
-})
-const opacityValue = computed({
-  get: () => props.setting.opacity,
-  set: (value: number) => emitData('opacity', value)
-})
+// const emit = defineEmits(['update:setting', 'delete', 'reverse', 'copy'])
 
-// 显示弹窗的时候获取坐标，计算透明度弹窗应该显示的位置
-function toggleShow() {
-  const ele = document.getElementById('OpacityBtn')
-  const rect = ele?.getBoundingClientRect()
-  opacityLocation.value.left = rect?.x || 0
-  opacityLocation.value.top = rect?.y || 0
-  opacityShow.value = !opacityShow.value
-}
+// const emitData = (key: string, value: string | number | boolean) => {
+//   const copyData = {
+//     ...props.setting,
+//     [key]: value
+//   }
+//   emit('update:setting', copyData)
+// }
 
-// 字体大小显示控制
-const showFontSize = ref(false)
-const fontSizeValue = computed({
-  get: () => props.setting.size,
-  set: (value: number) => emitData('size', value)
-})
-let copyFont = 0
-const fontInputFocus = () => {
-  showFontSize.value = true
-  copyFont = fontSizeValue.value
-}
-const fontInputBlur = () => {
-  if (fontSizeValue.value === copyFont) return
-  showFontSize.value = !showFontSize.value
-}
+// // 控制透明度工具栏
+// const opacityShow = ref(false)
+// const opacityLocation = ref({
+//   left: 0,
+//   top: 0
+// })
+// const opacityValue = computed({
+//   get: () => props.setting.opacity,
+//   set: (value: number) => emitData('opacity', value)
+// })
+
+// // 显示弹窗的时候获取坐标，计算透明度弹窗应该显示的位置
+// function toggleShow() {
+//   const ele = document.getElementById('OpacityBtn')
+//   const rect = ele?.getBoundingClientRect()
+//   opacityLocation.value.left = rect?.x || 0
+//   opacityLocation.value.top = rect?.y || 0
+//   opacityShow.value = !opacityShow.value
+// }
+
+// // 字体大小显示控制
+// const showFontSize = ref(false)
+// const fontSizeValue = computed({
+//   get: () => props.setting.size,
+//   set: (value: number) => emitData('size', value)
+// })
+// let copyFont = 0
+// const fontInputFocus = () => {
+//   showFontSize.value = true
+//   copyFont = fontSizeValue.value
+// }
+// const fontInputBlur = () => {
+//   if (fontSizeValue.value === copyFont) return
+//   showFontSize.value = !showFontSize.value
+// }
 
 // 字体显示控制
 const showFontFamily = ref(false)
-const fontFamilyValue = computed({
-  get: () => props.setting.family,
-  set: (value: string) => emitData('family', value)
-})
 </script>
 
 <style scoped lang="scss">

@@ -1,64 +1,58 @@
 <template>
   <aside class="editor-control">
-    {{ TextStyle.fontFamily }}
     <div class="left-tools">
       <div class="tools">
         <!-- {{ setting }} -->
         <Popover :title="'调色板'">
-          <span class="color-block" :style="{ backgroundColor: props.setting.color }"></span>
+          <span class="color-block" :style="{ backgroundColor: props.toolSetting.color }"></span>
         </Popover>
 
         <!-- 字体 -->
-        <Popover title="字体" @click="showFontFamily = !showFontFamily">
-          <div class="font-family__wrap" v-html="findFamilyByvalue(TextStyle.fontFamily)"></div>
-          <FontFamilyList
-            v-model:visible="showFontFamily"
-            v-model:fontFamily="TextStyle.fontFamily"
-          />
-        </Popover>
-
-        <!-- 字体大小 -->
-        <Popover title="字体大小" class="hover-tips tools-item font-size--choose">
-          <input
-            type="text"
-            v-model="fontSizeValue"
-            @focus="fontInputFocus"
-            @blur="fontInputBlur"
-          />
-          <span class="font-pop__icon" @click="showFontSize = !showFontSize">
-            <Icon icon="angle-down" />
-          </span>
-          <span class="tips-text" v-if="!showFontSize">字体大小</span>
-          <FontSize v-model:visible="showFontSize" v-model:size="fontSizeValue" />
-        </Popover>
-        <!-- 粗体 -->
-        <Popover title="加粗" :class="[props.setting.bold && 'selected']">
-          <span class="icon-wrap" @click="emitData('bold', !props.setting.bold)">
-            <Icon icon="bold" />
-          </span>
-        </Popover>
-        <!-- 斜体 -->
-        <Popover title="斜体" :class="[props.setting.italic && 'selected']">
-          <span class="icon-wrap" @click="emitData('italic', !props.setting.italic)">
-            <Icon icon="italic" />
-          </span>
-        </Popover>
-        <!-- 下划线 -->
-        <Popover title="下划线" :class="[props.setting.underline && 'selected']">
-          <span class="icon-wrap" @click="emitData('underline', !props.setting.underline)">
-            <Icon icon="underline" />
-          </span>
-        </Popover>
-        <!-- 对齐方式 -->
-        <Popover title="对齐" class="hover-tips tools-item">
-          <span class="icon-wrap">
-            <Icon :icon="`text-align-${props.setting.align}`" />
-          </span>
+        <Popover title="字体">
+          <div
+            @click="showFontFamily = !showFontFamily"
+            class="font-family__wrap"
+            v-html="findFamilyByvalue(props.toolSetting.fontFamily)"
+          ></div>
+          <FontFamilyList v-if="showFontFamily" :chooseFamily="chooseFamily" />
         </Popover>
       </div>
     </div>
+
+    <!-- <Popover title="字体大小" class="hover-tips tools-item font-size--choose">
+      <input type="text" v-model="fontSizeValue" @focus="fontInputFocus" @blur="fontInputBlur" />
+      <span class="font-pop__icon" @click="showFontSize = !showFontSize">
+        <Icon icon="angle-down" />
+      </span>
+      <span class="tips-text" v-if="!showFontSize">字体大小</span>
+      <FontSize v-model:visible="showFontSize" v-model:size="fontSizeValue" />
+    </Popover>
+
+    <Popover title="加粗" :class="[props.toolSetting.bold && 'selected']">
+      <span class="icon-wrap" @click="emitData('bold', !props.toolSetting.bold)">
+        <Icon icon="bold" />
+      </span>
+    </Popover>
+
+    <Popover title="斜体" :class="[props.toolSetting.italic && 'selected']">
+      <span class="icon-wrap" @click="emitData('italic', !props.toolSetting.italic)">
+        <Icon icon="italic" />
+      </span>
+    </Popover>
+
+    <Popover title="下划线" :class="[props.toolSetting.underline && 'selected']">
+      <span class="icon-wrap" @click="emitData('underline', !props.toolSetting.underline)">
+        <Icon icon="underline" />
+      </span>
+    </Popover>
+
+    <Popover title="对齐" class="hover-tips tools-item">
+      <span class="icon-wrap">
+        <Icon :icon="`text-align-${props.toolSetting.align}`" />
+      </span>
+    </Popover> -->
     <!-- 统一功能区 -->
-    <div class="right-tools">
+    <!-- <div class="right-tools">
       <ul class="tools">
         <Popover title="复制" class="hover-tips tools-item" @click="emit('copy')">
           <span class="icon-wrap">
@@ -86,7 +80,7 @@
           </span>
         </Popover>
       </ul>
-    </div>
+    </div> -->
   </aside>
 </template>
 
@@ -97,6 +91,9 @@ import Opacity from '@/components/Tools/Opacity.vue'
 import FontSize from '@/components/Tools/FontSize.vue'
 import FontFamilyList from '@/components/Tools/FontFamilyList.vue'
 import { findFamilyByvalue } from '@/config/toolBarConfig'
+import useEditorStore from '@/stores/editor'
+
+const store = useEditorStore()
 
 interface Setting {
   color: string
@@ -110,44 +107,37 @@ interface Setting {
 }
 
 const props = defineProps({
-  setting: {
+  toolSetting: {
     type: Object,
     required: true
   }
 })
 
-// 选中的文字数据
-let TextStyle: Setting = {
-  color: 'red',
-  fontFamily: 'Microsoft YaHei'
-  // size: 0,
-  // bold: false,
-  // italic: false,
-  // underline: false,
-  // align: '',
-  // opacity: 0
-}
-
 // 监听文字Style数据变化
 watch(
-  () => props.setting,
+  () => props.toolSetting,
   (newVal) => {
-    TextStyle = reactive({
-      ...newVal.style
-    })
-    console.log('%c Line:136 🍐 TextStyle', 'color:#7f2b82', TextStyle.fontFamily)
+    console.log('%c Line:121 🍢 newVal', 'color:#ed9ec7', newVal)
   },
   {
     deep: true,
     immediate: true
   }
 )
+// 字体显示控制
+const showFontFamily = ref(false)
+
+const chooseFamily = (value: string) => {
+  showFontFamily.value = false
+  // eslint-disable-next-line vue/no-mutating-props
+  props.toolSetting.fontFamily = value
+}
 
 // const emit = defineEmits(['update:setting', 'delete', 'reverse', 'copy'])
 
 // const emitData = (key: string, value: string | number | boolean) => {
 //   const copyData = {
-//     ...props.setting,
+//     ...props.toolSetting,
 //     [key]: value
 //   }
 //   emit('update:setting', copyData)
@@ -160,7 +150,7 @@ watch(
 //   top: 0
 // })
 // const opacityValue = computed({
-//   get: () => props.setting.opacity,
+//   get: () => props.toolSetting.opacity,
 //   set: (value: number) => emitData('opacity', value)
 // })
 
@@ -176,7 +166,7 @@ watch(
 // // 字体大小显示控制
 // const showFontSize = ref(false)
 // const fontSizeValue = computed({
-//   get: () => props.setting.size,
+//   get: () => props.toolSetting.size,
 //   set: (value: number) => emitData('size', value)
 // })
 // let copyFont = 0
@@ -188,9 +178,6 @@ watch(
 //   if (fontSizeValue.value === copyFont) return
 //   showFontSize.value = !showFontSize.value
 // }
-
-// 字体显示控制
-const showFontFamily = ref(false)
 </script>
 
 <style scoped lang="scss">

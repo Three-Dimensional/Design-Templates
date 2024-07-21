@@ -7,7 +7,7 @@
     </aside>
     <main class="preview-container">
       <!-- 工具栏 -->
-      <EditorTools v-if="currentElement" v-model:setting="currentElement" @copy="handleCopy" />
+      <EditorTools v-if="currentElement" :toolSetting="toolSetting" @copy="handleCopy" />
       <!-- 画布区域 -->
       <div class="preview-canvas" ref="previewRef">
         <CanvasArea ref="canvasRef" :style="{ transform: previewStyle.transform }"></CanvasArea>
@@ -17,13 +17,13 @@
 
     <aside class="settings-panel">
       <!-- 具体数据 -->
-      {{ currentElement && currentElement.style.fontFamily }}
+      {{ currentElement && currentElement.style }}
     </aside>
   </main>
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, watch, ref } from 'vue'
+import { computed, onMounted, watch, ref, reactive } from 'vue'
 import { ComponentData } from '@/stores/interface'
 import useEditorStore from '@/stores/editor'
 import EditorHeader from './components/EditorHeader.vue'
@@ -43,22 +43,22 @@ const currentElement = computed<ComponentData | undefined>(() => {
 const { previewStyle, previewRef, canvasRef, scaleRate, changeScaleRate } = pageScale()
 
 // 工具栏默认数据
-// const toolSetting = reactive({
-//   color: 'rgb(130, 85, 130)',
-//   family: 'Microsoft YouYuan',
-//   size: 155555,
-//   bold: false,
-//   italic: false,
-//   underline: false,
-//   align: 'left',
-//   opacity: 0
-// })
+let toolSetting = reactive({
+  color: 'rgb(130, 85, 130)',
+  family: 'Microsoft YouYuan',
+  size: 155555,
+  bold: false,
+  italic: false,
+  underline: false,
+  align: 'left',
+  opacity: 0
+})
 
 watch(
   () => currentElement,
   (newVal) => {
     if (newVal.value) {
-      // toolSetting = JSON.parse(JSON.stringify(newVal.value.style))
+      toolSetting = newVal.value.style
     }
   },
   {

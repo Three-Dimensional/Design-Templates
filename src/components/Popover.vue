@@ -11,8 +11,6 @@
 const props = defineProps<{
   title: String
 }>()
-
-// eslint-disable-next-line vue/no-export-in-script-setup
 </script>
 
 <style lang="scss">

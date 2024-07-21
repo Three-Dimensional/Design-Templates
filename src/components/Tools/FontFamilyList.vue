@@ -1,13 +1,11 @@
 <template>
-  {{ props.fontFamily }}12312322
-  {{ fontFamily }}
   <div class="family-child">
     <ul class="list">
       <li
         v-for="item in fontFamilyArr"
         :key="item.text"
         :style="{ fontFamily: item.value }"
-        @click="chooseFamily(item.value)"
+        @click="props.chooseFamily(item.value)"
       >
         {{ item.text }}
       </li>
@@ -16,30 +14,16 @@
 </template>
 
 <script lang="ts" setup>
-import { watch } from 'vue'
+import { onMounted } from 'vue'
 import { fontFamilyArr } from '@/config/toolBarConfig'
 
 const props = defineProps<{
-  visible: { type: Boolean; default: false }
-  fontFamily: { type: String; default: '' }
-}>()
-
-watch(
-  () => props.fontFamily,
-  (newVal) => {
-    console.log('%c Line:40 🥪 newVal', 'color:#b03734', newVal)
-    // let fontFamily = reactive(newVal)
-  },
-  {
-    deep: true,
-    immediate: true
+  chooseFamily: {
+    type: Function
+    required: true
   }
-)
-
-const chooseFamily = (value: string) => {
-  // store.setCurrentElementStyle({ fontFamily: value })
-  console.log(value)
-}
+}>()
+onMounted(() => {})
 </script>
 
 <style scoped lang="scss">

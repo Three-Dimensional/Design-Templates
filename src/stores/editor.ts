@@ -96,6 +96,7 @@ const useEditorStore = defineStore('editor', {
     removeComponent(id: string) {
       this.components = this.components.filter((item) => item.id !== id)
     },
+    // 当前选中的元素
     setActive(id: string) {
       this.currentElement = id
     },
@@ -103,7 +104,7 @@ const useEditorStore = defineStore('editor', {
     handleChange(state: any) {
       this.$state = state
     },
-    // 动态改变属性值
+    // 动态改变元素的属性值
     updateComponent({ key, value }: { key: string; value: any }) {
       const updatedComponent = this.components.find(
         (component) => component.id === this.currentElement

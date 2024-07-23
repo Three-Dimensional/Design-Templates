@@ -1,6 +1,4 @@
 <template>
-  {{ props.fontFamily }}12312322
-  {{ fontFamily }}
   <div class="family-child">
     <ul class="list">
       <li
@@ -16,30 +14,14 @@
 </template>
 
 <script lang="ts" setup>
-import { watch } from 'vue'
 import { fontFamilyArr } from '@/config/toolBarConfig'
 
-const props = defineProps<{
-  visible: { type: Boolean; default: false }
-  fontFamily: { type: String; default: '' }
-}>()
-
-watch(
-  () => props.fontFamily,
-  (newVal) => {
-    console.log('%c Line:40 🥪 newVal', 'color:#b03734', newVal)
-    // let fontFamily = reactive(newVal)
-  },
-  {
-    deep: true,
-    immediate: true
+defineProps({
+  chooseFamily: {
+    type: Function,
+    required: true
   }
-)
-
-const chooseFamily = (value: string) => {
-  // store.setCurrentElementStyle({ fontFamily: value })
-  console.log(value)
-}
+})
 </script>
 
 <style scoped lang="scss">
@@ -49,11 +31,11 @@ const chooseFamily = (value: string) => {
   box-shadow: 0 9px 28px 8px rgb(42 49 67 / 6%), 0 3px 6px -4px rgb(42 49 67 / 11%),
     0 6px 16px 0 rgb(42 49 67 / 8%);
   box-sizing: border-box;
-  left: 3.5px;
+  z-index: 1;
+  top: 50px;
+  left: 66px;
   overflow: hidden;
   position: absolute;
-  top: 44px;
-  z-index: 1;
   .list {
     height: 200px;
     overflow-y: scroll;

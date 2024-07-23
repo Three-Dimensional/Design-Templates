@@ -50,7 +50,6 @@ const forwardOperation = () => {
 
     .header-title {
       margin: 0 24px;
-      font-family: cursive;
     }
     .header-icon {
       width: 32px;

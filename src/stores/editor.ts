@@ -9,7 +9,7 @@ export const defaultComponents: ComponentData[] = [
     name: 'LText',
     tag: 'h1',
     props: {
-      text: '文案数据二'
+      text: '文案数据2222222'
     },
     style: {
       width: 225,
@@ -18,7 +18,7 @@ export const defaultComponents: ComponentData[] = [
       color: 'red',
       lineHeight: 1,
       textAlign: 'center',
-      fontFamily: 'Microsoft YaHei',
+      fontFamily: 'STFangsong',
       opacity: 1,
       left: 0,
       top: 20,
@@ -26,8 +26,7 @@ export const defaultComponents: ComponentData[] = [
       rotate: 0,
       bold: false,
       italic: false,
-      underline: false,
-      strike: false
+      underline: false
       // transform: 'matrix(1, 0, 0, 1, 0, 0)'
     }
   },
@@ -36,7 +35,7 @@ export const defaultComponents: ComponentData[] = [
     name: 'LText',
     tag: 'h1',
     props: {
-      text: '文案数据一'
+      text: '文案数据11111'
     },
     style: {
       width: 250,

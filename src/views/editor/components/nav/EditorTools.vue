@@ -2,7 +2,6 @@
   <aside class="editor-control">
     <div class="left-tools">
       <div class="tools">
-        <!-- {{ setting }} -->
         <Popover :title="'调色板'">
           <span class="color-block" :style="{ backgroundColor: props.toolSetting.color }"></span>
         </Popover>
@@ -10,16 +9,16 @@
         <!-- 字体 -->
         <Popover title="字体">
           <div
-            @click="showFontFamily = !showFontFamily"
+            @click="showFontFun"
             class="font-family__wrap"
             v-html="findFamilyByvalue(props.toolSetting.fontFamily)"
           ></div>
-          <FontFamilyList v-if="showFontFamily" :chooseFamily="chooseFamily" />
         </Popover>
+        <FontFamilyList v-show="showFontFamily" :chooseFamily="chooseFamily" />
       </div>
     </div>
 
-    <!-- <Popover title="字体大小" class="hover-tips tools-item font-size--choose">
+    <Popover title="字体大小" class="hover-tips tools-item font-size--choose">
       <input type="text" v-model="fontSizeValue" @focus="fontInputFocus" @blur="fontInputBlur" />
       <span class="font-pop__icon" @click="showFontSize = !showFontSize">
         <Icon icon="angle-down" />
@@ -28,11 +27,11 @@
       <FontSize v-model:visible="showFontSize" v-model:size="fontSizeValue" />
     </Popover>
 
-    <Popover title="加粗" :class="[props.toolSetting.bold && 'selected']">
+    <!--     <Popover title="加粗" :class="[props.toolSetting.bold && 'selected']">
       <span class="icon-wrap" @click="emitData('bold', !props.toolSetting.bold)">
         <Icon icon="bold" />
       </span>
-    </Popover>
+    </Popover>h
 
     <Popover title="斜体" :class="[props.toolSetting.italic && 'selected']">
       <span class="icon-wrap" @click="emitData('italic', !props.toolSetting.italic)">
@@ -85,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, reactive } from 'vue'
+import { watch, ref } from 'vue'
 import Popover from '@/components/Popover.vue'
 import Opacity from '@/components/Tools/Opacity.vue'
 import FontSize from '@/components/Tools/FontSize.vue'
@@ -126,6 +125,9 @@ watch(
 )
 // 字体显示控制
 const showFontFamily = ref(false)
+const showFontFun = () => {
+  showFontFamily.value = !showFontFamily.value
+}
 
 const chooseFamily = (value: string) => {
   showFontFamily.value = false

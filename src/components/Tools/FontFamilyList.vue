@@ -5,7 +5,7 @@
         v-for="item in fontFamilyArr"
         :key="item.text"
         :style="{ fontFamily: item.value }"
-        @click="props.chooseFamily(item.value)"
+        @click="chooseFamily(item.value)"
       >
         {{ item.text }}
       </li>
@@ -14,16 +14,14 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
 import { fontFamilyArr } from '@/config/toolBarConfig'
 
-const props = defineProps<{
+defineProps({
   chooseFamily: {
-    type: Function
+    type: Function,
     required: true
   }
-}>()
-onMounted(() => {})
+})
 </script>
 
 <style scoped lang="scss">
@@ -33,11 +31,11 @@ onMounted(() => {})
   box-shadow: 0 9px 28px 8px rgb(42 49 67 / 6%), 0 3px 6px -4px rgb(42 49 67 / 11%),
     0 6px 16px 0 rgb(42 49 67 / 8%);
   box-sizing: border-box;
-  left: 3.5px;
+  z-index: 1;
+  top: 50px;
+  left: 66px;
   overflow: hidden;
   position: absolute;
-  top: 44px;
-  z-index: 1;
   .list {
     height: 200px;
     overflow-y: scroll;

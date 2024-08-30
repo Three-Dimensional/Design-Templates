@@ -33,7 +33,7 @@ defineProps({
   box-sizing: border-box;
   z-index: 1;
   top: 50px;
-  left: 66px;
+  left: 52px;
   overflow: hidden;
   position: absolute;
   .list {

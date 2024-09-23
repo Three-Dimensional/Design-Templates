@@ -42,7 +42,7 @@ const handleClick = (id: number) => {
 .nav-menu {
   display: flex;
   justify-content: space-around;
-  margin: 80px auto 8px;
+  margin: 16px auto 8px;
   position: relative;
   width: 256px;
 

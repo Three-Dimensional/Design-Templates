@@ -3,13 +3,13 @@
     <div class="left-tools">
       <div class="tools">
         <Popover :title="'调色板'">
-          <span class="color-block" :style="{ backgroundColor: props.toolSetting.color }"></span>
+          <ColorPalette :backgroundColor="props.toolSetting.color"></ColorPalette>
         </Popover>
 
         <!-- 字体 -->
         <Popover title="字体">
           <div
-            @click="showFontFun"
+            @click="showFontHandle"
             class="font-family__wrap"
             v-html="findFamilyByvalue(props.toolSetting.fontFamily)"
           ></div>
@@ -18,14 +18,14 @@
       </div>
     </div>
 
-    <Popover title="字体大小" class="hover-tips tools-item font-size--choose">
+    <!-- <Popover title="字体大小" class="hover-tips tools-item font-size--choose">
       <input type="text" v-model="fontSizeValue" @focus="fontInputFocus" @blur="fontInputBlur" />
       <span class="font-pop__icon" @click="showFontSize = !showFontSize">
         <Icon icon="angle-down" />
       </span>
       <span class="tips-text" v-if="!showFontSize">字体大小</span>
       <FontSize v-model:visible="showFontSize" v-model:size="fontSizeValue" />
-    </Popover>
+    </Popover> -->
 
     <!--     <Popover title="加粗" :class="[props.toolSetting.bold && 'selected']">
       <span class="icon-wrap" @click="emitData('bold', !props.toolSetting.bold)">
@@ -51,7 +51,8 @@
       </span>
     </Popover> -->
     <!-- 统一功能区 -->
-    <!-- <div class="right-tools">
+    <div class="right-tools">
+      <!-- 
       <ul class="tools">
         <Popover title="复制" class="hover-tips tools-item" @click="emit('copy')">
           <span class="icon-wrap">
@@ -79,7 +80,8 @@
           </span>
         </Popover>
       </ul>
-    </div> -->
+      -->
+    </div>
   </aside>
 </template>
 
@@ -89,6 +91,7 @@ import Popover from '@/components/Popover.vue'
 import Opacity from '@/components/Tools/Opacity.vue'
 import FontSize from '@/components/Tools/FontSize.vue'
 import FontFamilyList from '@/components/Tools/FontFamilyList.vue'
+import ColorPalette from '@/components/Tools/ColorPalette.vue'
 import { findFamilyByvalue } from '@/config/toolBarConfig'
 import useEditorStore from '@/stores/editor'
 
@@ -125,7 +128,7 @@ watch(
 )
 // 字体显示控制
 const showFontFamily = ref(false)
-const showFontFun = () => {
+const showFontHandle = () => {
   showFontFamily.value = !showFontFamily.value
 }
 
@@ -213,15 +216,7 @@ const chooseFamily = (value: string) => {
     .font-pop__icon {
       cursor: pointer;
     }
-    .color-block {
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 2px;
-      box-sizing: border-box;
-      cursor: pointer;
-      display: inline-block;
-      height: 24px;
-      width: 24px;
-    }
+
     .icon-wrap {
       width: 20px;
       height: 20px;

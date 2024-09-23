@@ -16,9 +16,6 @@ const props = defineProps<{
 <style lang="scss">
 .tools-item {
   display: flex;
-  border-radius: 4px;
-  padding: 8px;
-  margin: 0 5px;
   align-items: center;
   position: relative;
 }
